@@ -14,7 +14,6 @@ namespace PetProject.Domain
             LinkMedia = linkMedia;
             Title = title;
         }
-        public List<SocialMedia> socialMedias = [];
         public string Title { get; } 
         public string LinkMedia { get; }
 

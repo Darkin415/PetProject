@@ -10,8 +10,10 @@ namespace PetProject.Domain.Species
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
-
-
-
+        private Breed(Guid id, string title)
+        {
+            Title = title;
+            Id = id;
+        }
     }
 }

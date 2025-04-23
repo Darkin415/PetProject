@@ -1,9 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
-
 namespace PetProject.Domain
 {
-
-
     public record Details
     {
         private Details(string telephonNumber)
@@ -23,14 +20,5 @@ namespace PetProject.Domain
                 return new Details(telephonNumber);
             }
         }
-
-
-
-
     }
 }
-            
-        
-
-
-    
