@@ -14,6 +14,7 @@ namespace PetProject.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Pet> builder)
         {
+            
             builder.ToTable("pets");
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Id)

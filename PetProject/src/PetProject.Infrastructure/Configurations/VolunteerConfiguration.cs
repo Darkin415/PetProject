@@ -21,9 +21,14 @@ namespace PetProject.Infrastructure.Configurations
                 .HasConversion(
                 id => id.Value,
                 value => VolunteerId.Create(value));
-            builder.Property(v => v.fullName)
+            builder.ComplexProperty(b => b.FullName, eb =>
+            {
+                eb.Property(e => e.FirstName)
                 .IsRequired()
-                .HasMaxLength(Constants.VERY_LOW_LENGTH);
+                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                .HasColumnName("first_name");
+
+            });
             builder.Property(v => v.Email)
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
@@ -33,27 +38,26 @@ namespace PetProject.Infrastructure.Configurations
             builder.HasMany(p => p.Pets)
                 .WithOne()
                 .HasForeignKey("VolunteerId");
-            builder.OwnsOne(v => v.SocialMedias, js =>
+            builder.OwnsOne(v => v.SocialList, b =>
             {
-                js.ToJson();
-
-                js.OwnsMany(x => x, ig =>
+                b.ToJson();
+                b.OwnsMany(b => b.SocialMedias, ib =>
                 {
-                    ig.Property(sm => sm.Title)
-                        .IsRequired()
-                        .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+                    ib.Property(i => i.LinkMedia)
+                    .IsRequired()
+                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
 
-                    ig.Property(sm => sm.LinkMedia)
-                        .IsRequired()
-                        .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
                 });
             });
-            builder.Property(s => s.fullName)
+           
+            builder.ComplexProperty(b => b.PhoneNumber, eb =>
+            {
+                eb.Property(e => e.TelephoneNumber)
                 .IsRequired()
-                .HasMaxLength(Constants.VERY_LOW_LENGTH);
-            builder.Property(s => s.PhoneNumber)
-                .IsRequired()
-                .HasMaxLength(Constants.VERY_LOW_LENGTH);
+                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                .HasColumnName("telephon_number");
+
+            });
 
 
 

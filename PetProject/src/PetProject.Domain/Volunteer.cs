@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CSharpFunctionalExtensions;
+using PetProject.Domain.Shared;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -8,31 +10,29 @@ using System.Threading.Tasks;
 using static PetProject.Domain.Pet;
 namespace PetProject.Domain
 {
-   public partial class Volunteer
+   public partial class Volunteer : Shared.Entity<VolunteerId>
     {
         //для ef core
-        private Volunteer()
+        private Volunteer(VolunteerId id) : base(id)
         {
             
         }
         private readonly List<Pet> _pets = new List<Pet>();
         private readonly List<SocialMedia> _socialMedias = new List<SocialMedia>();
 
-        public IReadOnlyList<SocialMedia> SocialMedias => _socialMedias.AsReadOnly();
+        public IReadOnlyList<SocialMedia> SocialMedias => _socialMedias;
         private Volunteer(
-            VolunteerId id,
+            VolunteerId volunteerId,
             TelephonNumber telephonNumber,
             string email, 
-            string description)
+            string description) : base (volunteerId)
         {
-            Id = id;
             Email = email;
             Description = description;
             PhoneNumber = telephonNumber;
-        }
-        public SocialMedia socialMedia { get; private set; }
-        public FullName fullName { get; private set; }
-        public VolunteerId Id { get; private set; }
+        } 
+        public SocialMedia SocialMedia { get; private set; }
+        public FullName FullName { get; private set; }
         public TelephonNumber PhoneNumber { get; private set; }
         public string Email { get; private set; } = default!;
         public string Description { get; private set; } = default!;
