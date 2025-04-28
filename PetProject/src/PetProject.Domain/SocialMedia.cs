@@ -9,7 +9,8 @@ namespace PetProject.Domain
 {
     public record SocialMedia
     {
-        private SocialMedia(string title, string linkMedia)
+        public List<SocialMedia> _socialMedias { get; private set; }
+        public SocialMedia(string title, string linkMedia)
         {
             LinkMedia = linkMedia;
             Title = title;
