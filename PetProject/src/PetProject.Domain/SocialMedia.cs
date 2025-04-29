@@ -9,26 +9,13 @@ namespace PetProject.Domain
 {
     public record SocialMedia
     {
-        private SocialMedia(string title, string linkMedia)
+
+        private SocialMedia(int value)
         {
-            LinkMedia = linkMedia;
-            Title = title;
+            Value = value;
         }
+        public int Value { get; }
         public string Title { get; } 
         public string LinkMedia { get; }
-
-        public static Result<SocialMedia> Create(string title, string linkMedia)
-        {
-            if (string.IsNullOrWhiteSpace(title))
-                return Result.Failure<SocialMedia>("Title cannot be empty");
-
-            if (string.IsNullOrWhiteSpace(linkMedia))
-                return Result.Failure<SocialMedia>("LinkMedia cannot be empty");
-
-            return new SocialMedia(title, linkMedia);
-        }
-
-
-
     }
 }

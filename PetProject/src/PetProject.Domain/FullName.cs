@@ -2,13 +2,15 @@
 {
     public record FullName
     {
-        private FullName(Guid value)
+        private FullName(int value)
         {
             Value = value;
         }
-        public Guid Value { get; }
-        public static FullName NewVolunteerId() => new(Guid.NewGuid());
-        public static FullName Empty() => new(Guid.Empty);
+        public int Value { get; }
+        public string FirstName { get; }
+        public string LastName { get; }
+        public string Surname { get; }
+        
     }
 }
 

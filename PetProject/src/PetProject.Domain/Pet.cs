@@ -1,13 +1,18 @@
-﻿using System;
+﻿using PetProject.Domain.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 namespace PetProject.Domain
 {
-    public partial class Pet
+    public class Pet : Entity<PetId>
     {
-        public PetId Id { get; private set; }
+        // ef core
+        private Pet(PetId id) :base(id)
+        {
+            
+        }
         public string Nickname { get; private set; } = default!;
         public string View { get; private set; } = default!;
         public string Breed { get; private set; } = default!;
@@ -22,7 +27,7 @@ namespace PetProject.Domain
         public string VaccinationStatus { get; private set; } = default!; 
         public DateTime DateOfCreation { get; private set; }
         public Pet(
-            Guid id, 
+            PetId Petid, 
             string nicname,
             string view, 
             string breed, 
@@ -36,7 +41,7 @@ namespace PetProject.Domain
             string vaccinationStatus,
             string statusHelp,
             DateTime dateOfCreation 
-            )
+            ) : base (Petid)
         {
             Nickname = nicname;
             View = view;

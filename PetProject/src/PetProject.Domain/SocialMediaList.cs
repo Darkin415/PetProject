@@ -6,7 +6,5 @@ using System.Threading.Tasks;
 
 namespace PetProject.Domain
 {
-    internal class PetsList
-    {
-    }
+    public record SocialMediaList(IReadOnlyList<SocialMedia> SocialMedias);
 }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace PetProject.Domain.Shared
 {
-    internal class Constants
+    public class Constants
     {
+
     }
 }

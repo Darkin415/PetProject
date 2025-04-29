@@ -1,24 +1,14 @@
-﻿using CSharpFunctionalExtensions;
-namespace PetProject.Domain
+﻿namespace PetProject.Domain
 {
-    public record Details
+    public record TelephonNumber
     {
-        private Details(string telephonNumber)
+        private TelephonNumber(int value)
         {
-            TelephoneNumber = telephonNumber;
+            Value = value;
         }
-        public string TelephoneNumber { get; }
+        public int Value { get; }
+        public string NumberPhone { get; }
 
-        public static Result<Details> Create(string telephonNumber)
-        {
-            if(String.IsNullOrWhiteSpace(telephonNumber))
-            {
-                return Result.Failure<Details>("Number cannot be null");
-            }
-            else
-            {
-                return new Details(telephonNumber);
-            }
-        }
+        
     }
 }
