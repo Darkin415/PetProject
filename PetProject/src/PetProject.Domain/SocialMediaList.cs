@@ -6,12 +6,17 @@ using System.Threading.Tasks;
 
 namespace PetProject.Domain
 {
-    public record SocialMediaList(IReadOnlyList<SocialMedia> SocialMedias)
-    {
-        public SocialMediaList() : this(new List<SocialMedia>())
-        {
 
+
+    public record SocialMediaList
+    {
+        public IReadOnlyList<SocialMedia> SocialMedias { get; private set; }
+
+        public SocialMediaList(IReadOnlyList<SocialMedia> socialMedias)
+        {
+            SocialMedias = socialMedias;  
         }
     }
-    
+
+
 }
