@@ -2,12 +2,13 @@
 {
     public record TelephonNumber
     {
-        private TelephonNumber(int value)
+        public TelephonNumber(string value)
         {
             Value = value;
+            
         }
-        public int Value { get; }
-        public string NumberPhone { get; }
+        public string Value { get; }
+      
 
         
     }

@@ -2,7 +2,7 @@
 {
     public record PetId
     {
-        private PetId(Guid value)
+        public PetId(Guid value)
         {
             Value = value;
         }

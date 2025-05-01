@@ -10,12 +10,13 @@ namespace PetProject.Domain
     public record SocialMedia
     {
 
-        private SocialMedia(int value)
+        public SocialMedia(string title, string linkMedia )
         {
-            Value = value;
+            Title = title;
+            LinkMedia = linkMedia;
         }
-        public int Value { get; }
-        public string Title { get; } 
-        public string LinkMedia { get; }
+        
+        public string Title { get; private set; } 
+        public string LinkMedia { get; private set; }
     }
 }

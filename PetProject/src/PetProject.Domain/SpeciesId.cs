@@ -8,7 +8,7 @@ namespace PetProject.Domain
 {
     public record SpeciesId
     {
-        private SpeciesId(Guid value)
+        public SpeciesId(Guid value)
         {
             Value = value;
         }

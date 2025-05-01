@@ -25,9 +25,9 @@ namespace PetProject.Domain
         public string Description { get; private set; } = default!;
         private readonly List<Pet> _pets = new List<Pet>();
         public IReadOnlyList<Pet> Pets => _pets;
-        public TelephonNumber TelephoneNumber { get; private set; }
+        public TelephonNumber TelephonNumber { get; private set; }
 
-            public Volunteer(
+        public Volunteer(
         VolunteerId id,
         FullName fullName,
         string email,
@@ -40,7 +40,7 @@ namespace PetProject.Domain
                 FullName = fullName;
                 Email = email;
                 Description = description;
-                TelephoneNumber = telephoneNumber;
+                TelephonNumber = telephoneNumber;
                 _socialMedias = socialMedias?.ToList() ?? new List<SocialMedia>();
                 SocialList = new SocialMediaList(_socialMedias);
                _pets = pets?.ToList() ?? new List<Pet>(); 

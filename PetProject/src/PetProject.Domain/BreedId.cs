@@ -7,7 +7,7 @@ namespace PetProject.Domain
 {
     public record BreedId
     {
-        private BreedId(Guid value)
+        public BreedId(Guid value)
         {
             Value = value;
         }
