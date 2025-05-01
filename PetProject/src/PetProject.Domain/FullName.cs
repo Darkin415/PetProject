@@ -2,6 +2,7 @@
 {
     public record FullName
     {
+        
         private FullName(int value)
         {
             Value = value;

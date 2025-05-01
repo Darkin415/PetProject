@@ -23,13 +23,29 @@ namespace PetProject.Domain
       
         public string Email { get; private set; } = default!;
         public string Description { get; private set; } = default!;
-        public List<Pet> Pets = [];
+        private readonly List<Pet> _pets = new List<Pet>();
+        public IReadOnlyList<Pet> Pets => _pets;
         public TelephonNumber TelephoneNumber { get; private set; }
 
-        //public Volunteer(VolunteerId volunteerId, string Email, string Description,  ) : base(volunteerId) сделать после всех value object
-        //{
-            
-        //}
+            public Volunteer(
+        VolunteerId id,
+        FullName fullName,
+        string email,
+        string description,
+        TelephonNumber telephoneNumber,
+        IReadOnlyList<SocialMedia>? socialMedias = null,
+        IReadOnlyList<Pet>? pets = null 
+    ) : base(id)
+            {
+                FullName = fullName;
+                Email = email;
+                Description = description;
+                TelephoneNumber = telephoneNumber;
+                _socialMedias = socialMedias?.ToList() ?? new List<SocialMedia>();
+                SocialList = new SocialMediaList(_socialMedias);
+               _pets = pets?.ToList() ?? new List<Pet>(); 
+            }
+
         public int CountPetFoundHome(List<Pet> pets)
         {
             return Pets?.Count(pet => pet.Status == StatusHelp.FoundedHome) ?? 0;
