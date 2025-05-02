@@ -11,4 +11,4 @@
         public static PetId Empty() => new(Guid.Empty);
         public static PetId Create(Guid id) => new(id);
     }
-    }
+}

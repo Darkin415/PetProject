@@ -7,10 +7,10 @@
         public string Surname { get; }
         private FullName(string firstName, string lastName, string surname)
         {
-            FirstName = firstName; 
+            FirstName = firstName;
             LastName = lastName;
             Surname = surname;
-        }       
+        }
     }
 }
 

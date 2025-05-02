@@ -11,21 +11,18 @@ namespace PetProject.Domain
 {
     public class Volunteer : Shared.Entity<VolunteerId>
     {
-        private Volunteer(VolunteerId id) : base(id)
-        {
-
-        }
-
-
         public FullName FullName { get; private set; }
-        public SocialMediaList SocialList { get; private set; } // создал свойство для того чтобы потом через него сделать конфигурацию Jsonb
+        public SocialMediaList SocialList { get; private set; }
 
         public string Email { get; private set; } = default!;
         public string Description { get; private set; } = default!;
         private readonly List<Pet> _pets = new List<Pet>();
         public IReadOnlyList<Pet> Pets => _pets;
         public TelephonNumber TelephonNumber { get; private set; }
+        private Volunteer(VolunteerId id) : base(id)
+        {
 
+        }
         public Volunteer(
         VolunteerId id,
         FullName fullName,

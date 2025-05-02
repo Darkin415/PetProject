@@ -20,24 +20,32 @@ namespace PetProject.Infrastructure.Configurations
                 .HasConversion(
                 id => id.Value,
                 value => VolunteerId.Create(value));
+
             builder.ComplexProperty(v => v.TelephonNumber, b =>
             {
                 b.Property(b => b.Value)
                 .IsRequired()
                 .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
             });
+
             builder.ComplexProperty(v => v.FullName, b =>
             {
                 b.Property(b => b.FirstName)
                 .IsRequired()
-                .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
+                .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH)
+                .HasColumnName("first_name");
+
                 b.Property(b => b.LastName)
                 .IsRequired()
-                .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
+                .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH)
+                .HasColumnName("last_name");
+
                 b.Property(b => b.Surname)
                 .IsRequired()
-                .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
+                .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH)
+                .HasColumnName("surname");
             });
+
             builder.OwnsOne(v => v.SocialList, vb =>
             {
                 vb.ToJson();
@@ -51,6 +59,20 @@ namespace PetProject.Infrastructure.Configurations
                     .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
                 });
             });
+
+            builder.Property(v => v.Email)
+                .IsRequired()
+                .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
+
+            builder.Property(v => v.Description)
+                .IsRequired()
+                .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH);
+
+            builder.HasMany(v => v.Pets)
+                .WithOne()
+                .HasForeignKey("volunteer_id")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
 
 
 
