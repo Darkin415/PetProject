@@ -16,14 +16,14 @@ public class ApplicationDbContext : DbContext
     {
         optionsBuilder.UseNpgsql("Server=localhost;Port=5434;Database=pet_project;User Id=postgres;Password=postgres;");
         optionsBuilder.UseSnakeCaseNamingConvention();
-        optionsBuilder.UseLoggerFactory(CreateLoggerFactory());  
+        optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
     private ILoggerFactory CreateLoggerFactory() =>
-        LoggerFactory.Create(builder => { builder.AddConsole(); }); 
+        LoggerFactory.Create(builder => { builder.AddConsole(); });
 }
 
 

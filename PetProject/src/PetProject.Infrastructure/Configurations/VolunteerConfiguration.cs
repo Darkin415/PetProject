@@ -49,10 +49,10 @@ namespace PetProject.Infrastructure.Configurations
                     db.Property(f => f.Title)
                     .IsRequired()
                     .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
-                }); 
+                });
             });
-                
-                
+
+
 
 
         }

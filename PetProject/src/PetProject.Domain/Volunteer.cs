@@ -9,18 +9,17 @@ using System.Threading.Tasks;
 using static PetProject.Domain.Pet;
 namespace PetProject.Domain
 {
-   public  class Volunteer : Shared.Entity<VolunteerId>
+    public class Volunteer : Shared.Entity<VolunteerId>
     {
         private Volunteer(VolunteerId id) : base(id)
         {
 
         }
-        private readonly List<SocialMedia> _socialMedias = new List<SocialMedia>();
-        public IReadOnlyList<SocialMedia> SocialMedias => _socialMedias;
+
 
         public FullName FullName { get; private set; }
         public SocialMediaList SocialList { get; private set; } // создал свойство для того чтобы потом через него сделать конфигурацию Jsonb
-      
+
         public string Email { get; private set; } = default!;
         public string Description { get; private set; } = default!;
         private readonly List<Pet> _pets = new List<Pet>();
@@ -34,17 +33,15 @@ namespace PetProject.Domain
         string description,
         TelephonNumber telephoneNumber,
         IReadOnlyList<SocialMedia>? socialMedias = null,
-        IReadOnlyList<Pet>? pets = null 
+        IReadOnlyList<Pet>? pets = null
     ) : base(id)
-            {
-                FullName = fullName;
-                Email = email;
-                Description = description;
-                TelephonNumber = telephoneNumber;
-                _socialMedias = socialMedias?.ToList() ?? new List<SocialMedia>();
-                SocialList = new SocialMediaList(_socialMedias);
-               _pets = pets?.ToList() ?? new List<Pet>(); 
-            }
+        {
+            FullName = fullName;
+            Email = email;
+            Description = description;
+            TelephonNumber = telephoneNumber;
+            _pets = pets?.ToList() ?? new List<Pet>();
+        }
 
         public int CountPetFoundHome(List<Pet> pets)
         {

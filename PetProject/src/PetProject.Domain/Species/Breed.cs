@@ -13,7 +13,6 @@ namespace PetProject.Domain.Species
         private Breed(BreedId BreedId, string title) 
         {
             Title = title;
-            
         }
     }
 }
