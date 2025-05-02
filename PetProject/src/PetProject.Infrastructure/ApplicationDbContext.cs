@@ -7,14 +7,14 @@ using PetProject.Domain;
 
 namespace PetProject.Infrastructure;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext(IConfiguration configuration) : DbContext
 {
-    //private const string DATABASE = "Database";
+    private const string DATABASE = "Database";
 
     public DbSet<Pet> Pets => Set<Pet>();
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql("Server=localhost;Port=5434;Database=pet_project;User Id=postgres;Password=postgres;");
+        optionsBuilder.UseNpgsql(configuration.GetConnectionString(DATABASE));
         optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
     }

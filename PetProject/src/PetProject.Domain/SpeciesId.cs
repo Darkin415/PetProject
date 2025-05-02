@@ -8,14 +8,12 @@ namespace PetProject.Domain
 {
     public record SpeciesId
     {
+        public Guid Value { get; }
         public SpeciesId(Guid value)
         {
             Value = value;
         }
-        public Guid Value { get; }
         public static SpeciesId NewModuleId() => new(Guid.NewGuid());
         public static SpeciesId Empty() => new(Guid.Empty);
-
-
     }
 }
