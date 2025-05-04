@@ -16,5 +16,21 @@ namespace PetProject.Domain
         }
         public string Title { get; }
         public string LinkMedia { get; }
+        public static Result<SocialMedia> Create(string title, string linkMedia)
+        {
+            if(string.IsNullOrWhiteSpace(title))
+            {
+                return Result.Failure<SocialMedia>("Title can not be empty");
+            }
+            if (string.IsNullOrWhiteSpace(linkMedia))
+            {
+                return Result.Failure<SocialMedia>("Linkmedia can not be empty");
+            }
+            else
+            {
+                var socialmedia = new SocialMedia(title, linkMedia);
+                return Result.Success(new SocialMedia(socialmedia));
+            }
+        }
     }
 }

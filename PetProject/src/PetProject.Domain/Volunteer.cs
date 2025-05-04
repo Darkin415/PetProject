@@ -23,21 +23,21 @@ namespace PetProject.Domain
         {
 
         }
-        public Volunteer(
+        private Volunteer(
         VolunteerId id,
         FullName fullName,
         string email,
         string description,
         TelephonNumber telephoneNumber,
-        IReadOnlyList<SocialMedia>? socialMedias = null,
-        IReadOnlyList<Pet>? pets = null
+        IReadOnlyList<SocialMedia>? socialMedias = null
+        
     ) : base(id)
         {
             FullName = fullName;
             Email = email;
             Description = description;
             TelephonNumber = telephoneNumber;
-            _pets = pets?.ToList() ?? new List<Pet>();
+            
         }
 
         public int CountPetFoundHome(List<Pet> pets)
@@ -52,5 +52,6 @@ namespace PetProject.Domain
         {
             return Pets?.Count(pet => pet.Status == StatusHelp.BeUnderTreatment) ?? 0;
         }
+        
     }
 }
