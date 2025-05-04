@@ -9,7 +9,6 @@ namespace PetProject.Domain;
 
 public record SocialMediaList
 {
-    public IEnumerable<SocialMedia> SocialMedias { get; }
     private SocialMediaList()
     {
 
@@ -18,6 +17,6 @@ public record SocialMediaList
     {
         SocialMedias = socialMedias;
     }
-
+    public IEnumerable<SocialMedia> SocialMedias { get; }
 }
 

@@ -53,23 +53,22 @@ public class Pet : Shared.Entity<PetId>
     public string VaccinationStatus { get; private set; } = default!;
     public StatusHelp Status { get; private set; }
     public DateTime DateOfCreation { get; private set; }
-    
     public static Result<Pet> Create(
-        string nickname, 
-        string view, 
-        string breed, 
-        string color, 
-        string statusHealth, 
-        double weight, 
+        string nickname,
+        string view,
+        string breed,
+        string color,
+        string statusHealth,
+        double weight,
         double height,
-        string telephonNumber, 
-        string castrationStatus, 
-        DateTime birthDate, 
+        string telephonNumber,
+        string castrationStatus,
+        DateTime birthDate,
         string vaccinationStatus,
         StatusHelp status,
         DateTime dateOfCreation)
     {
-        if(string.IsNullOrWhiteSpace(nickname))
+        if (string.IsNullOrWhiteSpace(nickname))
         {
             return "Nickname can not be empty";
         }
@@ -89,9 +88,9 @@ public class Pet : Shared.Entity<PetId>
         {
             return "StatusHealth can not be empty";
         }
-        if(weight == 0)
+        if (weight == 0)
         {
-            return "Weight can not be empty"    ;
+            return "Weight can not be empty";
         }
         if (height == 0)
         {
@@ -99,20 +98,20 @@ public class Pet : Shared.Entity<PetId>
         }
         if (string.IsNullOrWhiteSpace(telephonNumber))
         {
-            return "Telephon number can not be empty"   ;
+            return "Telephon number can not be empty";
         }
         if (string.IsNullOrWhiteSpace(castrationStatus))
         {
             return "Castration status can not be empty";
         }
-        if(birthDate ==DateTime.MinValue)
+        if (birthDate == DateTime.MinValue)
         {
             return "Birthdate can not be null";
         }
         if (string.IsNullOrWhiteSpace(vaccinationStatus))
         {
             return "Vaccination  status can not be empty";
-        }       
+        }
         if (dateOfCreation == DateTime.MinValue)
         {
             return "Date of creation can not be null";
@@ -134,10 +133,8 @@ public class Pet : Shared.Entity<PetId>
                  vaccinationStatus,
                  status,
                  dateOfCreation);
-            return pet;            
+            return pet;
         }
-        
     }
-    
 }
 

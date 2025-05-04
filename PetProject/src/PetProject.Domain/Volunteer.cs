@@ -7,17 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using static PetProject.Domain.Pet;
 namespace PetProject.Domain;
-
 public class Volunteer : Shared.Entity<VolunteerId>
 {
-    public FullName FullName { get; private set; }
-    public SocialMediaList SocialList { get; private set; }
-
-    public string Email { get; private set; } = default!;
-    public string Description { get; private set; } = default!;
     private readonly List<Pet> _pets = new List<Pet>();
-    public IReadOnlyList<Pet> Pets => _pets;
-    public TelephonNumber TelephonNumber { get; private set; }
     private Volunteer(VolunteerId id) : base(id)
     {
 
@@ -29,16 +21,21 @@ public class Volunteer : Shared.Entity<VolunteerId>
     string description,
     TelephonNumber telephoneNumber,
     IReadOnlyList<SocialMedia>? socialMedias = null
-    
+
 ) : base(id)
     {
         FullName = fullName;
         Email = email;
         Description = description;
         TelephonNumber = telephoneNumber;
-        
     }
-
+    
+    public FullName FullName { get; private set; }
+    public SocialMediaList SocialList { get; private set; }
+    public string Email { get; private set; } = default!;
+    public string Description { get; private set; } = default!;
+    public IReadOnlyList<Pet> Pets => _pets;
+    public TelephonNumber TelephonNumber { get; private set; }
     public int CountPetFoundHome(List<Pet> pets)
     {
         return Pets?.Count(pet => pet.Status == StatusHelp.FoundedHome) ?? 0;
@@ -51,8 +48,6 @@ public class Volunteer : Shared.Entity<VolunteerId>
     {
         return Pets?.Count(pet => pet.Status == StatusHelp.BeUnderTreatment) ?? 0;
     }
-    
-    
     public static Result<Volunteer> Create(string email, string description, FullName fullName, TelephonNumber telephonNumber, IReadOnlyList<SocialMedia>? socialMedias)
     {
         if (email == null)
@@ -66,18 +61,14 @@ public class Volunteer : Shared.Entity<VolunteerId>
         else
         {
             var volunteer = new Volunteer(
-            VolunteerId.NewVolunteerId(),  
-            fullName,          
+            VolunteerId.NewVolunteerId(),
+            fullName,
             email,
             description,
             telephonNumber,
             socialMedias
         );
-
-
             return volunteer;
-
         }
     }
-
 }

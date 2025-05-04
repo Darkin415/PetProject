@@ -54,6 +54,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                 db.Property(f => f.LinkMedia)
                 .IsRequired()
                 .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
+
                 db.Property(f => f.Title)
                 .IsRequired()
                 .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);

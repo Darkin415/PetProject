@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace PetProject.Domain;
-
 public record SocialMedia
 {
     public SocialMedia(string title, string linkMedia)

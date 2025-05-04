@@ -6,7 +6,6 @@ public record FullName
     public string FirstName { get; }
     public string LastName { get; }
     public string Surname { get; }
-
     private FullName(string firstName, string lastName, string surname)
     {
         FirstName = firstName;
@@ -25,8 +24,6 @@ public record FullName
             return "Surname can not be empty";
 
         return new FullName(firstName, lastName, surname);
-
-
     }
 }
 

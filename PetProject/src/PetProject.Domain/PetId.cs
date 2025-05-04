@@ -11,13 +11,11 @@ public record PetId
     public Guid Value { get; }
     public static PetId NewGuidId() => new(Guid.NewGuid());
     public static PetId Empty() => new(Guid.Empty);
-   
     public static Result<PetId> Create(Guid value)
     {
         if (value == Guid.Empty)
             return "Id cannot be empty";
         
         return new PetId(value);
-
     }
 }

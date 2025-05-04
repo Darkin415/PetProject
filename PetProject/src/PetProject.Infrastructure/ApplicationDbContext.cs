@@ -3,14 +3,10 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PetProject.Domain;
-
-
 namespace PetProject.Infrastructure;
-
 public class ApplicationDbContext(IConfiguration configuration) : DbContext
 {
     private const string DATABASE = "Database";
-
     public DbSet<Pet> Pets => Set<Pet>();
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -18,8 +14,6 @@ public class ApplicationDbContext(IConfiguration configuration) : DbContext
         optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
         optionsBuilder.EnableSensitiveDataLogging();
-
-
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

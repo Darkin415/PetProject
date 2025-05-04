@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using PetProject.Domain.Shared;
 namespace PetProject.Domain;
-
 public record BreedId
 {
     public BreedId(Guid value)
