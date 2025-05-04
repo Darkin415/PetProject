@@ -3,27 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
-namespace PetProject.Domain
+using PetProject.Domain.Shared;
+namespace PetProject.Domain;
+
+public record BreedId
 {
-    public record BreedId
+    public BreedId(Guid value)
     {
-        public BreedId(Guid value)
-        {
-            Value = value;
-        }
-        public Guid Value { get; }
-        public static BreedId NewGuidId() => new(Guid.NewGuid());
-        public static BreedId Empty() => new(Guid.Empty);
-        public static Result<BreedId> Create(Guid value)
-        {
-            if (value == Guid.Empty)
-                return Result.Failure<BreedId>("Id cannot be empty");
-            else
-            {
-                var id = new BreedId(value);
-                return Result.Success(new BreedId(value));
-            }
-        }
+        Value = value;
     }
+    public Guid Value { get; }
+    public static BreedId NewGuidId() => new(Guid.NewGuid());
+    public static BreedId Empty() => new(Guid.Empty);
+    public static BreedId Create(Guid value) => new(value);
 }
+
