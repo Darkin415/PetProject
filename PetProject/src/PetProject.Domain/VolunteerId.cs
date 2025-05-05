@@ -1,16 +1,21 @@
-﻿namespace PetProject.Domain
+﻿using PetProject.Domain.Shared;
+
+namespace PetProject.Domain;
+public record VolunteerId
 {
-   public partial class Volunteer
+    public Guid Value { get; }
+    public VolunteerId(Guid value)
     {
-        public record VolunteerId
-        {
-            private VolunteerId(Guid value)
-            {
-                Value = value;
-            }
-            public Guid Value { get; }
-            public static VolunteerId NewVolunteerId() => new(Guid.NewGuid());
-            public static VolunteerId Empty() => new(Guid.Empty);
-        }
+        Value = value;
+    }
+    public static VolunteerId NewVolunteerId() => new(Guid.NewGuid());
+    public static VolunteerId Empty() => new(Guid.Empty);
+    public static Result<VolunteerId> Create(Guid value)
+    {
+        if (value == Guid.Empty)
+            return "Id cannot be empty";
+        var id = new VolunteerId(value);
+        return new VolunteerId(value);
     }
 }
+

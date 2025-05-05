@@ -8,20 +8,12 @@ namespace PetProject.Domain.Species
 {
     public class Species
     {
-        public Guid Id { get; private set; }
+        public SpeciesId Id { get; private set; }
         public string Title { get; private set; }
-
         public List<Breed> Breeds { get; private set; } = [];
-
-        public Species(Guid id, string title)
-        {
-            Id = id;
+        public Species(string title)
+        {   
             Title = title;
         }
-
-
-
-
-
     }
 }

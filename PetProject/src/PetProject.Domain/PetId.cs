@@ -1,13 +1,21 @@
-﻿namespace PetProject.Domain
+﻿using PetProject.Domain.Shared;
+
+namespace PetProject.Domain;
+
+public record PetId
 {
-    public record PetId
+    public PetId(Guid value)
     {
-        private PetId(Guid value)
-        {
-            Value = value;
-        }
-        public Guid Value { get; }
-        public static PetId NewGuidId() => new(Guid.NewGuid());
-        public static PetId Empty() => new(Guid.Empty);
+        Value = value;
     }
+    public Guid Value { get; }
+    public static PetId NewGuidId() => new(Guid.NewGuid());
+    public static PetId Empty() => new(Guid.Empty);
+    public static Result<PetId> Create(Guid value)
+    {
+        if (value == Guid.Empty)
+            return "Id cannot be empty";
+        
+        return new PetId(value);
     }
+}

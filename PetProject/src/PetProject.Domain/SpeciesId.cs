@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PetProject.Domain.Shared;
 
-namespace PetProject.Domain
+namespace PetProject.Domain;
+
+public record SpeciesId
 {
-    public record SpeciesId
+    public Guid Value { get; }
+    public SpeciesId(Guid value)
     {
-        private SpeciesId(Guid value)
-        {
-            Value = value;
-        }
-        public Guid Value { get; }
-        public static SpeciesId NewModuleId() => new(Guid.NewGuid());
-        public static SpeciesId Empty() => new(Guid.Empty);
+        Value = value;
+    }
+    public static SpeciesId NewModuleId() => new(Guid.NewGuid());
+    public static SpeciesId Empty() => new(Guid.Empty);
 
-
+    public static Result<SpeciesId> Create(Guid value)
+    {
+        return new SpeciesId(value);
     }
 }

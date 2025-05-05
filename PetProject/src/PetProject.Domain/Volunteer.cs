@@ -1,32 +1,74 @@
-﻿using System;
+﻿using PetProject.Domain.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using static PetProject.Domain.Pet;
-namespace PetProject.Domain
+namespace PetProject.Domain;
+public class Volunteer : Shared.Entity<VolunteerId>
 {
-   public partial class Volunteer
+    private readonly List<Pet> _pets = new List<Pet>();
+    private Volunteer(VolunteerId id) : base(id)
     {
-        public VolunteerId Id { get; private set; }
-        public string Fullname { get; private set; } = default!;
-        public string Email { get; private set; } = default!;
-        public string Description { get; private set; } = default!;
-        public List<Pet> Pets = [];
-        public string NumberPhone { get; private set; } = default!;
-        public Details? ContactDetails { get; private set; }
-        public int CountPetFoundHome(List<Pet> pets)
+
+    }
+    private Volunteer(
+    VolunteerId id,
+    FullName fullName,
+    string email,
+    string description,
+    TelephonNumber telephoneNumber,
+    IReadOnlyList<SocialMedia>? socialMedias = null
+
+) : base(id)
+    {
+        FullName = fullName;
+        Email = email;
+        Description = description;
+        TelephonNumber = telephoneNumber;
+    }
+    
+    public FullName FullName { get; private set; }
+    public SocialMediaList SocialList { get; private set; }
+    public string Email { get; private set; } = default!;
+    public string Description { get; private set; } = default!;
+    public IReadOnlyList<Pet> Pets => _pets;
+    public TelephonNumber TelephonNumber { get; private set; }
+    public int CountPetFoundHome(List<Pet> pets)
+    {
+        return Pets?.Count(pet => pet.Status == StatusHelp.FoundedHome) ?? 0;
+    }
+    public int LookingHouse(List<Pet> pets)
+    {
+        return Pets?.Count(pet => pet.Status == StatusHelp.SeekingHome) ?? 0;
+    }
+    public int CountBeUnderTreatment(List<Pet> pets)
+    {
+        return Pets?.Count(pet => pet.Status == StatusHelp.BeUnderTreatment) ?? 0;
+    }
+    public static Result<Volunteer> Create(string email, string description, FullName fullName, TelephonNumber telephonNumber, IReadOnlyList<SocialMedia>? socialMedias)
+    {
+        if (email == null)
         {
-            return Pets?.Count(pet => pet.Status == StatusHelp.FoundedHome) ?? 0;
+            return "Email can not be empty";
         }
-        public int LookingHouse(List<Pet> pets)
+        if (description == null)
         {
-            return Pets?.Count(pet => pet.Status == StatusHelp.SeekingHome) ?? 0;
+            return "Description can not be empty";
         }
-        public int CountBeUnderTreatment(List<Pet> pets)
+        else
         {
-            return Pets?.Count(pet => pet.Status == StatusHelp.BeUnderTreatment) ?? 0;
+            var volunteer = new Volunteer(
+            VolunteerId.NewVolunteerId(),
+            fullName,
+            email,
+            description,
+            telephonNumber,
+            socialMedias
+        );
+            return volunteer;
         }
     }
 }
