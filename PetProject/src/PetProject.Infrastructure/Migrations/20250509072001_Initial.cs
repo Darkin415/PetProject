@@ -16,13 +16,13 @@ namespace PetProject.Infrastructure.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
+                    link = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     first_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     last_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     surname = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    telephon_number_value = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    SocialList = table.Column<string>(type: "jsonb", nullable: false)
+                    telehon_number = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    SocialList = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -1,4 +1,5 @@
-﻿using PetProject.Domain.Shared;
+﻿using CSharpFunctionalExtensions;
+using PetProject.Domain.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,7 +54,7 @@ public class Pet : Shared.Entity<PetId>
     public string VaccinationStatus { get; private set; } = default!;
     public StatusHelp Status { get; private set; }
     public DateTime DateOfCreation { get; private set; }
-    public static Result<Pet> Create(
+    public static Result<Pet, string> Create(
         string nickname,
         string view,
         string breed,

@@ -7,7 +7,7 @@ namespace PetProject.Infrastructure;
 public class ApplicationDbContext(IConfiguration configuration) : DbContext
 {
     private const string DATABASE = "Database";
-    public DbSet<Pet> Pets => Set<Pet>();
+    public DbSet<Volunteer> Volunteers => Set<Volunteer>();
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(configuration.GetConnectionString(DATABASE));
@@ -18,7 +18,7 @@ public class ApplicationDbContext(IConfiguration configuration) : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-    }
+    }   
     private ILoggerFactory CreateLoggerFactory() =>
         LoggerFactory.Create(builder => { builder.AddConsole(); });
 }

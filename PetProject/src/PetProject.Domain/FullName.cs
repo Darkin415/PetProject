@@ -1,4 +1,5 @@
-﻿using PetProject.Domain.Shared;
+﻿using CSharpFunctionalExtensions;
+using PetProject.Domain.Shared;
 namespace PetProject.Domain;
 
 public record FullName
@@ -12,18 +13,19 @@ public record FullName
         LastName = lastName;
         Surname = surname;
     }
-    public static Result<FullName> Create(string firstName, string lastName, string surname)
+    public static Result<FullName, Error> Create(string firstName, string lastName, string surname)
     {
         if (string.IsNullOrWhiteSpace(firstName))
-            return "Firstname can not be empty";
+            return Errors.General.ValueIsInvalid("Firstname");
 
         if (string.IsNullOrWhiteSpace(lastName))
-            return "Lastname can not be empty";
+            return Errors.General.ValueIsInvalid("Lastname");
 
         if (string.IsNullOrWhiteSpace(surname))
-            return "Surname can not be empty";
+            return Errors.General.ValueIsInvalid("Surname");
 
         return new FullName(firstName, lastName, surname);
     }
+    
 }
 
