@@ -8,6 +8,12 @@ using PetProject.API.Module;
 using PetProject.Domain;
 using PetProject.Domain.Shared;
 namespace PetProject.Application.Volunteers.CreateVolunteer;
+
+public record AddVolunteerCommand(
+   
+    CreateVolunteerRequest Request
+);
+
 public class CreateVolunteerHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
@@ -15,26 +21,26 @@ public class CreateVolunteerHandler
     {
         _volunteersRepository = volunteersRepository;
     }
-    public async Task<Result<Guid, Error>> Handle(CreateVolunteerRequest request, CancellationToken cancellationToken = default)
+    public async Task<Result<Guid, Error>> Handle(AddVolunteerCommand command, CancellationToken cancellationToken = default)
     {
         var volunteerId = VolunteerId.NewVolunteerId();
-        var emailResult = Email.Create(request.Link);
+        var emailResult = Email.Create(command.Request.Link);
         if (emailResult.IsFailure)
             return emailResult.Error;
 
-        var descriptionResult = Description.Create(request.Information);
+        var descriptionResult = Description.Create(command.Request.Information);
         if (descriptionResult.IsFailure)
             return descriptionResult.Error;
 
-        var phoneResult = TelephonNumber.Create(request.PhoneNumber);
+        var phoneResult = TelephonNumber.Create(command.Request.PhoneNumber);
         if (phoneResult.IsFailure)
             return phoneResult.Error;
 
-        var fullNameResult = FullName.Create(request.FirstName, request.LastName, request.Surname);
+        var fullNameResult = FullName.Create(command.Request.FirstName, command.Request.LastName, command.Request.Surname);
         if (fullNameResult.IsFailure)
             return fullNameResult.Error;
 
-        var socialMediaResults = request.SocialMedias
+        var socialMediaResults = command.Request.SocialMedias
         .Select(dto => SocialMedia.Create(dto.Title, dto.LinkMedia))
         .ToList();
         if (socialMediaResults.Any(r => r.IsFailure))

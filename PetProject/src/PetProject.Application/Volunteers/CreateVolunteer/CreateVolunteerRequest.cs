@@ -7,6 +7,6 @@ public record CreateVolunteerRequest(
     string FirstName,
     string LastName,
     string? Surname,
-    IEnumerable<SocialMediaDto> SocialMedias  
+    IEnumerable<SocialMediaDto> SocialMedias
 );
 public record SocialMediaDto(string Title, string LinkMedia);

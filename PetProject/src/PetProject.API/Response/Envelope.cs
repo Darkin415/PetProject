@@ -16,10 +16,10 @@ public record Envelope
     public string? ErrorCode { get; }
 
     public string? ErrorMessage { get; }
-    
+
     public DateTime TimeGenerated { get; }
 
-    public static Envelope Ok(object? result = null) => new (result, null);
+    public static Envelope Ok(object? result = null) => new(result, null);
 
     public static Envelope Error(Error error) => new(null, error);
 

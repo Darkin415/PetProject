@@ -49,27 +49,27 @@ public class Volunteer : Shared.Entity<VolunteerId>
     {
         return Pets?.Count(pet => pet.Status == StatusHelp.BeUnderTreatment) ?? 0;
     }
-    //public static Result<Volunteer, string> Create(Email email, Description description, FullName fullName, TelephonNumber telephonNumber/*, IReadOnlyList<SocialMedia>? socialMedias*/)
-    //{
-    //    if (email == null)
-    //    {
-    //        return "Email can not be empty";
-    //    }
-    //    if (description == null)
-    //    {
-    //        return "Description can not be empty";
-    //    }
-    //    else
-    //    {
-    //        var volunteer = new Volunteer(
-    //        VolunteerId.NewVolunteerId(),
-    //        fullName,
-    //        email,
-    //        description,
-    //        telephonNumber
-    //        //socialMedias
-    //    );
-    //        return volunteer;
-    //    }
-    //}
+    public static Result<Volunteer, string> Create(Email email, Description description, FullName fullName, TelephonNumber telephonNumber, IReadOnlyList<SocialMedia>? socialMedias)
+    {
+        if (email == null)
+        {
+            return "Email can not be empty";
+        }
+        if (description == null)
+        {
+            return "Description can not be empty";
+        }
+        else
+        {
+            var volunteer = new Volunteer(
+            VolunteerId.NewVolunteerId(),
+            fullName,
+            email,
+            description,
+            telephonNumber,
+            socialMedias
+        );
+            return volunteer;
+        }
+    }
 }

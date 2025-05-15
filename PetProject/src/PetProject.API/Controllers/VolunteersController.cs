@@ -6,31 +6,22 @@ using PetProject.API.Response;
 using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Domain;
 using PetProject.Domain.Shared;
-
 namespace PetProject.API.Controllers;
-
-[Route("[controller]")]
-[ApiController]
-public class VolunteersController : ControllerBase
+public class VolunteersController : ApplicationController
 {
-
     [HttpPost]
     public async Task<ActionResult<Guid>> Create(
         [FromServices] CreateVolunteerHandler handler,
         [FromBody] CreateVolunteerRequest request,
         CancellationToken cancellationToken = default)
     {
-       var result = await handler.Handle(request, cancellationToken);
-       
-        if (result.IsFailure)
-            return result.Error.ToResponse();
-
-        return Ok(Envelope.Ok(result.Value));
-       
+        var command = new AddVolunteerCommand(request);
+        var result = await handler.Handle(command, cancellationToken);
+        return CreatedAtAction("", result.Value);
     }
 }
-    
-    
+
+
 
 
 
