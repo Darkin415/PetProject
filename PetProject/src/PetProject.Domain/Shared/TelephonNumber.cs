@@ -1,6 +1,6 @@
-﻿using PetProject.Domain.Shared;
+﻿using CSharpFunctionalExtensions;
 
-namespace PetProject.Domain;
+namespace PetProject.Domain.Shared;
 
 public record TelephonNumber
 {
@@ -9,11 +9,11 @@ public record TelephonNumber
     {
         Value = value;
     }
-    public static Result<TelephonNumber> Create(string value)
+    public static Result<TelephonNumber, Error> Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            return "Number can not be empty";
+            return Errors.General.ValueIsInvalid();
 
         }
         return new TelephonNumber(value);

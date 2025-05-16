@@ -1,11 +1,11 @@
-﻿using PetProject.Domain.Shared;
+﻿using CSharpFunctionalExtensions;
+using PetProject.Domain.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using static PetProject.Domain.Pet;
 namespace PetProject.Domain;
 public class Volunteer : Shared.Entity<VolunteerId>
 {
@@ -14,11 +14,11 @@ public class Volunteer : Shared.Entity<VolunteerId>
     {
 
     }
-    private Volunteer(
+    public Volunteer(
     VolunteerId id,
     FullName fullName,
-    string email,
-    string description,
+    Email email,
+    Description description,
     TelephonNumber telephoneNumber,
     IReadOnlyList<SocialMedia>? socialMedias = null
 
@@ -32,8 +32,8 @@ public class Volunteer : Shared.Entity<VolunteerId>
     
     public FullName FullName { get; private set; }
     public SocialMediaList SocialList { get; private set; }
-    public string Email { get; private set; } = default!;
-    public string Description { get; private set; } = default!;
+    public Email Email { get; private set; } = default!;
+    public Description Description { get; private set; } = default!;
     public IReadOnlyList<Pet> Pets => _pets;
     public TelephonNumber TelephonNumber { get; private set; }
     public int CountPetFoundHome(List<Pet> pets)
@@ -48,7 +48,7 @@ public class Volunteer : Shared.Entity<VolunteerId>
     {
         return Pets?.Count(pet => pet.Status == StatusHelp.BeUnderTreatment) ?? 0;
     }
-    public static Result<Volunteer> Create(string email, string description, FullName fullName, TelephonNumber telephonNumber, IReadOnlyList<SocialMedia>? socialMedias)
+    public static Result<Volunteer, string> Create(Email email, Description description, FullName fullName, TelephonNumber telephonNumber, IReadOnlyList<SocialMedia>? socialMedias)
     {
         if (email == null)
         {

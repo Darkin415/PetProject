@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetProject.Domain.Shared
+namespace PetProject.Application.Abstraction;
+
+public class ICommandHandler
 {
-    internal class Result
-    {
-    }
+
 }

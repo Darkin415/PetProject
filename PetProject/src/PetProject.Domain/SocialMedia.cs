@@ -1,4 +1,5 @@
-﻿using PetProject.Domain.Shared;
+﻿using CSharpFunctionalExtensions;
+using PetProject.Domain.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +15,15 @@ public record SocialMedia
     }
     public string Title { get; }
     public string LinkMedia { get; }
-    public static Result<SocialMedia> Create(string title, string linkMedia)
+    public static Result<SocialMedia, Error> Create(string title, string linkMedia)
     {
         if (string.IsNullOrWhiteSpace(title))
         {
-            return "Title can not be empty";
+            return Errors.General.ValueIsInvalid("Title");
         }
         if (string.IsNullOrWhiteSpace(linkMedia))
         {
-            return "Linkmedia can not be empty";
+            return Errors.General.ValueIsInvalid("Link media");
         }
         return new SocialMedia(title, linkMedia);
     }

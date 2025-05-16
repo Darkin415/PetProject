@@ -24,6 +24,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
         builder.ComplexProperty(v => v.TelephonNumber, b =>
         {
             b.Property(b => b.Value)
+            .HasColumnName("telehon_number")
             .IsRequired()
             .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
         });
@@ -61,14 +62,24 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             });
         });
 
-        builder.Property(v => v.Email)
+        
+        builder.ComplexProperty(v => v.Email, b =>
+        {
+            b.Property(b => b.Link)
+            .HasColumnName("link")
             .IsRequired()
             .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
+        });
 
-        builder.Property(v => v.Description)
+        builder.ComplexProperty(v => v.Description, b =>
+        {
+            b.Property(b => b.Information)
+            .HasColumnName("description")
             .IsRequired()
             .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH);
-
+        });
+           
+        
         builder.HasMany(v => v.Pets)
             .WithOne()
             .HasForeignKey("volunteer_id")

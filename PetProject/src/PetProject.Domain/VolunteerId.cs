@@ -1,4 +1,5 @@
-﻿using PetProject.Domain.Shared;
+﻿using CSharpFunctionalExtensions;
+using PetProject.Domain.Shared;
 
 namespace PetProject.Domain;
 public record VolunteerId
@@ -10,11 +11,15 @@ public record VolunteerId
     }
     public static VolunteerId NewVolunteerId() => new(Guid.NewGuid());
     public static VolunteerId Empty() => new(Guid.Empty);
-    public static Result<VolunteerId> Create(Guid value)
+    public static implicit operator Guid(VolunteerId volunterId)
+    {
+        ArgumentNullException.ThrowIfNull(volunterId);
+        return volunterId.Value;
+    }
+    public static Result<VolunteerId, string> Create(Guid value)
     {
         if (value == Guid.Empty)
             return "Id cannot be empty";
-        var id = new VolunteerId(value);
         return new VolunteerId(value);
     }
 }
