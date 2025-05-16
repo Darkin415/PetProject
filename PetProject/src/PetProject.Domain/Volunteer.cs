@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using static PetProject.Domain.Pet;
 namespace PetProject.Domain;
 public class Volunteer : Shared.Entity<VolunteerId>
 {

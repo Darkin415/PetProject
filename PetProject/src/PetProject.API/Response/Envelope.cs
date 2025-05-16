@@ -1,7 +1,5 @@
 ﻿using PetProject.Domain.Shared;
-
 namespace PetProject.API.Response;
-
 public record Envelope
 {
     private Envelope(object? result, Error? error)
@@ -20,11 +18,5 @@ public record Envelope
     public DateTime TimeGenerated { get; }
 
     public static Envelope Ok(object? result = null) => new(result, null);
-
     public static Envelope Error(Error error) => new(null, error);
-
-
 }
-
-
-

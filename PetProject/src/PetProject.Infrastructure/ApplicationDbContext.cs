@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PetProject.Domain;
+
 namespace PetProject.Infrastructure;
 public class ApplicationDbContext(IConfiguration configuration) : DbContext
 {

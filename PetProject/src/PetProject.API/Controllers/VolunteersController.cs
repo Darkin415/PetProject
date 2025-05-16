@@ -17,12 +17,10 @@ public class VolunteersController : ApplicationController
     {
         var command = new AddVolunteerCommand(request);
         var result = await handler.Handle(command, cancellationToken);
+
+        if (result.IsFailure)
+            return BadRequest(result.Error);
+
         return CreatedAtAction("", result.Value);
     }
 }
-
-
-
-
-
-
