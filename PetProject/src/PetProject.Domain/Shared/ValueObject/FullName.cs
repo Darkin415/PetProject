@@ -1,6 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
-using PetProject.Domain.Shared;
-namespace PetProject.Domain;
+namespace PetProject.Domain.Shared.ValueObject;
 
 public record FullName
 {

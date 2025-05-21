@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
-using PetProject.Domain.Shared;
 
-namespace PetProject.Domain;
+namespace PetProject.Domain.Shared.ValueObject;
 
 public record Description
 {

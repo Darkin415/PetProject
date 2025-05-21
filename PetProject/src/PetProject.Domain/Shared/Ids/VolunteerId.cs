@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using PetProject.Domain.Shared;
 
-namespace PetProject.Domain;
+namespace PetProject.Domain.Shared.Ids;
 public record VolunteerId
 {
     public Guid Value { get; }
@@ -11,6 +11,7 @@ public record VolunteerId
     }
     public static VolunteerId NewVolunteerId() => new(Guid.NewGuid());
     public static VolunteerId Empty() => new(Guid.Empty);
+
     public static implicit operator Guid(VolunteerId volunterId)
     {
         ArgumentNullException.ThrowIfNull(volunterId);

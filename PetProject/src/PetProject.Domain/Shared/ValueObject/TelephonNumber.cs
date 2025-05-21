@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace PetProject.Domain.Shared;
+namespace PetProject.Domain.Shared.ValueObject;
 
 public record TelephonNumber
 {

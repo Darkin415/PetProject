@@ -1,5 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
-using PetProject.Domain.Shared;
+using PetProject.Domain.Shared.ValueObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;

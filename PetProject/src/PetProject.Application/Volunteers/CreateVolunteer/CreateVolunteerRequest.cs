@@ -1,6 +1,7 @@
 ﻿namespace PetProject.API.Module;
 public record CreateVolunteerRequest(
-    string Link,
+    string Title,
+    string LinkMedia,
     string Information,
     string Email,
     string PhoneNumber,
@@ -9,4 +10,5 @@ public record CreateVolunteerRequest(
     string? Surname,
     IEnumerable<SocialMediaDto> SocialMedias
 );
+
 public record SocialMediaDto(string Title, string LinkMedia);

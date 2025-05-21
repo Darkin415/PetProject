@@ -7,7 +7,9 @@ using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using PetProject.Application.Volunteers;
 using PetProject.Domain;
-using PetProject.Domain.Shared;
+using PetProject.Domain.Shared.Ids;
+using PetProject.Domain.Shared.ValueObject;
+using PetProject.Domain.Volunteers;
 
 namespace PetProject.Infrastructure.Repositories;
 
@@ -42,7 +44,6 @@ public class VolunteersRepository : IVolunteersRepository
     public async Task<Result<Volunteer, Error>> GetByEmail(Email email)
     {
         var volunteer = await _dbContext.Volunteers
-            .Include(v => v.Pets)
             .FirstOrDefaultAsync(v => v.Email == email);
 
         if (volunteer == null)

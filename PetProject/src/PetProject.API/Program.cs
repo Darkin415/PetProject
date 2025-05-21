@@ -6,6 +6,8 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Application.Volunteers;
 using PetProject.Infrastructure.Repositories;
+using FluentValidation.AspNetCore;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -16,7 +18,10 @@ builder.Services
     .AddInfrastructure()
     .AddApplication();
 
-
+builder.Services.AddFluentValidationAutoValidation(configuration =>
+{
+    configuration.OverrideDefaultResultFactoryWith<>();
+});
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
