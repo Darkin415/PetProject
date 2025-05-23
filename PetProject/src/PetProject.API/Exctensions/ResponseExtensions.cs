@@ -71,25 +71,5 @@ public static class ResponseExtensions
         {
             StatusCode = StatusCodes.Status400BadRequest
         };
-    }
-
-    public static Result<TValueObject, Error> MustBeValueObject<TValueObject, TInput>(
-        this TInput input,
-        Func<TInput, Result<TValueObject, Error>> createMethod)
-    {
-        if (createMethod == null)
-            throw new ArgumentNullException(nameof(createMethod));
-
-        return createMethod(input);
-    }
-
-    public static Result<TValueObject, Error> MustBeValueObject<TValueObject, TInput1, TInput2, TInput3>(
-        this (TInput1, TInput2, TInput3) inputs,
-        Func<TInput1, TInput2, TInput3, Result<TValueObject, Error>> createMethod)
-    {
-        if (createMethod == null)
-            throw new ArgumentNullException(nameof(createMethod));
-
-        return createMethod(inputs.Item1, inputs.Item2, inputs.Item3);
-    }
+    }      
 }
