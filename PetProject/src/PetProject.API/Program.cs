@@ -8,6 +8,7 @@ using PetProject.Application.Volunteers;
 using PetProject.Infrastructure.Repositories;
 using FluentValidation.AspNetCore;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
+using PetProject.API.Validation;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -20,7 +21,7 @@ builder.Services
 
 builder.Services.AddFluentValidationAutoValidation(configuration =>
 {
-    configuration.OverrideDefaultResultFactoryWith<>();
+    configuration.OverrideDefaultResultFactoryWith<CustomResultFactory>();
 });
 
 var app = builder.Build();

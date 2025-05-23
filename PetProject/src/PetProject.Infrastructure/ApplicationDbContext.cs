@@ -23,5 +23,3 @@ public class ApplicationDbContext(IConfiguration configuration) : DbContext
     private ILoggerFactory CreateLoggerFactory() =>
         LoggerFactory.Create(builder => { builder.AddConsole(); });
 }
-
-

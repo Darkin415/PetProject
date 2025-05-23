@@ -10,7 +10,6 @@ using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Volunteers;
 
 namespace PetProject.Infrastructure.Configurations;
-
 public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
 {
     public void Configure(EntityTypeBuilder<Volunteer> builder)
@@ -88,8 +87,5 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             .IsRequired();
 
         builder.Navigation(v => v.Pets).AutoInclude();
-
-
-
     }
 }
