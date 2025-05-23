@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
+using FluentValidation;
 using PetProject.API.Module;
 using PetProject.Domain;
-using PetProject.Domain.Shared;
+using PetProject.Domain.Shared.Ids;
+using PetProject.Domain.Shared.ValueObject;
+using PetProject.Domain.Volunteers;
 namespace PetProject.Application.Volunteers.CreateVolunteer;
 
 public record AddVolunteerCommand(
@@ -17,14 +20,18 @@ public record AddVolunteerCommand(
 public class CreateVolunteerHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
-    public CreateVolunteerHandler(IVolunteersRepository volunteersRepository)
+    private readonly IValidator<AddVolunteerCommand> _validator;
+    public CreateVolunteerHandler(IVolunteersRepository volunteersRepository, IValidator<AddVolunteerCommand> validator)
     {
         _volunteersRepository = volunteersRepository;
+        _validator = validator;
     }
     public async Task<Result<Guid, Error>> Handle(AddVolunteerCommand command, CancellationToken cancellationToken = default)
     {
+        var validationResult = await _validator.ValidateAsync(command, cancellationToken);
+
         var volunteerId = VolunteerId.NewVolunteerId();
-        var emailResult = Email.Create(command.Request.Link);
+        var emailResult = Email.Create(command.Request.LinkMedia);
         if (emailResult.IsFailure)
             return emailResult.Error;
 

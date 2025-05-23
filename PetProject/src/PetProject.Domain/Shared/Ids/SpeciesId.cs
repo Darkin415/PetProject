@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using PetProject.Domain.Shared;
 
-namespace PetProject.Domain;
+namespace PetProject.Domain.Shared.Ids;
 
 public record SpeciesId
 {
@@ -15,7 +15,7 @@ public record SpeciesId
     {
         Value = value;
     }
-    public static SpeciesId NewModuleId() => new(Guid.NewGuid());
+    public static SpeciesId NewSpeciesId() => new(Guid.NewGuid());
     public static SpeciesId Empty() => new(Guid.Empty);
 
     public static Result<SpeciesId> Create(Guid value)

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using PetProject.Domain;
+using PetProject.Domain.Volunteers;
 
 namespace PetProject.Infrastructure;
 public class ApplicationDbContext(IConfiguration configuration) : DbContext
@@ -23,5 +23,3 @@ public class ApplicationDbContext(IConfiguration configuration) : DbContext
     private ILoggerFactory CreateLoggerFactory() =>
         LoggerFactory.Create(builder => { builder.AddConsole(); });
 }
-
-

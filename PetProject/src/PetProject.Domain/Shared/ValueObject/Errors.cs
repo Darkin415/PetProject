@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetProject.Domain.Shared
+namespace PetProject.Domain.Shared.ValueObject
 {
     public static class Errors
     {

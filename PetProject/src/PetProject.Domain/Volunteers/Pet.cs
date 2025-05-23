@@ -1,11 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
-using PetProject.Domain.Shared;
+using PetProject.Domain.Shared.Ids;
+using PetProject.Domain.Shared.ValueObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace PetProject.Domain;
+namespace PetProject.Domain.Volunteers;
 public class Pet : Shared.Entity<PetId>
 {
     private Pet(PetId id) : base(id)
@@ -77,15 +78,16 @@ public class Pet : Shared.Entity<PetId>
         StatusHelp status,
         DateTime dateOfCreation)
     {
-       
+
         if (birthDate == DateTime.MinValue)
-        {
+        
             return "Birthdate can not be null";
-        }        
+        
+
         if (dateOfCreation == DateTime.MinValue)
-        {
+        
             return "Date of creation can not be null";
-        }
+        
         else
         {
             var pet = new Pet(
@@ -102,6 +104,7 @@ public class Pet : Shared.Entity<PetId>
                  vaccinationStatus,
                  status,
                  dateOfCreation);
+
             return pet;
         }
     }

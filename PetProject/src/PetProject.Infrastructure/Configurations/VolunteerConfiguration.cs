@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PetProject.Domain;
 using PetProject.Domain.Shared;
+using PetProject.Domain.Shared.Ids;
+using PetProject.Domain.Volunteers;
 
 namespace PetProject.Infrastructure.Configurations;
-
 public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
 {
     public void Configure(EntityTypeBuilder<Volunteer> builder)
@@ -49,7 +49,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
 
         builder.OwnsOne(v => v.SocialList, vb =>
         {
-            vb.ToJson();
+            vb.ToJson("social_list");
             vb.OwnsMany(d => d.SocialMedias, db =>
             {
                 db.Property(f => f.LinkMedia)
@@ -86,8 +86,6 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
-
-
-
+        builder.Navigation(v => v.Pets).AutoInclude();
     }
 }

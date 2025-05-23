@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PetProject.Domain;
 using PetProject.Domain.Shared;
+using PetProject.Domain.Shared.Ids;
+using PetProject.Domain.Volunteers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

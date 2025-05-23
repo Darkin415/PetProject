@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
-using PetProject.Domain.Shared;
+using PetProject.Domain.Shared.ValueObject;
 
 namespace PetProject.Domain;
 
