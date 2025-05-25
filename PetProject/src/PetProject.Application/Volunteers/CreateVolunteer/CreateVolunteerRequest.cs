@@ -5,10 +5,10 @@ public record CreateVolunteerRequest(
     string Information,
     string Email,
     string PhoneNumber,
-    string FirstName,
-    string LastName,
-    string? Surname,
+    FullNameDto FullName,
     IEnumerable<SocialMediaDto> SocialMedias
 );
 
 public record SocialMediaDto(string Title, string LinkMedia);
+
+public record FullNameDto(string FirstName, string LastName, string? Surname);

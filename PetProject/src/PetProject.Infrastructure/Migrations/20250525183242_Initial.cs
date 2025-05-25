@@ -22,7 +22,7 @@ namespace PetProject.Infrastructure.Migrations
                     last_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     surname = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     telehon_number = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    SocialList = table.Column<string>(type: "jsonb", nullable: false)
+                    social_list = table.Column<string>(type: "jsonb", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -26,7 +26,7 @@ public class CustomResultFactory : IFluentValidationAutoValidationResultFactory
                                  let error = Domain.Shared.ValueObject.Error.Deserialize(errorMessage)
                                  select new ResponseError(error.Code, error.Message, invalidField);
 
-            errors.AddRange(responseErrors);           
+            errors.AddRange(responseErrors);
         }
         var envelope = Envelope.Error(errors);
 

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using PetProject.Infrastructure;
 using PetProject.Application;
-using Microsoft.OpenApi.Models;  
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Application.Volunteers;
@@ -29,9 +29,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    await app.AplyMigration();
+
 }
 
 app.MapControllers();
 app.UseHttpsRedirection();
 app.UseAuthorization();
+
 app.Run();

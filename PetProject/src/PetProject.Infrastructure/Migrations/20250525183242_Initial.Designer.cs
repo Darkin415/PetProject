@@ -13,7 +13,7 @@ using PetProject.Infrastructure;
 namespace PetProject.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250516163047_Initial")]
+    [Migration("20250525183242_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -26,7 +26,7 @@ namespace PetProject.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("PetProject.Domain.Pet", b =>
+            modelBuilder.Entity("PetProject.Domain.Volunteers.Pet", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
@@ -51,7 +51,7 @@ namespace PetProject.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("volunteer_id");
 
-                    b.ComplexProperty<Dictionary<string, object>>("Attributes", "PetProject.Domain.Pet.Attributes#PhysicalAttributes", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("Attributes", "PetProject.Domain.Volunteers.Pet.Attributes#PhysicalAttributes", b1 =>
                         {
                             b1.IsRequired();
 
@@ -66,7 +66,7 @@ namespace PetProject.Infrastructure.Migrations
                                 .HasColumnName("attributes");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("Breed", "PetProject.Domain.Pet.Breed#Breed", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("Breed", "PetProject.Domain.Volunteers.Pet.Breed#Breed", b1 =>
                         {
                             b1.IsRequired();
 
@@ -77,7 +77,7 @@ namespace PetProject.Infrastructure.Migrations
                                 .HasColumnName("breed");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("CastrationStatus", "PetProject.Domain.Pet.CastrationStatus#CastrationStatus", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("CastrationStatus", "PetProject.Domain.Volunteers.Pet.CastrationStatus#CastrationStatus", b1 =>
                         {
                             b1.IsRequired();
 
@@ -88,7 +88,7 @@ namespace PetProject.Infrastructure.Migrations
                                 .HasColumnName("castration_status");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("Color", "PetProject.Domain.Pet.Color#Color", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("Color", "PetProject.Domain.Volunteers.Pet.Color#Color", b1 =>
                         {
                             b1.IsRequired();
 
@@ -99,7 +99,7 @@ namespace PetProject.Infrastructure.Migrations
                                 .HasColumnName("color");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("Nickname", "PetProject.Domain.Pet.Nickname#NickName", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("Nickname", "PetProject.Domain.Volunteers.Pet.Nickname#NickName", b1 =>
                         {
                             b1.IsRequired();
 
@@ -110,7 +110,7 @@ namespace PetProject.Infrastructure.Migrations
                                 .HasColumnName("nick_name");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("OwnerTelephoneNumber", "PetProject.Domain.Pet.OwnerTelephoneNumber#TelephonNumber", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("OwnerTelephoneNumber", "PetProject.Domain.Volunteers.Pet.OwnerTelephoneNumber#TelephonNumber", b1 =>
                         {
                             b1.IsRequired();
 
@@ -121,7 +121,7 @@ namespace PetProject.Infrastructure.Migrations
                                 .HasColumnName("owner_telephon_number");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("StatusHealth", "PetProject.Domain.Pet.StatusHealth#StatusHealth", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("StatusHealth", "PetProject.Domain.Volunteers.Pet.StatusHealth#StatusHealth", b1 =>
                         {
                             b1.IsRequired();
 
@@ -132,7 +132,7 @@ namespace PetProject.Infrastructure.Migrations
                                 .HasColumnName("status_health");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("VaccinationStatus", "PetProject.Domain.Pet.VaccinationStatus#VaccinationStatus", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("VaccinationStatus", "PetProject.Domain.Volunteers.Pet.VaccinationStatus#VaccinationStatus", b1 =>
                         {
                             b1.IsRequired();
 
@@ -143,7 +143,7 @@ namespace PetProject.Infrastructure.Migrations
                                 .HasColumnName("vaccination_status");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("View", "PetProject.Domain.Pet.View#View", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("View", "PetProject.Domain.Volunteers.Pet.View#View", b1 =>
                         {
                             b1.IsRequired();
 
@@ -163,13 +163,13 @@ namespace PetProject.Infrastructure.Migrations
                     b.ToTable("pets", (string)null);
                 });
 
-            modelBuilder.Entity("PetProject.Domain.Volunteer", b =>
+            modelBuilder.Entity("PetProject.Domain.Volunteers.Volunteer", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.ComplexProperty<Dictionary<string, object>>("Description", "PetProject.Domain.Volunteer.Description#Description", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("Description", "PetProject.Domain.Volunteers.Volunteer.Description#Description", b1 =>
                         {
                             b1.IsRequired();
 
@@ -180,7 +180,7 @@ namespace PetProject.Infrastructure.Migrations
                                 .HasColumnName("description");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("Email", "PetProject.Domain.Volunteer.Email#Email", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("Email", "PetProject.Domain.Volunteers.Volunteer.Email#Email", b1 =>
                         {
                             b1.IsRequired();
 
@@ -191,7 +191,7 @@ namespace PetProject.Infrastructure.Migrations
                                 .HasColumnName("link");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("FullName", "PetProject.Domain.Volunteer.FullName#FullName", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("FullName", "PetProject.Domain.Volunteers.Volunteer.FullName#FullName", b1 =>
                         {
                             b1.IsRequired();
 
@@ -214,7 +214,7 @@ namespace PetProject.Infrastructure.Migrations
                                 .HasColumnName("surname");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("TelephonNumber", "PetProject.Domain.Volunteer.TelephonNumber#TelephonNumber", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("TelephonNumber", "PetProject.Domain.Volunteers.Volunteer.TelephonNumber#TelephonNumber", b1 =>
                         {
                             b1.IsRequired();
 
@@ -231,9 +231,9 @@ namespace PetProject.Infrastructure.Migrations
                     b.ToTable("volunteers", (string)null);
                 });
 
-            modelBuilder.Entity("PetProject.Domain.Pet", b =>
+            modelBuilder.Entity("PetProject.Domain.Volunteers.Pet", b =>
                 {
-                    b.HasOne("PetProject.Domain.Volunteer", null)
+                    b.HasOne("PetProject.Domain.Volunteers.Volunteer", null)
                         .WithMany("Pets")
                         .HasForeignKey("volunteer_id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -241,9 +241,9 @@ namespace PetProject.Infrastructure.Migrations
                         .HasConstraintName("fk_pets_volunteers_volunteer_id");
                 });
 
-            modelBuilder.Entity("PetProject.Domain.Volunteer", b =>
+            modelBuilder.Entity("PetProject.Domain.Volunteers.Volunteer", b =>
                 {
-                    b.OwnsOne("PetProject.Domain.SocialMediaList", "SocialList", b1 =>
+                    b.OwnsOne("PetProject.Domain.Volunteers.SocialMediaList", "SocialList", b1 =>
                         {
                             b1.Property<Guid>("VolunteerId")
                                 .HasColumnType("uuid")
@@ -253,13 +253,13 @@ namespace PetProject.Infrastructure.Migrations
 
                             b1.ToTable("volunteers");
 
-                            b1.ToJson("SocialList");
+                            b1.ToJson("social_list");
 
                             b1.WithOwner()
                                 .HasForeignKey("VolunteerId")
                                 .HasConstraintName("fk_volunteers_volunteers_id");
 
-                            b1.OwnsMany("PetProject.Domain.SocialMedia", "SocialMedias", b2 =>
+                            b1.OwnsMany("PetProject.Domain.Volunteers.SocialMedia", "SocialMedias", b2 =>
                                 {
                                     b2.Property<Guid>("SocialMediaListVolunteerId")
                                         .HasColumnType("uuid");
@@ -295,7 +295,7 @@ namespace PetProject.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PetProject.Domain.Volunteer", b =>
+            modelBuilder.Entity("PetProject.Domain.Volunteers.Volunteer", b =>
                 {
                     b.Navigation("Pets");
                 });
