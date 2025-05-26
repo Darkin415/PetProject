@@ -16,7 +16,7 @@ public class CreateVolunteerCommandValidator : AbstractValidator<AddVolunteerCom
         RuleFor(c => c.Request.Information).MustBeValueObject(Description.Create);
         RuleFor(c => c.Request.PhoneNumber).MustBeValueObject(TelephonNumber.Create);
         RuleForEach(c => c.Request.SocialMedias).MustBeValueObject(s => SocialMedia.Create(s.Title, s.LinkMedia));
-        RuleFor(c => new { c.Request.FirstName, c.Request.LastName, c.Request.Surname })
+        RuleFor(c => c.Request.FullName)
             .MustBeValueObject(x => FullName.Create(x.FirstName, x.LastName, x.Surname));
     }
 }
