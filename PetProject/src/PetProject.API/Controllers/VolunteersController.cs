@@ -20,12 +20,12 @@ public class VolunteersController : ApplicationController
         [FromBody] AddVolunteerCommand command,
         CancellationToken cancellationToken = default) 
     {
-
+        
         var result = await handler.Handle(command, cancellationToken);
 
         if (result.IsFailure)
             return result.Error.ToResponse();
 
-        return CreatedAtAction("", result.Value);
+        return Ok(result.Value);
     }
 }

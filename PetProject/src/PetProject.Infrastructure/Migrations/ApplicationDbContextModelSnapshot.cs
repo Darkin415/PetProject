@@ -266,12 +266,10 @@ namespace PetProject.Infrastructure.Migrations
                                         .HasColumnType("integer");
 
                                     b2.Property<string>("LinkMedia")
-                                        .IsRequired()
                                         .HasMaxLength(100)
                                         .HasColumnType("character varying(100)");
 
                                     b2.Property<string>("Title")
-                                        .IsRequired()
                                         .HasMaxLength(100)
                                         .HasColumnType("character varying(100)");
 

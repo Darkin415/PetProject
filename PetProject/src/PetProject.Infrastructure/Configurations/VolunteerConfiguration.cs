@@ -53,11 +53,11 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             vb.OwnsMany(d => d.SocialMedias, db =>
             {
                 db.Property(f => f.LinkMedia)
-                .IsRequired()
+                .IsRequired(false)
                 .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
 
                 db.Property(f => f.Title)
-                .IsRequired()
+                .IsRequired(false)
                 .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
             });
         });

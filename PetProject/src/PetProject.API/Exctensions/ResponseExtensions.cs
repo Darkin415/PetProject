@@ -45,6 +45,7 @@ public static class ResponseExtensions
         };
 
         var responseError = Envelope.FromError(error);
+
         var envelope = Envelope.Error(new[] { responseError });
 
         return new ObjectResult(envelope)
@@ -52,7 +53,6 @@ public static class ResponseExtensions
             StatusCode = statusCode
         };
     }
-
     public static ActionResult ToValidationErrorResponse(this FluentValidation.Results.ValidationResult result)
     {
         if (result.IsValid)
@@ -71,5 +71,5 @@ public static class ResponseExtensions
         {
             StatusCode = StatusCodes.Status400BadRequest
         };
-    }      
+    }
 }
