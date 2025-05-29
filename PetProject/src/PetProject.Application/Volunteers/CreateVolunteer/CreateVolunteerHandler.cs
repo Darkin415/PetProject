@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using FluentValidation;
+using Microsoft.Extensions.Logging;
 using PetProject.API.Module;
 using PetProject.Domain;
 using PetProject.Domain.Shared.Ids;
@@ -21,10 +22,15 @@ public class CreateVolunteerHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly IValidator<AddVolunteerCommand> _validator;
-    public CreateVolunteerHandler(IVolunteersRepository volunteersRepository, IValidator<AddVolunteerCommand> validator)
+    private readonly ILogger<CreateVolunteerHandler> _logger;
+    public CreateVolunteerHandler(
+        IVolunteersRepository volunteersRepository, 
+        IValidator<AddVolunteerCommand> validator, 
+        ILogger<CreateVolunteerHandler> logger)
     {
         _volunteersRepository = volunteersRepository;
         _validator = validator;
+        _logger = logger;
     }
     public async Task<Result<Guid, Error>> Handle(AddVolunteerCommand command, CancellationToken cancellationToken = default)
     {
@@ -63,6 +69,8 @@ public class CreateVolunteerHandler
 
         var volunteerToCreate = new Volunteer(volunteerId, fullNameResult.Value, emailResult.Value, descriptionResult.Value, phoneResult.Value, socialMedias);
         await _volunteersRepository.Add(volunteerToCreate, cancellationToken);
+        _logger.LogInformation("Created volunteer with id {volunteerId}", volunteerId);
+
         return (Guid)volunteerToCreate.Id;
     }
 }

@@ -61,6 +61,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                 .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
             });
         });
+        builder.Navigation(v => v.SocialList).IsRequired(false);
 
         
         builder.ComplexProperty(v => v.Email, b =>

@@ -288,8 +288,7 @@ namespace PetProject.Infrastructure.Migrations
                             b1.Navigation("SocialMedias");
                         });
 
-                    b.Navigation("SocialList")
-                        .IsRequired();
+                    b.Navigation("SocialList");
                 });
 
             modelBuilder.Entity("PetProject.Domain.Volunteers.Volunteer", b =>

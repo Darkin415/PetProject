@@ -13,7 +13,7 @@ using PetProject.Infrastructure;
 namespace PetProject.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250525183242_Initial")]
+    [Migration("20250529135207_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -291,8 +291,7 @@ namespace PetProject.Infrastructure.Migrations
                             b1.Navigation("SocialMedias");
                         });
 
-                    b.Navigation("SocialList")
-                        .IsRequired();
+                    b.Navigation("SocialList");
                 });
 
             modelBuilder.Entity("PetProject.Domain.Volunteers.Volunteer", b =>
