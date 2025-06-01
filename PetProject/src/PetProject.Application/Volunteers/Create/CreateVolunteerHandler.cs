@@ -11,6 +11,7 @@ using PetProject.Domain;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
 using PetProject.Domain.Volunteers;
+
 namespace PetProject.Application.Volunteers.CreateVolunteer;
 
 public record AddVolunteerCommand(
@@ -21,21 +22,17 @@ public record AddVolunteerCommand(
 public class CreateVolunteerHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
-    private readonly IValidator<AddVolunteerCommand> _validator;
     private readonly ILogger<CreateVolunteerHandler> _logger;
     public CreateVolunteerHandler(
-        IVolunteersRepository volunteersRepository, 
-        IValidator<AddVolunteerCommand> validator, 
+        IVolunteersRepository volunteersRepository,      
         ILogger<CreateVolunteerHandler> logger)
     {
         _volunteersRepository = volunteersRepository;
-        _validator = validator;
         _logger = logger;
     }
     public async Task<Result<Guid, Error>> Handle(AddVolunteerCommand command, CancellationToken cancellationToken = default)
     {
-        var validationResult = await _validator.ValidateAsync(command, cancellationToken);
-
+       
         var volunteerId = VolunteerId.NewVolunteerId();
         var emailResult = Email.Create(command.Request.LinkMedia);
         if (emailResult.IsFailure)

@@ -1,2 +1,2 @@
 ﻿namespace PetProject.Application.Volunteers.UpdateMainInfo;
-public record UpdateMainInfoHandlerRequest(Guid VolunteerId);
+public record UpdateMainInfoRequest(Guid VolunteerId);

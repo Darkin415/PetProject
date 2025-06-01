@@ -28,7 +28,18 @@ public class VolunteersRepository : IVolunteersRepository
 
         return volunteer.Id;
     }
-    public async Task<Result<Volunteer, Error>> GetById(VolunteerId volunteerId)
+
+    public async Task<Guid> Update(Volunteer volunteer, CancellationToken cancellationToken = default)
+    {
+        await _dbContext.Volunteers.AddAsync(volunteer, cancellationToken);
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return volunteer.Id;
+    }
+
+
+    public async Task<Result<Volunteer, Error>> GetById(VolunteerId volunteerId, CancellationToken cancellationToken = default)
     {
         var volunteer = await _dbContext.Volunteers
             .Include(v => v.Pets)
@@ -41,7 +52,7 @@ public class VolunteersRepository : IVolunteersRepository
         return volunteer;
 
     }
-    public async Task<Result<Volunteer, Error>> GetByEmail(Email email)
+    public async Task<Result<Volunteer, Error>> GetByEmail(Email email, CancellationToken cancellationToken = default)
     {
         var volunteer = await _dbContext.Volunteers
             .FirstOrDefaultAsync(v => v.Email == email);
