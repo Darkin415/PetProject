@@ -57,7 +57,7 @@ public class UpdateMainInfoHandler
 
         volunteerResult.Value.UpdateMainInfo(fullNameResult, description, telephonNumber);
 
-        var result = await _volunteersRepository.Update(volunteerResult.Value, cancellationToken);
+        var result = await _volunteersRepository.Save(volunteerResult.Value, cancellationToken);
 
         return result;
     }

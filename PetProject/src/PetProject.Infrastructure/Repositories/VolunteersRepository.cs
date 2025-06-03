@@ -29,18 +29,11 @@ public class VolunteersRepository : IVolunteersRepository
         return volunteer.Id;
     }
 
-    public async Task<Guid> Update(Volunteer volunteer, CancellationToken cancellationToken = default)
+    public async Task<Guid> Save(Volunteer volunteer, CancellationToken cancellationToken = default)
     {
-        var entries1 = _dbContext.ChangeTracker.Entries<Volunteer>();
-
-        _dbContext.Volunteers.Update(volunteer);
-
-        var entries2 = _dbContext.ChangeTracker.Entries<Volunteer>();
-
+        _dbContext.Volunteers.Attach(volunteer);
         await _dbContext.SaveChangesAsync(cancellationToken);
-
-        var entries3 = _dbContext.ChangeTracker.Entries<Volunteer>();
-
+        
         return volunteer.Id;
     }
 
