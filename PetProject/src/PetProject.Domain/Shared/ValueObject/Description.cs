@@ -18,6 +18,7 @@ public record Description
     {
         if (string.IsNullOrWhiteSpace(information))
             return Errors.General.ValueIsInvalid("Information");
+
         return new Description(information);
     }
 }

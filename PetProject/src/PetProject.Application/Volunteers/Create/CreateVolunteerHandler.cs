@@ -46,7 +46,10 @@ public class CreateVolunteerHandler
         if (phoneResult.IsFailure)
             return phoneResult.Error;
 
-        var fullNameResult = FullName.Create(command.Request.FullName.FirstName, command.Request.FullName.LastName, command.Request.FullName.Surname);
+        var fullNameResult = FullName.Create(
+            command.Request.FullName.FirstName, 
+            command.Request.FullName.LastName, 
+            command.Request.FullName.Surname);
         if (fullNameResult.IsFailure)
             return fullNameResult.Error;
 

@@ -76,4 +76,10 @@ public class Volunteer : Shared.Entity<VolunteerId>
             return volunteer;
         }
     }
+    public void UpdateMainInfo(FullName fullName, Description description, TelephonNumber telephonNumber)
+    {
+        FullName = fullName;
+        Description = description;
+        TelephonNumber = telephonNumber;
+    }
 }

@@ -37,11 +37,28 @@ public class UpdateMainInfoHandler
         AddUpdateMainInfoCommand command,
     CancellationToken cancellationToken = default)
     {
-        // дописать логику продолжить просмотр 9 видео 
+
         var volunteerId = new VolunteerId(command.Request.VolunteerId);
-        var volunteerResult = _volunteersRepository.GetById(volunteerId, cancellationToken);
+
+        var volunteerResult = await _volunteersRepository.GetById(volunteerId, cancellationToken);
+
+        if (volunteerResult.IsFailure)
+            return volunteerResult.Error;
+
+        var telephonNumber = TelephonNumber.Create(command.Request.TelephonNumber).Value;
+
+        var description = Description.Create(command.Request.Description).Value;
+
+        var fullNameResult = FullName.Create(
+            command.Request.FullName.FirstName,
+            command.Request.FullName.LastName,
+            command.Request.FullName.Surname).Value;
 
 
-        return Guid.Empty;
+        volunteerResult.Value.UpdateMainInfo(fullNameResult, description, telephonNumber);
+
+        var result = await _volunteersRepository.Update(volunteerResult.Value, cancellationToken);
+
+        return result;
     }
 }

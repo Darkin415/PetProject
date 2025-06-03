@@ -39,7 +39,7 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
     [HttpPut("{id:guid}/full-name")]
-    public async Task<ActionResult> Create(
+    public async Task<ActionResult> Update(
         [FromRoute] Guid id,
         [FromServices] UpdateMainInfoHandler handler,
         [FromServices] IValidator<AddUpdateMainInfoCommand> validator,

@@ -9,5 +9,9 @@ public class UpdateMainInfoHandlerCommandValidator : AbstractValidator<AddUpdate
     public UpdateMainInfoHandlerCommandValidator()
     {
         RuleFor(r => r.Request.VolunteerId).NotEmpty().WithError(Errors.General.ValueIsRequired());
+        RuleFor(c => c.Request.FullName)
+            .MustBeValueObject(x => FullName.Create(x.FirstName, x.LastName, x.Surname));
+        RuleFor(r => r.Request.TelephonNumber).MustBeValueObject(TelephonNumber.Create);
+        RuleFor(r => r.Request.Description).MustBeValueObject(Description.Create);
     }
 }

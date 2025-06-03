@@ -31,9 +31,15 @@ public class VolunteersRepository : IVolunteersRepository
 
     public async Task<Guid> Update(Volunteer volunteer, CancellationToken cancellationToken = default)
     {
-        await _dbContext.Volunteers.AddAsync(volunteer, cancellationToken);
+        var entries1 = _dbContext.ChangeTracker.Entries<Volunteer>();
+
+        _dbContext.Volunteers.Update(volunteer);
+
+        var entries2 = _dbContext.ChangeTracker.Entries<Volunteer>();
 
         await _dbContext.SaveChangesAsync(cancellationToken);
+
+        var entries3 = _dbContext.ChangeTracker.Entries<Volunteer>();
 
         return volunteer.Id;
     }
