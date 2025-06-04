@@ -110,5 +110,9 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         builder.Property(p => p.DateOfCreation)
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+
+        builder.Property<bool>("_isDeleted")
+            .UsePropertyAccessMode(PropertyAccessMode.Field)
+            .HasColumnName("is_deleted");
     }
 }

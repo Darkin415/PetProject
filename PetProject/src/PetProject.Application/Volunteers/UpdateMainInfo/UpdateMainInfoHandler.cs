@@ -34,7 +34,7 @@ public class UpdateMainInfoHandler
         _logger = logger;
     }
     public async Task<Result<Guid, Error>> Handle(
-        AddUpdateMainInfoCommand command,
+    AddUpdateMainInfoCommand command,
     CancellationToken cancellationToken = default)
     {
 
@@ -54,10 +54,11 @@ public class UpdateMainInfoHandler
             command.Request.FullName.LastName,
             command.Request.FullName.Surname).Value;
 
-
         volunteerResult.Value.UpdateMainInfo(fullNameResult, description, telephonNumber);
 
         var result = await _volunteersRepository.Save(volunteerResult.Value, cancellationToken);
+
+        _logger.LogInformation("Updated volunteer with id {volunteerId}" , volunteerId);
 
         return result;
     }

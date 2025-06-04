@@ -9,12 +9,13 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using static PetProject.Domain.Volunteers.Volunteer;
 namespace PetProject.Domain.Volunteers;
-public class Volunteer : Shared.Entity<VolunteerId>
+public partial class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
 {
+    private bool _isDeleted = false;
     private readonly List<Pet> _pets = new List<Pet>();
 
-    
     private Volunteer(VolunteerId id) : base(id)
     {
 
@@ -34,7 +35,7 @@ public class Volunteer : Shared.Entity<VolunteerId>
         Description = description;
         TelephonNumber = telephoneNumber;
     }
-    
+
     public FullName FullName { get; private set; }
     public SocialMediaList SocialList { get; private set; }
     public Email Email { get; private set; } = default!;
@@ -81,5 +82,16 @@ public class Volunteer : Shared.Entity<VolunteerId>
         FullName = fullName;
         Description = description;
         TelephonNumber = telephonNumber;
+    }
+
+    public void Delete()
+    {
+        _isDeleted = true;
+
+    }
+
+    public void Restore()
+    {
+        _isDeleted = false;
     }
 }
