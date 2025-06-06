@@ -13,7 +13,7 @@ using PetProject.Infrastructure;
 namespace PetProject.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250529135207_Initial")]
+    [Migration("20250604154209_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -46,6 +46,10 @@ namespace PetProject.Infrastructure.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("integer")
                         .HasColumnName("status");
+
+                    b.Property<bool>("_isDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
 
                     b.Property<Guid>("volunteer_id")
                         .HasColumnType("uuid")
@@ -168,6 +172,10 @@ namespace PetProject.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.Property<bool>("_isDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
 
                     b.ComplexProperty<Dictionary<string, object>>("Description", "PetProject.Domain.Volunteers.Volunteer.Description#Description", b1 =>
                         {

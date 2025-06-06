@@ -44,6 +44,10 @@ namespace PetProject.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("status");
 
+                    b.Property<bool>("_isDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
+
                     b.Property<Guid>("volunteer_id")
                         .HasColumnType("uuid")
                         .HasColumnName("volunteer_id");
@@ -165,6 +169,10 @@ namespace PetProject.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.Property<bool>("_isDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
 
                     b.ComplexProperty<Dictionary<string, object>>("Description", "PetProject.Domain.Volunteers.Volunteer.Description#Description", b1 =>
                         {

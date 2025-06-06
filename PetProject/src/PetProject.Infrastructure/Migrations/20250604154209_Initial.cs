@@ -16,6 +16,7 @@ namespace PetProject.Infrastructure.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
+                    is_deleted = table.Column<bool>(type: "boolean", nullable: false),
                     description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
                     link = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     first_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
@@ -37,6 +38,7 @@ namespace PetProject.Infrastructure.Migrations
                     birth_date = table.Column<DateTime>(type: "timestamp with time zone", maxLength: 10, nullable: false),
                     status = table.Column<int>(type: "integer", maxLength: 10, nullable: false),
                     date_of_creation = table.Column<DateTime>(type: "timestamp with time zone", maxLength: 10, nullable: false),
+                    is_deleted = table.Column<bool>(type: "boolean", nullable: false),
                     volunteer_id = table.Column<Guid>(type: "uuid", nullable: false),
                     attributes_height = table.Column<double>(type: "double precision", maxLength: 10, nullable: false),
                     attributes = table.Column<double>(type: "double precision", maxLength: 10, nullable: false),

@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PetProject.Domain.Volunteers;
+using PetProject.Infrastructure.Interceptors;
 
 namespace PetProject.Infrastructure;
 public class ApplicationDbContext(IConfiguration configuration) : DbContext
-{
+{   
     private const string DATABASE = "Database";
     public DbSet<Volunteer> Volunteers => Set<Volunteer>();
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -15,6 +16,7 @@ public class ApplicationDbContext(IConfiguration configuration) : DbContext
         optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
         optionsBuilder.EnableSensitiveDataLogging();
+        optionsBuilder.AddInterceptors(new SoftDeleteIntercepter());
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
