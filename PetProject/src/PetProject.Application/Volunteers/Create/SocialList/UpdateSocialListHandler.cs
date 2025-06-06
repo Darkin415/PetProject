@@ -54,4 +54,3 @@ public class UpdateSocialListHandler
         return result;
     }
 }
-

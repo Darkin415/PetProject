@@ -18,7 +18,6 @@ public record AddVolunteerCommand(
 
     CreateVolunteerRequest Request
 );
-
 public class CreateVolunteerHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
