@@ -1,4 +1,4 @@
-﻿namespace PetProject.API.Module;
+﻿namespace PetProject.Application.Volunteers.Create.Volunteer;
 public record CreateVolunteerRequest(
     string Title,
     string LinkMedia,

@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static PetProject.Domain.Volunteers.Volunteer;
 namespace PetProject.Domain.Volunteers;
-public partial class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
+public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
 {
     private bool _isDeleted = false;
     private readonly List<Pet> _pets = new List<Pet>();
@@ -26,7 +26,7 @@ public partial class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
     Email email,
     Description description,
     TelephonNumber telephoneNumber,
-    IReadOnlyList<SocialMedia>? socialMedias = null
+    SocialMediaList? socialMedias = null
 
 ) : base(id)
     {
@@ -34,6 +34,7 @@ public partial class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
         Email = email;
         Description = description;
         TelephonNumber = telephoneNumber;
+        SocialList = socialMedias ?? new SocialMediaList(new List<SocialMedia>());
     }
 
     public FullName FullName { get; private set; }
@@ -54,34 +55,35 @@ public partial class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
     {
         return Pets?.Count(pet => pet.Status == StatusHelp.BeUnderTreatment) ?? 0;
     }
-    public static Result<Volunteer, string> Create(Email email, Description description, FullName fullName, TelephonNumber telephonNumber, IReadOnlyList<SocialMedia>? socialMedias)
+    public static Result<Volunteer, string> Create(
+        Email email,
+        Description description,
+        FullName fullName,
+        TelephonNumber telephonNumber,
+        SocialMediaList? socialMedias = null)
     {
-        if (email == null)
-        {
-            return "Email can not be empty";
-        }
-        if (description == null)
-        {
-            return "Description can not be empty";
-        }
-        else
-        {
-            var volunteer = new Volunteer(
-            VolunteerId.NewVolunteerId(),
-            fullName,
-            email,
-            description,
-            telephonNumber,
-            socialMedias
-        );
-            return volunteer;
-        }
+        var volunteer = new Volunteer(
+        VolunteerId.NewVolunteerId(),
+        fullName,
+        email,
+        description,
+        telephonNumber,
+        socialMedias
+    );
+
+        return volunteer;
     }
+
     public void UpdateMainInfo(FullName fullName, Description description, TelephonNumber telephonNumber)
     {
         FullName = fullName;
         Description = description;
         TelephonNumber = telephonNumber;
+    }
+
+    public void UpdateSocialList(SocialMediaList socialMedias)
+    {
+        SocialList = socialMedias;
     }
 
     public void Delete()

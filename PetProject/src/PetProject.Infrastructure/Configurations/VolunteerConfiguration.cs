@@ -59,6 +59,8 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                 db.Property(f => f.Title)
                 .IsRequired()
                 .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
+
+                
             });
         });
         builder.Navigation(v => v.SocialList).IsRequired(false);

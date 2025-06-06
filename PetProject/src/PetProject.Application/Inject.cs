@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using PetProject.Application.Volunteers.Create.SocialList;
+using PetProject.Application.Volunteers.Create.Volunteer;
 using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Application.Volunteers.Delete;
 using PetProject.Application.Volunteers.UpdateMainInfo;
@@ -18,6 +20,7 @@ public static class Inject
         services.AddScoped<CreateVolunteerHandler>();
         services.AddScoped<UpdateMainInfoHandler>();
         services.AddScoped<DeleteVolunteerHandler>();
+        services.AddScoped<UpdateSocialListHandler>();
 
         services.AddValidatorsFromAssembly(typeof(Inject).Assembly);
         return services;

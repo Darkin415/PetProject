@@ -1,6 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.Extensions.Logging;
-using PetProject.API.Module;
 using PetProject.Application.Volunteers.UpdateMainInfo;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;

@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PetProject.API.Exctensions;
-using PetProject.API.Module;
 using PetProject.API.Response;
+using PetProject.Application.Volunteers.Create.SocialList;
+using PetProject.Application.Volunteers.Create.Volunteer;
 using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Application.Volunteers.Delete;
 using PetProject.Application.Volunteers.UpdateMainInfo;
@@ -53,6 +54,27 @@ public class VolunteersController : ApplicationController
             return validationResult.ToValidationErrorResponse();
         }
            
+        var result = await handler.Handle(command, cancellationToken);
+
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+
+        return Ok(result.Value);
+    }
+    [HttpPut("{id:guid}/social-medias")]
+    public async Task<ActionResult> UpdateSocialList(
+        [FromRoute] Guid id,
+        [FromServices] UpdateSocialListHandler handler,
+        [FromServices] IValidator<UpdateSocialListCommand> validator,
+        [FromBody] UpdateSocialListCommand command,
+        CancellationToken cancellationToken = default)
+    {
+        var validationResult = await validator.ValidateAsync(command, cancellationToken);
+        if (validationResult.IsValid == false)
+        {
+            return validationResult.ToValidationErrorResponse();
+        }
+
         var result = await handler.Handle(command, cancellationToken);
 
         if (result.IsFailure)

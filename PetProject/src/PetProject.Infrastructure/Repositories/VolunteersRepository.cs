@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using PetProject.Application.Volunteers;
 using PetProject.Domain;
@@ -71,4 +72,6 @@ public class VolunteersRepository : IVolunteersRepository
 
         return volunteer.Id;
     }
+
+    
 }

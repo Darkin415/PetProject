@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
-using PetProject.API.Module;
+using PetProject.Application.Volunteers.Create.Volunteer;
 using PetProject.Domain;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
@@ -15,7 +15,7 @@ using PetProject.Domain.Volunteers;
 namespace PetProject.Application.Volunteers.CreateVolunteer;
 
 public record AddVolunteerCommand(
-   
+
     CreateVolunteerRequest Request
 );
 
@@ -24,7 +24,7 @@ public class CreateVolunteerHandler
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ILogger<CreateVolunteerHandler> _logger;
     public CreateVolunteerHandler(
-        IVolunteersRepository volunteersRepository,      
+        IVolunteersRepository volunteersRepository,
         ILogger<CreateVolunteerHandler> logger)
     {
         _volunteersRepository = volunteersRepository;
@@ -32,7 +32,7 @@ public class CreateVolunteerHandler
     }
     public async Task<Result<Guid, Error>> Handle(AddVolunteerCommand command, CancellationToken cancellationToken = default)
     {
-       
+
         var volunteerId = VolunteerId.NewVolunteerId();
         var emailResult = Email.Create(command.Request.LinkMedia);
         if (emailResult.IsFailure)
@@ -47,8 +47,8 @@ public class CreateVolunteerHandler
             return phoneResult.Error;
 
         var fullNameResult = FullName.Create(
-            command.Request.FullName.FirstName, 
-            command.Request.FullName.LastName, 
+            command.Request.FullName.FirstName,
+            command.Request.FullName.LastName,
             command.Request.FullName.Surname);
         if (fullNameResult.IsFailure)
             return fullNameResult.Error;
@@ -60,14 +60,22 @@ public class CreateVolunteerHandler
 
             return Result.Failure<Guid, Error>(socialMediaResults.First(r => r.IsFailure).Error);
 
-        var socialMedias = socialMediaResults.Select(r => r.Value).ToList();
+        var socialMediasList = new SocialMediaList(
+            socialMediaResults
+            .Select(r => r.Value).ToList());
 
         var volunteer = await _volunteersRepository.GetByEmail(emailResult.Value);
 
         if (volunteer.IsSuccess)
             return Errors.Volunteer.AlreadyExist();
 
-        var volunteerToCreate = new Volunteer(volunteerId, fullNameResult.Value, emailResult.Value, descriptionResult.Value, phoneResult.Value, socialMedias);
+        var volunteerToCreate = new Volunteer(
+            volunteerId,
+            fullNameResult.Value,
+            emailResult.Value,
+            descriptionResult.Value,
+            phoneResult.Value,
+            socialMediasList);
         await _volunteersRepository.Add(volunteerToCreate, cancellationToken);
         _logger.LogInformation("Created volunteer with id {volunteerId}", volunteerId);
 
