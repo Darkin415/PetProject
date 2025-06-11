@@ -3,7 +3,7 @@ using PetProject.Domain.Shared.ValueObject;
 
 namespace PetProject.Domain;
 
-public record View
+public record View  
 {
     public View(string value)
     {

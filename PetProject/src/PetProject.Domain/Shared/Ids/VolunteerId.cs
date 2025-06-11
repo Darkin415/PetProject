@@ -1,5 +1,4 @@
 ﻿using CSharpFunctionalExtensions;
-using PetProject.Domain.Shared;
 
 namespace PetProject.Domain.Shared.Ids;
 public record VolunteerId

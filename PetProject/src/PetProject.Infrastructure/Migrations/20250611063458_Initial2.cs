@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PetProject.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Initial2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,30 +15,32 @@ namespace PetProject.Infrastructure.Migrations
                 name: "volunteers",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    is_deleted = table.Column<bool>(type: "boolean", nullable: false),
                     description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
                     link = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     first_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     last_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     surname = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     telehon_number = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    social_list = table.Column<string>(type: "jsonb", nullable: true)
+                    Social = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_volunteers", x => x.id);
+                    table.PrimaryKey("PK_volunteers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "pets",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    birth_date = table.Column<DateTime>(type: "timestamp with time zone", maxLength: 10, nullable: false),
-                    status = table.Column<int>(type: "integer", maxLength: 10, nullable: false),
-                    date_of_creation = table.Column<DateTime>(type: "timestamp with time zone", maxLength: 10, nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "timestamp with time zone", maxLength: 10, nullable: false),
+                    Status = table.Column<int>(type: "integer", maxLength: 10, nullable: false),
+                    DateOfCreation = table.Column<DateTime>(type: "timestamp with time zone", maxLength: 10, nullable: false),
+                    is_deleted = table.Column<bool>(type: "boolean", nullable: false),
                     volunteer_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    attributes_height = table.Column<double>(type: "double precision", maxLength: 10, nullable: false),
+                    Attributes_Height = table.Column<double>(type: "double precision", maxLength: 10, nullable: false),
                     attributes = table.Column<double>(type: "double precision", maxLength: 10, nullable: false),
                     breed = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     castration_status = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
@@ -51,17 +53,17 @@ namespace PetProject.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_pets", x => x.id);
+                    table.PrimaryKey("PK_pets", x => x.Id);
                     table.ForeignKey(
-                        name: "fk_pets_volunteers_volunteer_id",
+                        name: "FK_pets_volunteers_volunteer_id",
                         column: x => x.volunteer_id,
                         principalTable: "volunteers",
-                        principalColumn: "id",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_pets_volunteer_id",
+                name: "IX_pets_volunteer_id",
                 table: "pets",
                 column: "volunteer_id");
         }

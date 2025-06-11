@@ -1,14 +1,10 @@
 ﻿using CSharpFunctionalExtensions;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 namespace PetProject.Domain.Volunteers;
-public class Pet : Shared.Entity<PetId>
+public class Pet : Shared.Entity<PetId>, ISoftDeletable
 {
+    private bool _isDeleted = false;
     private Pet(PetId id) : base(id)
     {
     }
@@ -107,6 +103,17 @@ public class Pet : Shared.Entity<PetId>
 
             return pet;
         }
+    }
+
+    public void Delete()
+    {
+        _isDeleted = true;
+
+    }
+
+    public void Restore()
+    {
+        _isDeleted = false;
     }
 }
 

@@ -1,11 +1,5 @@
-using Microsoft.AspNetCore.Builder;
 using PetProject.Infrastructure;
 using PetProject.Application;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using PetProject.Application.Volunteers.CreateVolunteer;
-using PetProject.Application.Volunteers;
-using PetProject.Infrastructure.Repositories;
 using FluentValidation.AspNetCore;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using PetProject.API.Validation;
@@ -17,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .WriteTo.Debug()
-    .WriteTo.Seq(builder.Configuration.GetConnectionString("Seq") 
+    .WriteTo.Seq(builder.Configuration.GetConnectionString("Seq")
                  ?? throw new ArgumentNullException("Seq"))
     .Enrich.WithEnvironmentName()
     .MinimumLevel.Override("Microsoft.AspNetCore.Hosting", LogEventLevel.Warning)

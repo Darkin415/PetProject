@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
+﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using PetProject.Application.Volunteers;
 using PetProject.Domain;
@@ -28,7 +23,17 @@ public class VolunteersRepository : IVolunteersRepository
 
         return volunteer.Id;
     }
-    public async Task<Result<Volunteer, Error>> GetById(VolunteerId volunteerId)
+
+    public async Task<Guid> Save(Volunteer volunteer, CancellationToken cancellationToken = default)
+    {
+        _dbContext.Volunteers.Attach(volunteer);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return volunteer.Id;
+    }
+
+
+    public async Task<Result<Volunteer, Error>> GetById(VolunteerId volunteerId, CancellationToken cancellationToken = default)
     {
         var volunteer = await _dbContext.Volunteers
             .Include(v => v.Pets)
@@ -41,7 +46,7 @@ public class VolunteersRepository : IVolunteersRepository
         return volunteer;
 
     }
-    public async Task<Result<Volunteer, Error>> GetByEmail(Email email)
+    public async Task<Result<Volunteer, Error>> GetByEmail(Email email, CancellationToken cancellationToken = default)
     {
         var volunteer = await _dbContext.Volunteers
             .FirstOrDefaultAsync(v => v.Email == email);
@@ -53,5 +58,14 @@ public class VolunteersRepository : IVolunteersRepository
         return volunteer;
 
     }
+
+    public async Task<Guid> Delete(Volunteer volunteer, CancellationToken cancellationToken = default)
+    {
+        _dbContext.Volunteers.Remove(volunteer);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return volunteer.Id;
+    }
+
 
 }

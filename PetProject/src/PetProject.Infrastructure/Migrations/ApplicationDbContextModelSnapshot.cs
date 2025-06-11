@@ -26,27 +26,26 @@ namespace PetProject.Infrastructure.Migrations
             modelBuilder.Entity("PetProject.Domain.Volunteers.Pet", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("BirthDate")
                         .HasMaxLength(10)
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("birth_date");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("DateOfCreation")
                         .HasMaxLength(10)
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("date_of_creation");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Status")
                         .HasMaxLength(10)
-                        .HasColumnType("integer")
-                        .HasColumnName("status");
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("_isDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
 
                     b.Property<Guid>("volunteer_id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("volunteer_id");
+                        .HasColumnType("uuid");
 
                     b.ComplexProperty<Dictionary<string, object>>("Attributes", "PetProject.Domain.Volunteers.Pet.Attributes#PhysicalAttributes", b1 =>
                         {
@@ -54,8 +53,7 @@ namespace PetProject.Infrastructure.Migrations
 
                             b1.Property<double>("Height")
                                 .HasMaxLength(10)
-                                .HasColumnType("double precision")
-                                .HasColumnName("attributes_height");
+                                .HasColumnType("double precision");
 
                             b1.Property<double>("Weight")
                                 .HasMaxLength(10)
@@ -151,11 +149,9 @@ namespace PetProject.Infrastructure.Migrations
                                 .HasColumnName("View");
                         });
 
-                    b.HasKey("Id")
-                        .HasName("pk_pets");
+                    b.HasKey("Id");
 
-                    b.HasIndex("volunteer_id")
-                        .HasDatabaseName("ix_pets_volunteer_id");
+                    b.HasIndex("volunteer_id");
 
                     b.ToTable("pets", (string)null);
                 });
@@ -163,8 +159,11 @@ namespace PetProject.Infrastructure.Migrations
             modelBuilder.Entity("PetProject.Domain.Volunteers.Volunteer", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("_isDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
 
                     b.ComplexProperty<Dictionary<string, object>>("Description", "PetProject.Domain.Volunteers.Volunteer.Description#Description", b1 =>
                         {
@@ -222,8 +221,7 @@ namespace PetProject.Infrastructure.Migrations
                                 .HasColumnName("telehon_number");
                         });
 
-                    b.HasKey("Id")
-                        .HasName("pk_volunteers");
+                    b.HasKey("Id");
 
                     b.ToTable("volunteers", (string)null);
                 });
@@ -234,61 +232,43 @@ namespace PetProject.Infrastructure.Migrations
                         .WithMany("Pets")
                         .HasForeignKey("volunteer_id")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_pets_volunteers_volunteer_id");
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PetProject.Domain.Volunteers.Volunteer", b =>
                 {
-                    b.OwnsOne("PetProject.Domain.Volunteers.SocialMediaList", "SocialList", b1 =>
+                    b.OwnsMany("PetProject.Domain.Volunteers.SocialMedia", "Socials", b1 =>
                         {
                             b1.Property<Guid>("VolunteerId")
-                                .HasColumnType("uuid")
-                                .HasColumnName("id");
+                                .HasColumnType("uuid");
 
-                            b1.HasKey("VolunteerId");
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("LinkMedia")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("link_media");
+
+                            b1.Property<string>("Title")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("title");
+
+                            b1.HasKey("VolunteerId", "__synthesizedOrdinal");
 
                             b1.ToTable("volunteers");
 
-                            b1.ToJson("social_list");
+                            b1.ToJson("Social");
 
                             b1.WithOwner()
-                                .HasForeignKey("VolunteerId")
-                                .HasConstraintName("fk_volunteers_volunteers_id");
-
-                            b1.OwnsMany("PetProject.Domain.Volunteers.SocialMedia", "SocialMedias", b2 =>
-                                {
-                                    b2.Property<Guid>("SocialMediaListVolunteerId")
-                                        .HasColumnType("uuid");
-
-                                    b2.Property<int>("__synthesizedOrdinal")
-                                        .ValueGeneratedOnAdd()
-                                        .HasColumnType("integer");
-
-                                    b2.Property<string>("LinkMedia")
-                                        .IsRequired()
-                                        .HasMaxLength(100)
-                                        .HasColumnType("character varying(100)");
-
-                                    b2.Property<string>("Title")
-                                        .IsRequired()
-                                        .HasMaxLength(100)
-                                        .HasColumnType("character varying(100)");
-
-                                    b2.HasKey("SocialMediaListVolunteerId", "__synthesizedOrdinal")
-                                        .HasName("pk_volunteers");
-
-                                    b2.ToTable("volunteers");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("SocialMediaListVolunteerId")
-                                        .HasConstraintName("fk_volunteers_volunteers_social_media_list_volunteer_id");
-                                });
-
-                            b1.Navigation("SocialMedias");
+                                .HasForeignKey("VolunteerId");
                         });
 
-                    b.Navigation("SocialList");
+                    b.Navigation("Socials");
                 });
 
             modelBuilder.Entity("PetProject.Domain.Volunteers.Volunteer", b =>

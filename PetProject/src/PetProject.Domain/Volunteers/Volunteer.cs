@@ -1,20 +1,13 @@
 ﻿using CSharpFunctionalExtensions;
-using PetProject.Domain.Shared;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 namespace PetProject.Domain.Volunteers;
-public class Volunteer : Shared.Entity<VolunteerId>
+public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
 {
+    private bool _isDeleted = false;
     private readonly List<Pet> _pets = new List<Pet>();
-
     
+
     private Volunteer(VolunteerId id) : base(id)
     {
 
@@ -33,10 +26,11 @@ public class Volunteer : Shared.Entity<VolunteerId>
         Email = email;
         Description = description;
         TelephonNumber = telephoneNumber;
+        Socials = socialMedias ?? new List<SocialMedia>();
     }
-    
+
     public FullName FullName { get; private set; }
-    public SocialMediaList SocialList { get; private set; }
+    public IReadOnlyList<SocialMedia> Socials { get; private set; } = new List<SocialMedia>();
     public Email Email { get; private set; } = default!;
     public Description Description { get; private set; } = default!;
     public IReadOnlyList<Pet> Pets => _pets;
@@ -53,27 +47,45 @@ public class Volunteer : Shared.Entity<VolunteerId>
     {
         return Pets?.Count(pet => pet.Status == StatusHelp.BeUnderTreatment) ?? 0;
     }
-    public static Result<Volunteer, string> Create(Email email, Description description, FullName fullName, TelephonNumber telephonNumber, IReadOnlyList<SocialMedia>? socialMedias)
+    public static Result<Volunteer, string> Create(
+        Email email,
+        Description description,
+        FullName fullName,
+        TelephonNumber telephonNumber,
+        IReadOnlyList<SocialMedia>? socialMedias = null)
     {
-        if (email == null)
-        {
-            return "Email can not be empty";
-        }
-        if (description == null)
-        {
-            return "Description can not be empty";
-        }
-        else
-        {
-            var volunteer = new Volunteer(
-            VolunteerId.NewVolunteerId(),
-            fullName,
-            email,
-            description,
-            telephonNumber,
-            socialMedias
-        );
-            return volunteer;
-        }
+        var volunteer = new Volunteer(
+        VolunteerId.NewVolunteerId(),
+        fullName,
+        email,
+        description,
+        telephonNumber,
+        socialMedias
+    );
+
+        return volunteer;
+    }
+
+    public void UpdateMainInfo(FullName fullName, Description description, TelephonNumber telephonNumber)
+    {
+        FullName = fullName;
+        Description = description;
+        TelephonNumber = telephonNumber;
+    }
+
+    public void UpdateSocialList(IReadOnlyList<SocialMedia> socialMedias)
+    {
+        Socials = socialMedias;
+    }
+
+    public void Delete()
+    {
+        _isDeleted = true;
+
+    }
+
+    public void Restore()
+    {
+        _isDeleted = false;
     }
 }
