@@ -1,10 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using PetProject.API.Response;
 using PetProject.Domain.Shared.ValueObject;
 using static PetProject.API.Response.Envelope;
-using System.ComponentModel.DataAnnotations;
 
 namespace PetProject.API.Exctensions;
 

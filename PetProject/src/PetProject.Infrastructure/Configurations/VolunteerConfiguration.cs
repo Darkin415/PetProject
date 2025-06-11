@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetProject.Domain.Shared;
 using PetProject.Domain.Shared.Ids;
@@ -47,23 +42,19 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             .HasColumnName("surname");
         });
 
-        builder.OwnsOne(v => v.SocialList, vb =>
+        builder.OwnsMany(v => v.Socials, sb =>
         {
-            vb.ToJson("social_list");
-            vb.OwnsMany(d => d.SocialMedias, db =>
-            {
-                db.Property(f => f.LinkMedia)
-                .IsRequired()
-                .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
+            sb.ToJson("Social"); 
 
-                db.Property(f => f.Title)
+            sb.Property(s => s.LinkMedia)
                 .IsRequired()
-                .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
+                .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH)
+                .HasColumnName("link_media");
 
-                
-            });
+            sb.Property(s => s.Title)
+                .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH)
+                .HasColumnName("title");
         });
-        builder.Navigation(v => v.SocialList).IsRequired(false);
 
         
         builder.ComplexProperty(v => v.Email, b =>

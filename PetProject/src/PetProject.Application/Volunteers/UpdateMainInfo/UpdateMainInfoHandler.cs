@@ -1,25 +1,13 @@
 ﻿using CSharpFunctionalExtensions;
-using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
-using PetProject.Domain.Volunteers;
-using PetProject.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Logging;
-using static PetProject.Domain.Shared.ValueObject.Errors;
 
 namespace PetProject.Application.Volunteers.UpdateMainInfo;
 
-public record AddUpdateMainInfoCommand(
-
-    UpdateMainInfoRequest Request
-);
+public record UpdateMainInfoCommand(
+    Guid VolunteerId,
+    UpdateMainInfoRequest Request);
 
 public class UpdateMainInfoHandler
 {
@@ -33,11 +21,11 @@ public class UpdateMainInfoHandler
         _logger = logger;
     }
     public async Task<Result<Guid, Error>> Handle(
-    AddUpdateMainInfoCommand command,
+    UpdateMainInfoCommand command,
     CancellationToken cancellationToken = default)
     {
 
-        var volunteerId = new VolunteerId(command.Request.VolunteerId);
+        var volunteerId = new VolunteerId(command.VolunteerId);
 
         var volunteerResult = await _volunteersRepository.GetById(volunteerId, cancellationToken);
 

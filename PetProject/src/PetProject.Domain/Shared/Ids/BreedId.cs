@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PetProject.Domain.Shared;
-namespace PetProject.Domain.Shared.Ids;
+﻿namespace PetProject.Domain.Shared.Ids;
 public record BreedId
 {
     public BreedId(Guid value)

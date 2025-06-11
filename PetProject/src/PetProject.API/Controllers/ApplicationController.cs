@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PetProject.API.Response;
 namespace PetProject.API.Controllers;
 
 [Route("[controller]")]

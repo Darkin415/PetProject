@@ -1,11 +1,5 @@
-using Microsoft.AspNetCore.Builder;
 using PetProject.Infrastructure;
 using PetProject.Application;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using PetProject.Application.Volunteers.CreateVolunteer;
-using PetProject.Application.Volunteers;
-using PetProject.Infrastructure.Repositories;
 using FluentValidation.AspNetCore;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using PetProject.API.Validation;

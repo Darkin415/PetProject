@@ -1,19 +1,13 @@
 ﻿using FluentValidation;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PetProject.API.Exctensions;
-using PetProject.API.Response;
 using PetProject.Application.Volunteers.Create.SocialList;
-using PetProject.Application.Volunteers.Create.Volunteer;
 using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Application.Volunteers.Delete;
 using PetProject.Application.Volunteers.UpdateMainInfo;
-using PetProject.Domain;
-using PetProject.Domain.Shared;
-using PetProject.Domain.Shared.ValueObject;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using static PetProject.API.Response.Envelope;
+using PetProject.Domain.Shared.Ids;
+using PetProject.Domain.Volunteers;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace PetProject.API.Controllers;
 public class VolunteersController : ApplicationController
@@ -44,16 +38,17 @@ public class VolunteersController : ApplicationController
     public async Task<ActionResult> UpdateMainInfo(
         [FromRoute] Guid id,
         [FromServices] UpdateMainInfoHandler handler,
-        [FromServices] IValidator<AddUpdateMainInfoCommand> validator,
-        [FromBody] AddUpdateMainInfoCommand command,
+        [FromServices] IValidator<UpdateMainInfoCommand> validator,
+        [FromBody] UpdateMainInfoRequest request,
         CancellationToken cancellationToken = default)
     {
+        var command = new UpdateMainInfoCommand(id, request);
+
         var validationResult = await validator.ValidateAsync(command, cancellationToken);
+
         if (validationResult.IsValid == false)
-        {
             return validationResult.ToValidationErrorResponse();
-        }
-           
+        
         var result = await handler.Handle(command, cancellationToken);
 
         if (result.IsFailure)
@@ -65,10 +60,11 @@ public class VolunteersController : ApplicationController
     public async Task<ActionResult> UpdateSocialList(
         [FromRoute] Guid id,
         [FromServices] UpdateSocialListHandler handler,
-        [FromServices] IValidator<UpdateSocialListCommand> validator,
-        [FromBody] UpdateSocialListCommand command,
+        [FromServices] IValidator<UpdateSocialNetworksCommand> validator,
+        [FromBody] UpdateSocialListRequest request,
         CancellationToken cancellationToken = default)
     {
+        var command = new UpdateSocialNetworksCommand(id, request);
         var validationResult = await validator.ValidateAsync(command, cancellationToken);
         if (validationResult.IsValid == false)
         {
@@ -87,10 +83,11 @@ public class VolunteersController : ApplicationController
     public async Task<ActionResult> Delete(
         [FromRoute] Guid id,
         [FromServices] DeleteVolunteerHandler handler,
-        [FromServices] IValidator<DeleteVolunteerCommand> validator,
-        [FromBody] DeleteVolunteerCommand command,
+        [FromServices] IValidator<DeleteVolunteerCommand> validator,       
         CancellationToken cancellationToken = default)
     {
+        var request = new DeleteVolunteerRequest(VolunteerId: id);
+        var command = new DeleteVolunteerCommand(request);
         var validationResult = await validator.ValidateAsync(command, cancellationToken);
         if (validationResult.IsValid == false)
         {

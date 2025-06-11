@@ -1,20 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
-using PetProject.Domain.Shared;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using static PetProject.Domain.Volunteers.Volunteer;
 namespace PetProject.Domain.Volunteers;
 public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
 {
     private bool _isDeleted = false;
     private readonly List<Pet> _pets = new List<Pet>();
+    
 
     private Volunteer(VolunteerId id) : base(id)
     {
@@ -26,7 +18,7 @@ public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
     Email email,
     Description description,
     TelephonNumber telephoneNumber,
-    SocialMediaList? socialMedias = null
+    IReadOnlyList<SocialMedia>? socialMedias = null
 
 ) : base(id)
     {
@@ -34,11 +26,11 @@ public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
         Email = email;
         Description = description;
         TelephonNumber = telephoneNumber;
-        SocialList = socialMedias ?? new SocialMediaList(new List<SocialMedia>());
+        Socials = socialMedias ?? new List<SocialMedia>();
     }
 
     public FullName FullName { get; private set; }
-    public SocialMediaList SocialList { get; private set; }
+    public IReadOnlyList<SocialMedia> Socials { get; private set; } = new List<SocialMedia>();
     public Email Email { get; private set; } = default!;
     public Description Description { get; private set; } = default!;
     public IReadOnlyList<Pet> Pets => _pets;
@@ -60,7 +52,7 @@ public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
         Description description,
         FullName fullName,
         TelephonNumber telephonNumber,
-        SocialMediaList? socialMedias = null)
+        IReadOnlyList<SocialMedia>? socialMedias = null)
     {
         var volunteer = new Volunteer(
         VolunteerId.NewVolunteerId(),
@@ -81,9 +73,9 @@ public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
         TelephonNumber = telephonNumber;
     }
 
-    public void UpdateSocialList(SocialMediaList socialMedias)
+    public void UpdateSocialList(IReadOnlyList<SocialMedia> socialMedias)
     {
-        SocialList = socialMedias;
+        Socials = socialMedias;
     }
 
     public void Delete()

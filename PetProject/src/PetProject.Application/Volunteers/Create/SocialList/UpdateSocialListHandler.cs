@@ -1,17 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.Extensions.Logging;
-using PetProject.Application.Volunteers.UpdateMainInfo;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
 using PetProject.Domain.Volunteers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PetProject.Application.Volunteers.Create.SocialList;
-public record UpdateSocialListCommand(UpdateSocialListRequest Request);
+public record UpdateSocialNetworksCommand(Guid VolunteerId, UpdateSocialListRequest Request);
 public class UpdateSocialListHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
@@ -24,11 +18,11 @@ public class UpdateSocialListHandler
         _logger = logger;
     }
     public async Task<Result<Guid, Error>> Handle(
-    UpdateSocialListCommand command,
+    UpdateSocialNetworksCommand command,
     CancellationToken cancellationToken = default)
     {
 
-        var volunteerId = new VolunteerId(command.Request.VolunteerId);
+        var volunteerId = new VolunteerId(command.VolunteerId);
 
         var volunteerResult = await _volunteersRepository.GetById(volunteerId, cancellationToken);
         if (volunteerResult.IsFailure)
@@ -43,9 +37,18 @@ public class UpdateSocialListHandler
     .Select(r => r.Value)
     .ToList();
 
-        var socialMediaList = new SocialMediaList(validSocialMedias);
+        var socialMediaResults = command.Request.SocialMedias
+        .Select(dto => SocialMedia.Create(dto.Title, dto.LinkMedia))
+        .ToList();
+        if (socialMediaResults.Any(r => r.IsFailure))
 
-        volunteerResult.Value.UpdateSocialList(socialMediaList);
+            return Result.Failure<Guid, Error>(socialMediaResults.First(r => r.IsFailure).Error);
+
+        var socialMediasList = socialMediaResults
+    .Select(r => r.Value)
+    .ToList();
+
+        volunteerResult.Value.UpdateSocialList(socialMediasList);
 
         var result = await _volunteersRepository.Save(volunteerResult.Value, cancellationToken);
 

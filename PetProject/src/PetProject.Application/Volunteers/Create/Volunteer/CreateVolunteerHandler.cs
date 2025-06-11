@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
-using FluentValidation;
+﻿using CSharpFunctionalExtensions;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Volunteers.Create.Volunteer;
 using PetProject.Domain;
@@ -59,9 +53,9 @@ public class CreateVolunteerHandler
 
             return Result.Failure<Guid, Error>(socialMediaResults.First(r => r.IsFailure).Error);
 
-        var socialMediasList = new SocialMediaList(
-            socialMediaResults
-            .Select(r => r.Value).ToList());
+        var socialMediasList = socialMediaResults
+    .Select(r => r.Value)
+    .ToList();
 
         var volunteer = await _volunteersRepository.GetByEmail(emailResult.Value);
 

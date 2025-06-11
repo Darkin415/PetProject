@@ -1,6 +1,4 @@
 ﻿using PetProject.API.Response;
-using System.Globalization;
-using System.Net;
 using static PetProject.API.Response.Envelope;
 
 namespace PetProject.API.Middlewares;
