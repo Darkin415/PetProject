@@ -27,21 +27,11 @@ public class UpdateSocialListHandler
         var volunteerResult = await _volunteersRepository.GetById(volunteerId, cancellationToken);
         if (volunteerResult.IsFailure)
             return volunteerResult.Error;
-
-        var socialMediaResult = command.Request.SocialMedias
-    .Select(x => SocialMedia.Create(x.Title, x.LinkMedia))
-    .ToList();
-
-        var validSocialMedias = socialMediaResult
-    .Where(r => r.IsSuccess)
-    .Select(r => r.Value)
-    .ToList();
-
+             
         var socialMediaResults = command.Request.SocialMedias
         .Select(dto => SocialMedia.Create(dto.Title, dto.LinkMedia))
         .ToList();
         if (socialMediaResults.Any(r => r.IsFailure))
-
             return Result.Failure<Guid, Error>(socialMediaResults.First(r => r.IsFailure).Error);
 
         var socialMediasList = socialMediaResults

@@ -26,7 +26,6 @@ public class VolunteersController : ApplicationController
             return validationResult.ToValidationErrorResponse();
         }
 
-
         var result = await handler.Handle(command, cancellationToken);
 
         if (result.IsFailure)
@@ -48,7 +47,7 @@ public class VolunteersController : ApplicationController
 
         if (validationResult.IsValid == false)
             return validationResult.ToValidationErrorResponse();
-        
+
         var result = await handler.Handle(command, cancellationToken);
 
         if (result.IsFailure)
@@ -83,7 +82,7 @@ public class VolunteersController : ApplicationController
     public async Task<ActionResult> Delete(
         [FromRoute] Guid id,
         [FromServices] DeleteVolunteerHandler handler,
-        [FromServices] IValidator<DeleteVolunteerCommand> validator,       
+        [FromServices] IValidator<DeleteVolunteerCommand> validator,
         CancellationToken cancellationToken = default)
     {
         var request = new DeleteVolunteerRequest(VolunteerId: id);

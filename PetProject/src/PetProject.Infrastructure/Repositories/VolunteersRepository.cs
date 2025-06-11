@@ -28,7 +28,7 @@ public class VolunteersRepository : IVolunteersRepository
     {
         _dbContext.Volunteers.Attach(volunteer);
         await _dbContext.SaveChangesAsync(cancellationToken);
-        
+
         return volunteer.Id;
     }
 
@@ -67,5 +67,5 @@ public class VolunteersRepository : IVolunteersRepository
         return volunteer.Id;
     }
 
-    
+
 }
