@@ -10,22 +10,22 @@ using IFileProvider = PetProject.Application.Providers.IFileProvider;
 
 namespace PetProject.API.Controllers;
 
-public class FileController: ApplicationController
+public class FileController : ApplicationController
 {
-   
+
     private readonly string BUCKET_NAME = "photos";
     private readonly IFileProvider _fileProvider;
-    
+
     public FileController(IFileProvider fileProvider)
     {
         _fileProvider = fileProvider;
     }
-    [HttpPost] 
+    [HttpPost]
     public async Task<IActionResult> CreateFile(IFormFile file, CancellationToken cancellationToken)
     {
         await using var stream = file.OpenReadStream();
 
-        var fileData = new FileData(stream, BUCKET_NAME, Guid.NewGuid().ToString());
+        var fileData = new FileData(stream, BUCKET_NAME, Guid.NewGuid());
 
         var result = await _fileProvider.UploadFile(fileData, cancellationToken);
 
@@ -37,7 +37,7 @@ public class FileController: ApplicationController
 
     [HttpDelete("{objectName}")]
     public async Task<IActionResult> DeleteFile(
-    [FromRoute] Guid objectName, 
+    [FromRoute] Guid objectName,
     CancellationToken cancellationToken)
     {
         var fileMetaData = new FileMetaData(BUCKET_NAME, objectName);
