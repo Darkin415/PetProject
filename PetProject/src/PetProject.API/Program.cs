@@ -6,6 +6,8 @@ using PetProject.API.Validation;
 using PetProject.API.Middlewares;
 using Serilog;
 using Serilog.Events;
+using PetProject.Infrastructure.Providers;
+using PetProject.Application.Providers;
 
 var builder = WebApplication.CreateBuilder(args);
 Log.Logger = new LoggerConfiguration()
@@ -25,8 +27,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSerilog();
 builder.Services
-    .AddInfrastructure()
+    .AddInfrastructure(builder.Configuration)
     .AddApplication();
+builder.Services.AddScoped<IFileProvider, MinioProvider>();
 
 builder.Services.AddFluentValidationAutoValidation(configuration =>
 {

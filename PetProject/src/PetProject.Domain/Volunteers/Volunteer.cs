@@ -5,8 +5,8 @@ namespace PetProject.Domain.Volunteers;
 public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
 {
     private bool _isDeleted = false;
-    private readonly List<Pet> _pets = new List<Pet>();
-    
+    private readonly List<Pet> _pets = [];
+
 
     private Volunteer(VolunteerId id) : base(id)
     {
