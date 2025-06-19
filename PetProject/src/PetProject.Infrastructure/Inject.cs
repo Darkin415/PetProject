@@ -2,8 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Minio;
 using Minio.AspNetCore;
+using PetProject.Application.Providers;
 using PetProject.Application.Volunteers;
 using PetProject.Infrastructure.Options;
+using PetProject.Infrastructure.Providers;
 using PetProject.Infrastructure.Repositories;
 using MinioOptions = PetProject.Infrastructure.Options.MinioOptions;
 
@@ -37,6 +39,8 @@ public static class Inject
             options.WithCredentials(minioOptions.AccessKey, minioOptions.SecretKey);
             options.WithSSL(minioOptions.WithSsl);
         });
+
+        services.AddScoped<IFilesProvider, MinioProvider>();
 
         return services;
     }

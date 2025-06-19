@@ -88,4 +88,11 @@ public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
     {
         _isDeleted = false;
     }
+
+    public UnitResult<Error> AddPet(Pet pet)
+    {
+        // логика + валидация 
+        _pets.Add(pet);
+        return Result.Success<Error>();
+    }
 }

@@ -8,20 +8,21 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
     private Pet(PetId id) : base(id)
     {
     }
-    private Pet(
+    public Pet(
         PetId id,
         NickName nickname,
         View view,
         Breed breed,
-        Color color,
+        Color? color,
         StatusHealth statusHealth,
-        PhysicalAttributes attributes,
+        PhysicalAttributes? attributes,
         TelephonNumber telephoneNumber,
         CastrationStatus castrationStatus,
-        DateTime birthDate,
+        BirthDay birthDate,
         VaccinationStatus vaccinationStatus,
         StatusHelp status,
-        DateTime dateOfCreation) : base(id)
+        DateOfCreation dateOfCreation,
+        IReadOnlyList<Photos> photosList) : base(id)
     {
         Nickname = nickname;
         View = view;
@@ -35,10 +36,13 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
         VaccinationStatus = vaccinationStatus;
         Status = status;
         DateOfCreation = dateOfCreation;
+        Photos = photosList;
     }
     public NickName Nickname { get; private set; } = default!;
 
     public View View { get; private set; } = default!;
+
+    public IReadOnlyList<Photos> Photos { get; private set; } = new List<Photos>();
 
     public Breed Breed { get; private set; } = default!;
 
@@ -52,58 +56,13 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
 
     public CastrationStatus CastrationStatus { get; private set; } = default!;
 
-    public DateTime BirthDate { get; private set; }
+    public BirthDay BirthDate { get; private set; }
 
     public VaccinationStatus VaccinationStatus { get; private set; } = default!;
 
     public StatusHelp Status { get; private set; }
 
-    public DateTime DateOfCreation { get; private set; }
-
-    public static Result<Pet, string> Create(
-        NickName nickname,
-        View view,
-        Breed breed,
-        Color color,
-        StatusHealth statusHealth,
-        PhysicalAttributes attributes,
-        TelephonNumber telephonNumber,
-        CastrationStatus castrationStatus,
-        DateTime birthDate,
-        VaccinationStatus vaccinationStatus,
-        StatusHelp status,
-        DateTime dateOfCreation)
-    {
-
-        if (birthDate == DateTime.MinValue)
-        
-            return "Birthdate can not be null";
-        
-
-        if (dateOfCreation == DateTime.MinValue)
-        
-            return "Date of creation can not be null";
-        
-        else
-        {
-            var pet = new Pet(
-                PetId.NewGuidId(),
-                 nickname,
-                 view,
-                 breed,
-                 color,
-                 statusHealth,
-                 attributes,
-                 telephonNumber,
-                 castrationStatus,
-                 birthDate,
-                 vaccinationStatus,
-                 status,
-                 dateOfCreation);
-
-            return pet;
-        }
-    }
+    public DateOfCreation DateOfCreation { get; private set; }
 
     public void Delete()
     {

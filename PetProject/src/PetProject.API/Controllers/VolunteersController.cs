@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using PetProject.API.Contracts;
 using PetProject.API.Exctensions;
+using PetProject.Application.Volunteers.Create.Pet;
 using PetProject.Application.Volunteers.Create.SocialList;
 using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Application.Volunteers.Delete;
@@ -99,5 +101,57 @@ public class VolunteersController : ApplicationController
             return result.Error.ToResponse();
 
         return Ok(result.Value);
+    }
+
+    [HttpPost("{id:guid}/pet")]
+    public async Task<ActionResult> AddPet(
+        [FromRoute] Guid id,
+        [FromServices] AddPetHandler handler,
+        [FromServices] IValidator<AddPetCommand> validator,
+        [FromForm] AddPetRequest request,
+        CancellationToken cancellationToken
+        )
+    {
+        List<FileDto> photosDto = [];
+        try
+        {
+            foreach (var file in request.Photos)
+            {
+                var stream = file.OpenReadStream();
+                
+                photosDto.Add(new FileDto(
+                    stream, file.FileName, file.ContentType));
+            }
+            var command = new AddPetCommand(
+                id,
+                photosDto,
+                request.NickName,
+                request.View,
+                request.Attribute,
+                request.Color,
+                request.Breed,
+                request.StatusHealth,
+                request.OwnerTelephonNumber,
+                request.CastrationStatus,
+                request.VaccinationStatus,
+                request.BirthDate,
+                request.Status,
+                request.DateOfCreation
+                );
+
+            var result = await handler.Handle(command, cancellationToken);
+
+            if (result.IsFailure)
+                return result.Error.ToResponse();
+
+            return Ok(result.Value);
+        }
+        finally
+        {
+            foreach (var photo in photosDto)
+            {
+                await photo.Content.DisposeAsync();
+            }
+        }
     }
 }

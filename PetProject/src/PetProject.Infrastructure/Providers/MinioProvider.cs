@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace PetProject.Infrastructure.Providers;
 
-public class MinioProvider : IFileProvider
+public class MinioProvider : IFilesProvider
 {
     private readonly IMinioClient _minioClient;
     private readonly ILogger<MinioProvider> _logger;

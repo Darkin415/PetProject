@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PetProject.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial2 : Migration
+    public partial class Initial3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,21 +35,22 @@ namespace PetProject.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "timestamp with time zone", maxLength: 10, nullable: false),
                     Status = table.Column<int>(type: "integer", maxLength: 10, nullable: false),
-                    DateOfCreation = table.Column<DateTime>(type: "timestamp with time zone", maxLength: 10, nullable: false),
                     is_deleted = table.Column<bool>(type: "boolean", nullable: false),
                     volunteer_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Attributes_Height = table.Column<double>(type: "double precision", maxLength: 10, nullable: false),
-                    attributes = table.Column<double>(type: "double precision", maxLength: 10, nullable: false),
+                    height = table.Column<double>(type: "double precision", maxLength: 10, nullable: false),
+                    weight = table.Column<double>(type: "double precision", maxLength: 10, nullable: false),
+                    birth_date = table.Column<DateTime>(type: "timestamp with time zone", maxLength: 100, nullable: false),
                     breed = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     castration_status = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     color = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
+                    creation_date = table.Column<DateTime>(type: "timestamp with time zone", maxLength: 100, nullable: false),
                     nick_name = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     owner_telephon_number = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     status_health = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     vaccination_status = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    View = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false)
+                    View = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
+                    Photos = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {

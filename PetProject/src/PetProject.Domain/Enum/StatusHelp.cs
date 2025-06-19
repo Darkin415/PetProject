@@ -1,9 +1,8 @@
-﻿namespace PetProject.Domain
+﻿namespace PetProject.Domain;
+
+public enum StatusHelp
 {
-    public enum StatusHelp
-    {
-        FoundedHome,
-        SeekingHome,
-        BeUnderTreatment
-    };
-}
+    FoundedHome,
+    SeekingHome,
+    BeUnderTreatment
+};

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PetProject.Application.Providers;
 
-public interface IFileProvider
+public interface IFilesProvider
 {
     Task<Result<string, Error>> UploadFile(FileData fileData, CancellationToken cancellationtoken = default);
     Task<Result<string, Error>> DeleteFile(FileMetaData fileMetaData, CancellationToken cancellationtoken = default);

@@ -20,7 +20,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         builder.ComplexProperty(p => p.Nickname, g =>
         {
             g.Property(g => g.Name)
-             .HasColumnName("nick_name")
+            .HasColumnName("nick_name")
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
         });
@@ -28,7 +28,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         builder.ComplexProperty(p => p.View, g =>
         {
             g.Property(g => g.Value)
-             .HasColumnName("View")
+            .HasColumnName("View")
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
         });
@@ -36,7 +36,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         builder.ComplexProperty(p => p.Breed, g =>
         {
             g.Property(g => g.Name)
-             .HasColumnName("breed")
+            .HasColumnName("breed")
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
         });
@@ -44,7 +44,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         builder.ComplexProperty(p => p.Color, g =>
         {
             g.Property(g => g.Value)
-             .HasColumnName("color")
+            .HasColumnName("color")
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
         });
@@ -60,10 +60,11 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         builder.ComplexProperty(p => p.Attributes, g =>
         {
             g.Property(g => g.Weight)
-             .HasColumnName("attributes")
+            .HasColumnName("weight")
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
             g.Property(g => g.Height)
+            .HasColumnName("height")
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
         });
@@ -93,21 +94,40 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         });
 
 
-        builder.Property(p => p.BirthDate)
+        builder.ComplexProperty(p => p.BirthDate, b =>
+        {
+            b.Property(b => b.BirthDate)
+            .HasColumnName("birth_date")
             .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+            .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
+        });
 
-        
         builder.Property(p => p.Status)
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
 
-        builder.Property(p => p.DateOfCreation)
+
+        builder.ComplexProperty(p => p.DateOfCreation, b =>
+        {
+            b.Property(b => b.CreationDate)
+            .HasColumnName("creation_date")
             .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+            .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
+        });
+
 
         builder.Property<bool>("_isDeleted")
             .UsePropertyAccessMode(PropertyAccessMode.Field)
             .HasColumnName("is_deleted");
+
+        builder.OwnsMany(p => p.Photos, sp =>
+        {
+            sp.ToJson("Photos");
+
+            sp.Property(s => s.PathToStorage)
+                .IsRequired()
+                .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH)
+                .HasColumnName("path_to_storage");
+        });
     }
 }
