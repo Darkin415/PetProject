@@ -1,5 +1,5 @@
 ﻿namespace PetProject.Domain.Shared.ValueObject;
-
+using System;
 public record Error
 {
     public const string SEPARATOR = "||";

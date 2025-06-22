@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.Extensions.Logging;
+using PetProject.Application.Database;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
 using PetProject.Domain.Volunteers;
@@ -10,12 +11,15 @@ public class UpdateSocialListHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ILogger<UpdateSocialListHandler> _logger;
+    private readonly IUnitOfWork _unitOfWork;
     public UpdateSocialListHandler(
         IVolunteersRepository volunteersRepository,
+        IUnitOfWork unitOfWork,
         ILogger<UpdateSocialListHandler> logger)
     {
         _volunteersRepository = volunteersRepository;
         _logger = logger;
+        _unitOfWork = unitOfWork;
     }
     public async Task<Result<Guid, Error>> Handle(
     UpdateSocialNetworksCommand command,
@@ -40,10 +44,10 @@ public class UpdateSocialListHandler
 
         volunteerResult.Value.UpdateSocialList(socialMediasList);
 
-        var result = await _volunteersRepository.Save(volunteerResult.Value, cancellationToken);
+        await _unitOfWork.SaveChanges(cancellationToken);
 
         _logger.LogInformation("Volunteer's social network has been updated with id {volunteerId}", volunteerId);
 
-        return result;
+        return volunteerResult.Value.Id.Value;
     }
 }

@@ -1,7 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Volunteers.Create.Volunteer;
-using PetProject.Domain;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
 using PetProject.Domain.Volunteers;
@@ -69,6 +68,7 @@ public class CreateVolunteerHandler
             descriptionResult.Value,
             phoneResult.Value,
             socialMediasList);
+
         await _volunteersRepository.Add(volunteerToCreate, cancellationToken);
         _logger.LogInformation("Created volunteer with id {volunteerId}", volunteerId);
 

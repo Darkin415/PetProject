@@ -1,7 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
-using PetProject.Domain.Shared.ValueObject;
 
-namespace PetProject.Domain;
+namespace PetProject.Domain.Shared.ValueObject;
 
 public record Email
 {

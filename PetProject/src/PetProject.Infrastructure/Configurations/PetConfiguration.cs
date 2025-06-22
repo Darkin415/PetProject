@@ -17,29 +17,15 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             id => id.Value,
             guid => PetId.Create(guid).Value);
 
+        
+
         builder.ComplexProperty(p => p.Nickname, g =>
         {
             g.Property(g => g.Name)
             .HasColumnName("nick_name")
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-        });
-
-        builder.ComplexProperty(p => p.View, g =>
-        {
-            g.Property(g => g.Value)
-            .HasColumnName("View")
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-        });
-
-        builder.ComplexProperty(p => p.Breed, g =>
-        {
-            g.Property(g => g.Name)
-            .HasColumnName("breed")
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-        });
+        });             
 
         builder.ComplexProperty(p => p.Color, g =>
         {
@@ -122,12 +108,20 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
 
         builder.OwnsMany(p => p.Photos, sp =>
         {
-            sp.ToJson("Photos");
+        sp.ToJson("Photos");
 
-            sp.Property(s => s.PathToStorage)
+            sp.Property(f => f.PathToStorage)
+                .HasConversion(
+                p => p.Path,
+                value => FilePath.Create(value).Value)
                 .IsRequired()
-                .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH)
-                .HasColumnName("path_to_storage");
+                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);                                
+        });
+
+        builder.ComplexProperty(p => p.PetInfo, pi =>
+        {
+            pi.Property(x => x.SpeciesId).HasColumnName("SpeciesId");
+            pi.Property(x => x.BreedId).HasColumnName("BreedId");
         });
     }
 }

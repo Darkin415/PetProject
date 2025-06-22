@@ -1,16 +1,14 @@
 ﻿using PetProject.Application.Volunteers.Create.Pet;
-using PetProject.Domain;
+using PetProject.Domain.Enum;
 
 namespace PetProject.API.Contracts;
 
 public record AddPetRequest(
     string NickName,
-    string View,
-    double Weight,
-    double Height,
-    string Color,
-    AttributeDto Attribute,
+    string Species,
     string Breed,
+    string Color,
+    AttributeDto Attribute,    
     string StatusHealth,
     string OwnerTelephonNumber,
     string CastrationStatus,

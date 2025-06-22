@@ -2,6 +2,7 @@
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
 using Microsoft.Extensions.Logging;
+using PetProject.Application.Database;
 
 namespace PetProject.Application.Volunteers.UpdateMainInfo;
 
@@ -13,10 +14,13 @@ public class UpdateMainInfoHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ILogger<UpdateMainInfoHandler> _logger;
+    private readonly IUnitOfWork _unitOfWork;
     public UpdateMainInfoHandler(
         IVolunteersRepository volunteersRepository,
-        ILogger<UpdateMainInfoHandler> logger)
+        ILogger<UpdateMainInfoHandler> logger,
+        IUnitOfWork unitOfWork)
     {
+        _unitOfWork = unitOfWork;
         _volunteersRepository = volunteersRepository;
         _logger = logger;
     }
@@ -43,10 +47,10 @@ public class UpdateMainInfoHandler
 
         volunteerResult.Value.UpdateMainInfo(fullNameResult, description, telephonNumber);
 
-        var result = await _volunteersRepository.Save(volunteerResult.Value, cancellationToken);
+        await _unitOfWork.SaveChanges(cancellationToken);
 
         _logger.LogInformation("Updated volunteer with id {volunteerId}" , volunteerId);
 
-        return result;
+        return volunteerResult.Value.Id.Value;
     }
 }

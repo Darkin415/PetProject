@@ -1,4 +1,4 @@
-﻿using PetProject.Domain;
+﻿using PetProject.Domain.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +9,12 @@ namespace PetProject.Application.Volunteers.Create.Pet;
 
 public record AddPetCommand(
     Guid VolunteerId, 
-    IEnumerable<FileDto> Photos,
+    IEnumerable<CreateFileDto> Photos,
     string NickName,
-    string View,
+    string Breed,
+    string Species,
     AttributeDto PhysicalAttribute,
     string Color,
-    string Breed,
     string StatusHealth,
     string OwnerTelephonNumber,
     string CastrationStatus,
@@ -26,6 +26,9 @@ public record AddPetCommand(
 
 public record FileDto(Stream Content,string FileName, string ContentType);
 
+public record CreateFileDto(Stream Content, string FileName);
+
 public record AttributeDto(double Weight, double Height);
+
 
 
