@@ -4,10 +4,13 @@ using PetProject.Domain.PetSpecies;
 using PetProject.Domain.Shared;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
+using System.Collections.Generic;
 namespace PetProject.Domain.Volunteers;
 public class Pet : Shared.Entity<PetId>, ISoftDeletable
 {
     private bool _isDeleted = false;
+    private readonly List<Photos> _photos = [];
+
     private Pet(PetId id) : base(id)
     {
     }
@@ -23,8 +26,8 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
         BirthDay birthDate,
         VaccinationStatus vaccinationStatus,
         StatusHelp status,
-        DateOfCreation dateOfCreation,
-        IReadOnlyList<Photos> photosList) : base(id)
+        DateOfCreation dateOfCreation
+        ) : base(id)
     {
         Nickname = nickname;
         PetInfo = petInfo;
@@ -36,12 +39,11 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
         BirthDate = birthDate;
         VaccinationStatus = vaccinationStatus;
         Status = status;
-        DateOfCreation = dateOfCreation;
-        Photos = photosList;
+        DateOfCreation = dateOfCreation;     
     }
     public NickName Nickname { get; private set; } = default!;
-   
-    public IReadOnlyList<Photos> Photos { get; private set; } = new List<Photos>();
+
+    public IReadOnlyList<Photos> Photos => _photos;
 
     public PetInfo PetInfo { get; private set; }
 
@@ -72,6 +74,23 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
     public void Restore()
     {
         _isDeleted = false;
+    }
+
+    public UnitResult<Error> RemovePhotos(IEnumerable<Photos> photos)
+    {
+        foreach (var photo in photos)
+        {
+            _photos.Remove(photo);
+        }
+
+        return Result.Success<Error>();
+    }
+
+    public UnitResult<Error> AddPhotos(IEnumerable<Photos> photos)
+    {
+        _photos.AddRange(photos.ToList());
+
+        return UnitResult.Success<Error>();
     }
 }
 

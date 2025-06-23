@@ -4,7 +4,7 @@ using PetProject.Domain;
 using PetProject.Domain.PetSpecies;
 using PetProject.Domain.Shared.ValueObject;
 
-namespace PetProject.Application.Volunteers.Create.Pet;
+namespace PetProject.Application.Volunteers.Create.Pet.AddPet;
 
 public class AddPetCommandValidator : AbstractValidator<AddPetCommand>
 {
@@ -16,6 +16,5 @@ public class AddPetCommandValidator : AbstractValidator<AddPetCommand>
         RuleFor(a => a.CastrationStatus).MustBeValueObject(CastrationStatus.Create);
         RuleFor(a => a.Color).MustBeValueObject(Color.Create);
         RuleFor(a => a.DateOfCreation).MustBeValueObject(DateOfCreation.Create);
-        RuleFor(a => a.Photos).NotEmpty();
     }
 }

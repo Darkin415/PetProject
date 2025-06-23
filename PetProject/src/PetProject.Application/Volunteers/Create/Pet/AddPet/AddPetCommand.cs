@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetProject.Application.Volunteers.Create.Pet;
+namespace PetProject.Application.Volunteers.Create.Pet.AddPet;
 
 public record AddPetCommand(
-    Guid VolunteerId, 
-    IEnumerable<CreateFileDto> Photos,
+    Guid VolunteerId,
     string NickName,
     string Breed,
     string Species,

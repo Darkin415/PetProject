@@ -93,7 +93,7 @@ public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
 
     public UnitResult<Error> AddPet(Pet pet)
     {
-        // логика + валидация 
+        
         _pets.Add(pet);
         return Result.Success<Error>();
     }

@@ -17,7 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace PetProject.Application.Volunteers.Create.Pet;
+namespace PetProject.Application.Volunteers.Create.Pet.AddPet;
 
 
 public class AddPetHandler
@@ -50,7 +50,7 @@ public class AddPetHandler
         try
         {
             var volunteerResult = await _volunteersRepository
-                .GetById(VolunteerId.Create(command.VolunteerId).Value, cancellationToken);
+                .GetVolunteerById(VolunteerId.Create(command.VolunteerId).Value, cancellationToken);
 
             if (volunteerResult.IsFailure)
                 return volunteerResult.Error;
@@ -87,28 +87,7 @@ public class AddPetHandler
 
             var status = command.Status;
 
-            List<FileData> filesData = [];
-            
-
-            foreach (var file in command.Photos)
-            {
-                var extensions = Path.GetExtension(file.FileName);
-
-                var filePath = FilePath.Create(Guid.NewGuid(), extensions);
-                if (filePath.IsFailure)
-                    return filePath.Error;
-
-                var fileContent = new FileData(file.Content, filePath.Value, BUCKET_NAME);
-
-                filesData.Add(fileContent);             
-            }
-
-            var photosFile = filesData
-                .Select(f => f.FilePath)
-                .Select(f => new Photos(f))
-                .ToList();
-
-            var pet = new PetProject.Domain.Volunteers.Pet(
+            var pet = new Domain.Volunteers.Pet(
             petId,
             nickName,
             petInfo,
@@ -120,18 +99,12 @@ public class AddPetHandler
             birthDate,
             vaccinationStatus,
             status,
-            dateOfCreation,
-            photosFile
+            dateOfCreation
             );
 
             volunteerResult.Value.AddPet(pet);
 
             await _unitOfWork.SaveChanges(cancellationToken);
-
-            var uploadResult = await _fileProvider.UploadFiles(filesData, cancellationToken);
-
-            if (uploadResult.IsFailure)
-                return uploadResult.Error;
 
             transaction.Commit();
 
@@ -146,6 +119,6 @@ public class AddPetHandler
             transaction.Rollback();
 
             return Error.Failure("volunteer.pet.failure", "Can not add pet to volunteer - {id}");
-        }                                                  
+        }
     }
 }

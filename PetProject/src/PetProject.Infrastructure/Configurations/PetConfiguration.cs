@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using PetProject.Domain.PetSpecies;
 using PetProject.Domain.Shared;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Volunteers;
@@ -17,7 +18,8 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             id => id.Value,
             guid => PetId.Create(guid).Value);
 
-        
+       
+
 
         builder.ComplexProperty(p => p.Nickname, g =>
         {
@@ -120,8 +122,17 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
 
         builder.ComplexProperty(p => p.PetInfo, pi =>
         {
-            pi.Property(x => x.SpeciesId).HasColumnName("SpeciesId");
-            pi.Property(x => x.BreedId).HasColumnName("BreedId");
+            pi.Property(x => x.SpeciesId)
+            .HasColumnName("SpeciesId")
+            .HasConversion(
+                id => id.Value,
+                guid => SpeciesId.Create(guid).Value
+                );
+            pi.Property(x => x.BreedId)
+            .HasColumnName("BreedId")
+            .HasConversion(
+                id => id.Value,
+                guid => BreedId.Create(guid).Value);
         });
     }
 }

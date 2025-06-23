@@ -28,7 +28,7 @@ public class UpdateSocialListHandler
 
         var volunteerId = new VolunteerId(command.VolunteerId);
 
-        var volunteerResult = await _volunteersRepository.GetById(volunteerId, cancellationToken);
+        var volunteerResult = await _volunteersRepository.GetVolunteerById(volunteerId, cancellationToken);
         if (volunteerResult.IsFailure)
             return volunteerResult.Error;
              

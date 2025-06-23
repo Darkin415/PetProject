@@ -20,6 +20,6 @@ public class BreedConfiguration : IEntityTypeConfiguration<Breed>
         builder.Property(p => p.Id)
             .HasConversion(
             id => id.Value,
-            guid => new BreedId(guid));
+            guid => BreedId.Create(guid).Value);
     }
 }

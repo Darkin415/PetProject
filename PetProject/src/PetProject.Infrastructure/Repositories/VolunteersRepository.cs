@@ -10,6 +10,7 @@ namespace PetProject.Infrastructure.Repositories;
 public class VolunteersRepository : IVolunteersRepository
 {
     private readonly ApplicationDbContext _dbContext;
+    private List<Pet> _pets = [];
     public VolunteersRepository(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -27,7 +28,7 @@ public class VolunteersRepository : IVolunteersRepository
      
         return volunteer.Id.Value;
     }
-    public async Task<Result<Volunteer, Error>> GetById(VolunteerId volunteerId, CancellationToken cancellationToken = default)
+    public async Task<Result<Volunteer, Error>> GetVolunteerById(VolunteerId volunteerId, CancellationToken cancellationToken = default)
     {
         var volunteer = await _dbContext.Volunteers
             .Include(v => v.Pets)
@@ -57,5 +58,20 @@ public class VolunteersRepository : IVolunteersRepository
         _dbContext.Volunteers.Remove(volunteer);
         
         return volunteer.Id;
-    } 
+    }
+
+    public Result<Pet, Error> GetByPetId(PetId id)
+    {
+        var volunteer = _dbContext.Volunteers
+        .Include(v => v.Pets) 
+        .FirstOrDefault(v => v.Pets.Any(p => p.Id == id));
+
+        if (volunteer == null)
+            return Errors.General.NotFound();
+
+        var pet = volunteer.Pets.First(p => p.Id == id);
+        return pet;       
+    }
+
+    
 }

@@ -27,13 +27,16 @@ public class DeleteVolunteerHandler
 
     public async Task<Result<Guid, Error>> Handle(
     DeleteVolunteerCommand command,
+
     CancellationToken cancellationToken = default)
     {
         var volunteerId = new VolunteerId(command.Request.VolunteerId);
 
-        var volunteerResult = await _volunteersRepository.GetById(volunteerId, cancellationToken);
+        var volunteerResult = await _volunteersRepository.GetVolunteerById(volunteerId, cancellationToken);
         if (volunteerResult.IsFailure)
             return volunteerResult.Error;
+
+        var result = _volunteersRepository.Delete(volunteerResult.Value, cancellationToken);
 
         await _unitOfWork.SaveChanges(cancellationToken);
 
@@ -44,4 +47,3 @@ public class DeleteVolunteerHandler
 
 }
 
-// доделать ID-B-14 по возможности и расписать ее в Word .

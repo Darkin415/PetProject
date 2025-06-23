@@ -22,6 +22,7 @@ public class MinioProvider : IFilesProvider
     private const int MAX_DEGREE_OF_PARALLELISM = 10;
     private readonly IMinioClient _minioClient;
     private readonly ILogger<MinioProvider> _logger;
+    private const string BUCKET_NAME = "photos";
     public MinioProvider(IMinioClient minioClient, ILogger<MinioProvider> logger)
     {
         _minioClient = minioClient;
@@ -93,6 +94,40 @@ public class MinioProvider : IFilesProvider
             semaphoreSlim.Release();
         }
     }
+    
+    public async Task<Result<string, Error>> RemoveObject(
+        string fileName,
+        SemaphoreSlim semaphoreSlim,
+        CancellationToken cancellationToken)
+    {
+        await semaphoreSlim.WaitAsync(cancellationToken);
+
+        var removeObjectArgs = new RemoveObjectArgs()
+            .WithBucket(BUCKET_NAME)
+            .WithObject(fileName);
+
+        try
+        {
+            await _minioClient.RemoveObjectAsync(removeObjectArgs, cancellationToken);
+
+            return fileName;
+        }
+        catch (Exception ex)
+        {
+
+            _logger.LogError(ex,
+                "Fail to remove file from minio with name {fileName} in bucket {BUCKET_NAME}",
+                fileName,
+                BUCKET_NAME);
+
+            return Error.Failure("file.remove", "Fail to remove file from minio");
+        }
+        finally
+        {
+            semaphoreSlim.Release();
+        }
+    }
+    
 
     public async Task IfBucketsNotExistCreateBucket(IEnumerable<FileData> filesData, CancellationToken cancellationToken)
     {
@@ -115,18 +150,29 @@ public class MinioProvider : IFilesProvider
             }
         }
     }
-
-    public async Task<Result<string, Error>> DeleteFile(FileMetaData fileMetaData, CancellationToken cancellationToken)
+    public async Task<Result<IReadOnlyList<string>, Error>> RemoveFiles(
+        IEnumerable<string> filesNames,
+        CancellationToken cancellationToken = default)
     {
+        var semaphoreSlim = new SemaphoreSlim(MAX_DEGREE_OF_PARALLELISM);
+        var filesNamesList = filesNames.ToList();
+
         try
         {
-            var removeObjectArgs = new RemoveObjectArgs()
-                .WithBucket(fileMetaData.BucketName)
-                .WithObject(fileMetaData.ObjectName.ToString());
+            var tasks = filesNamesList.Select(async fileName =>
+                await RemoveObject(fileName, semaphoreSlim, cancellationToken));
 
-            await _minioClient.RemoveObjectAsync(removeObjectArgs, cancellationToken);
+            var fileNamesResult = await Task.WhenAll(tasks);
 
-            return fileMetaData.ObjectName.ToString();
+            if (fileNamesResult.Any(p => p.IsFailure))
+            {
+                _logger.LogError("Ошибка удаления FileName: Error");
+                return fileNamesResult.First().Error;
+            }             
+
+            var results = fileNamesResult.Select(p => p.Value).ToList();
+            
+            return results;
         }
 
         catch (Exception ex)

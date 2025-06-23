@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.Extensions.Logging;
+using PetProject.Application.Database;
 using PetProject.Application.Volunteers.Create.Volunteer;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
@@ -15,12 +16,15 @@ public class CreateVolunteerHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ILogger<CreateVolunteerHandler> _logger;
+    private readonly IUnitOfWork _unitOfWork;
     public CreateVolunteerHandler(
         IVolunteersRepository volunteersRepository,
+        IUnitOfWork unitOfWork,
         ILogger<CreateVolunteerHandler> logger)
     {
         _volunteersRepository = volunteersRepository;
         _logger = logger;
+        _unitOfWork = unitOfWork;
     }
     public async Task<Result<Guid, Error>> Handle(AddVolunteerCommand command, CancellationToken cancellationToken = default)
     {
@@ -70,6 +74,9 @@ public class CreateVolunteerHandler
             socialMediasList);
 
         await _volunteersRepository.Add(volunteerToCreate, cancellationToken);
+
+        await _unitOfWork.SaveChanges(cancellationToken);
+
         _logger.LogInformation("Created volunteer with id {volunteerId}", volunteerId);
 
         return (Guid)volunteerToCreate.Id;

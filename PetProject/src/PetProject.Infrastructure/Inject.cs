@@ -18,6 +18,8 @@ public static class Inject
     {
         services.AddScoped<ApplicationDbContext>();
 
+
+
         services.AddScoped<IVolunteersRepository, VolunteersRepository>();
 
         services.AddScoped<ISpeciesRepository, SpeciesRepository>();

@@ -1,4 +1,4 @@
-﻿using PetProject.Application.Volunteers.Create.Pet;
+﻿using PetProject.Application.Volunteers.Create.Pet.AddPet;
 
 namespace PetProject.API.Processors;
 
@@ -8,7 +8,7 @@ public class FormFileProcessor : IAsyncDisposable
 
     public List<CreateFileDto> Process(IFormFileCollection files)
     {
-        foreach(var file in files)
+        foreach (var file in files)
         {
             var stream = file.OpenReadStream();
 
