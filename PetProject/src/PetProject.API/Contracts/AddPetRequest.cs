@@ -1,4 +1,5 @@
 ﻿using PetProject.Application.Volunteers.Create.Pet.AddPet;
+using PetProject.Contracts.Dtos;
 using PetProject.Domain.Enum;
 
 namespace PetProject.API.Contracts;

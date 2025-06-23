@@ -4,6 +4,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Database;
 using PetProject.Application.Providers;
+using PetProject.Contracts.Command;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
 using PetProject.Domain.Volunteers;

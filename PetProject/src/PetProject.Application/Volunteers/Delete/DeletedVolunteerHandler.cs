@@ -1,15 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Database;
+using PetProject.Contracts.Command;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
 
 namespace PetProject.Application.Volunteers.Delete;
-public record DeleteVolunteerCommand(
-
-    DeleteVolunteerRequest Request
-);
-
 public class DeleteVolunteerHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;

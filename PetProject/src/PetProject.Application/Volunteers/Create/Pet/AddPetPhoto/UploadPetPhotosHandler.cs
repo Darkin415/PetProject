@@ -5,6 +5,7 @@ using PetProject.Application.Database;
 using PetProject.Application.FileProvider;
 using PetProject.Application.Providers;
 using PetProject.Application.Volunteers.Create.Pet.AddPet;
+using PetProject.Contracts.Command;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
 using PetProject.Domain.Volunteers;
@@ -82,7 +83,6 @@ public class UploadPetPhotosHandler
             return uploadResult.Error;
         }
             
-
         var petPhotos = photosData
             .Select(f => f.FilePath)
             .Select(f => new Photos(f))
@@ -102,8 +102,3 @@ public class UploadPetPhotosHandler
         return filesPaths.ToList();
     }
 }
-
-
-    
-
-

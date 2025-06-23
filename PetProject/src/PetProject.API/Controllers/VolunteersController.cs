@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using PetProject.API.Contracts;
-using PetProject.API.Exctensions;
 using PetProject.API.Processors;
 using PetProject.Application.Volunteers.Create.Pet.AddPet;
 using PetProject.Application.Volunteers.Create.Pet.AddPetPhoto;
@@ -10,6 +9,9 @@ using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Application.Volunteers.Delete;
 using PetProject.Application.Volunteers.DeletePhotos;
 using PetProject.Application.Volunteers.UpdateMainInfo;
+using PetProject.Contracts.Command;
+using PetProject.Contracts.Request;
+using PetProject.Contracts.ResponseExtensions;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Volunteers;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
@@ -112,11 +114,9 @@ public class VolunteersController : ApplicationController
         [FromServices] AddPetHandler handler,
         [FromServices] IValidator<AddPetCommand> validator,
         [FromForm] AddPetRequest request,
-        CancellationToken cancellationToken
-        )
-    {
-        await using var fileProcessor = new FormFileProcessor();
-
+        CancellationToken cancellationToken)
+    {      
+        
         var command = new AddPetCommand(
                 id,           
                 request.NickName,
@@ -130,8 +130,7 @@ public class VolunteersController : ApplicationController
                 request.VaccinationStatus,
                 request.BirthDate,
                 request.Status,
-                request.DateOfCreation
-                );
+                request.DateOfCreation);
 
         var result = await handler.Handle(command, cancellationToken);
 

@@ -5,6 +5,7 @@ using PetProject.Application.Database;
 using PetProject.Application.FileProvider;
 using PetProject.Application.Providers;
 using PetProject.Application.Volunteers.Create.SocialList;
+using PetProject.Contracts.Command;
 using PetProject.Domain;
 using PetProject.Domain.PetSpecies;
 using PetProject.Domain.Shared.Ids;
@@ -44,9 +45,7 @@ public class AddPetHandler
     public async Task<Result<Guid, Error>> Handle(
     AddPetCommand command,
     CancellationToken cancellationToken = default)
-    {
-        var transaction = await _unitOfWork.BeginTransaction(cancellationToken);
-
+    {       
         try
         {
             var volunteerResult = await _volunteersRepository
@@ -99,14 +98,11 @@ public class AddPetHandler
             birthDate,
             vaccinationStatus,
             status,
-            dateOfCreation
-            );
+            dateOfCreation);
 
             volunteerResult.Value.AddPet(pet);
 
-            await _unitOfWork.SaveChanges(cancellationToken);
-
-            transaction.Commit();
+            await _unitOfWork.SaveChanges(cancellationToken);       
 
             return pet.Id.Value;
         }
@@ -114,9 +110,7 @@ public class AddPetHandler
         catch (Exception ex)
         {
 
-            _logger.LogError(ex, "Can not add pet to volunteer - {id} in transaction", command.VolunteerId);
-
-            transaction.Rollback();
+            _logger.LogError(ex, "Can not add pet to volunteer - {id} in transaction", command.VolunteerId);        
 
             return Error.Failure("volunteer.pet.failure", "Can not add pet to volunteer - {id}");
         }

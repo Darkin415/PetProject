@@ -3,13 +3,9 @@ using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Database;
+using PetProject.Contracts.Command;
 
 namespace PetProject.Application.Volunteers.UpdateMainInfo;
-
-public record UpdateMainInfoCommand(
-    Guid VolunteerId,
-    UpdateMainInfoRequest Request);
-
 public class UpdateMainInfoHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;

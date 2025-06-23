@@ -1,9 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using PetProject.API.Response;
+using PetProject.Contracts;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Results;
-using static PetProject.API.Response.Envelope;
+using static PetProject.Contracts.Envelope;
 
 namespace PetProject.API.Validation;
 

@@ -1,4 +1,5 @@
 ﻿using PetProject.Application.Volunteers.Create.Pet.AddPet;
+using PetProject.Contracts.Dtos;
 
 namespace PetProject.API.Processors;
 
