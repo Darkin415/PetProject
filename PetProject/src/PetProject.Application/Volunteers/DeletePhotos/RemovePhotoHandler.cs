@@ -78,9 +78,7 @@ public class RemovePhotoHandler
         }         
 
         await _unitOfWork.SaveChanges(cancellationToken);
-
-        _logger.LogInformation("Photos for pet were removed");
-
+      
         var photosPaths = photoPaths.Select(x => x.Path);
 
         return photosPaths.ToList();       
