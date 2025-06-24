@@ -26,10 +26,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSerilog();
+
 builder.Services
     .AddInfrastructure(builder.Configuration)
     .AddApplication();
-builder.Services.AddScoped<IFileProvider, MinioProvider>();
+
+
+
 
 builder.Services.AddFluentValidationAutoValidation(configuration =>
 {

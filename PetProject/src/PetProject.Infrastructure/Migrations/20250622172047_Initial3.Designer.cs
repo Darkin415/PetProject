@@ -13,8 +13,8 @@ using PetProject.Infrastructure;
 namespace PetProject.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250611063458_Initial2")]
-    partial class Initial2
+    [Migration("20250622172047_Initial3")]
+    partial class Initial3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,18 +26,43 @@ namespace PetProject.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("PetProject.Domain.Volunteers.Pet", b =>
+            modelBuilder.Entity("PetProject.Domain.PetSpecies.Breed", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("BirthDate")
-                        .HasMaxLength(10)
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<Guid?>("SpeciesId")
+                        .HasColumnType("uuid");
 
-                    b.Property<DateTime>("DateOfCreation")
-                        .HasMaxLength(10)
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SpeciesId");
+
+                    b.ToTable("breed", (string)null);
+                });
+
+            modelBuilder.Entity("PetProject.Domain.PetSpecies.Species", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("species", (string)null);
+                });
+
+            modelBuilder.Entity("PetProject.Domain.Volunteers.Pet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Status")
                         .HasMaxLength(10)
@@ -56,23 +81,23 @@ namespace PetProject.Infrastructure.Migrations
 
                             b1.Property<double>("Height")
                                 .HasMaxLength(10)
-                                .HasColumnType("double precision");
+                                .HasColumnType("double precision")
+                                .HasColumnName("height");
 
                             b1.Property<double>("Weight")
                                 .HasMaxLength(10)
                                 .HasColumnType("double precision")
-                                .HasColumnName("attributes");
+                                .HasColumnName("weight");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("Breed", "PetProject.Domain.Volunteers.Pet.Breed#Breed", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("BirthDate", "PetProject.Domain.Volunteers.Pet.BirthDate#BirthDay", b1 =>
                         {
                             b1.IsRequired();
 
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasMaxLength(10)
-                                .HasColumnType("character varying(10)")
-                                .HasColumnName("breed");
+                            b1.Property<DateTime>("BirthDate")
+                                .HasMaxLength(100)
+                                .HasColumnType("timestamp with time zone")
+                                .HasColumnName("birth_date");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("CastrationStatus", "PetProject.Domain.Volunteers.Pet.CastrationStatus#CastrationStatus", b1 =>
@@ -97,6 +122,16 @@ namespace PetProject.Infrastructure.Migrations
                                 .HasColumnName("color");
                         });
 
+                    b.ComplexProperty<Dictionary<string, object>>("DateOfCreation", "PetProject.Domain.Volunteers.Pet.DateOfCreation#DateOfCreation", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<DateTime>("CreationDate")
+                                .HasMaxLength(100)
+                                .HasColumnType("timestamp with time zone")
+                                .HasColumnName("creation_date");
+                        });
+
                     b.ComplexProperty<Dictionary<string, object>>("Nickname", "PetProject.Domain.Volunteers.Pet.Nickname#NickName", b1 =>
                         {
                             b1.IsRequired();
@@ -119,6 +154,19 @@ namespace PetProject.Infrastructure.Migrations
                                 .HasColumnName("owner_telephon_number");
                         });
 
+                    b.ComplexProperty<Dictionary<string, object>>("PetInfo", "PetProject.Domain.Volunteers.Pet.PetInfo#PetInfo", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<Guid>("BreedId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("BreedId");
+
+                            b1.Property<Guid>("SpeciesId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("SpeciesId");
+                        });
+
                     b.ComplexProperty<Dictionary<string, object>>("StatusHealth", "PetProject.Domain.Volunteers.Pet.StatusHealth#StatusHealth", b1 =>
                         {
                             b1.IsRequired();
@@ -139,17 +187,6 @@ namespace PetProject.Infrastructure.Migrations
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
                                 .HasColumnName("vaccination_status");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("View", "PetProject.Domain.Volunteers.Pet.View#View", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasMaxLength(10)
-                                .HasColumnType("character varying(10)")
-                                .HasColumnName("View");
                         });
 
                     b.HasKey("Id");
@@ -229,6 +266,13 @@ namespace PetProject.Infrastructure.Migrations
                     b.ToTable("volunteers", (string)null);
                 });
 
+            modelBuilder.Entity("PetProject.Domain.PetSpecies.Breed", b =>
+                {
+                    b.HasOne("PetProject.Domain.PetSpecies.Species", null)
+                        .WithMany("Breeds")
+                        .HasForeignKey("SpeciesId");
+                });
+
             modelBuilder.Entity("PetProject.Domain.Volunteers.Pet", b =>
                 {
                     b.HasOne("PetProject.Domain.Volunteers.Volunteer", null)
@@ -236,6 +280,32 @@ namespace PetProject.Infrastructure.Migrations
                         .HasForeignKey("volunteer_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.OwnsMany("PetProject.Domain.Volunteers.Photos", "Photos", b1 =>
+                        {
+                            b1.Property<Guid>("PetId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("PathToStorage")
+                                .IsRequired()
+                                .HasMaxLength(10)
+                                .HasColumnType("character varying(10)");
+
+                            b1.HasKey("PetId", "__synthesizedOrdinal");
+
+                            b1.ToTable("pets");
+
+                            b1.ToJson("Photos");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PetId");
+                        });
+
+                    b.Navigation("Photos");
                 });
 
             modelBuilder.Entity("PetProject.Domain.Volunteers.Volunteer", b =>
@@ -272,6 +342,11 @@ namespace PetProject.Infrastructure.Migrations
                         });
 
                     b.Navigation("Socials");
+                });
+
+            modelBuilder.Entity("PetProject.Domain.PetSpecies.Species", b =>
+                {
+                    b.Navigation("Breeds");
                 });
 
             modelBuilder.Entity("PetProject.Domain.Volunteers.Volunteer", b =>

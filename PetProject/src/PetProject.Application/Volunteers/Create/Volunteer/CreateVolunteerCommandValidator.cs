@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using PetProject.Application.Validation;
 using PetProject.Application.Volunteers.CreateVolunteer;
-using PetProject.Domain;
 using PetProject.Domain.Shared.ValueObject;
 using PetProject.Domain.Volunteers;
 

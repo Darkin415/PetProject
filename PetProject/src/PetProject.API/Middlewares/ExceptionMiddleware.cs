@@ -1,5 +1,5 @@
-﻿using PetProject.API.Response;
-using static PetProject.API.Response.Envelope;
+﻿using PetProject.Contracts;
+using static PetProject.Contracts.Envelope;
 
 namespace PetProject.API.Middlewares;
 

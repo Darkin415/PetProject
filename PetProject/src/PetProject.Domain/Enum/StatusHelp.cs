@@ -1,9 +1,14 @@
-﻿namespace PetProject.Domain
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PetProject.Domain.Enum;
+
+public enum StatusHelp
 {
-    public enum StatusHelp
-    {
-        FoundedHome,
-        SeekingHome,
-        BeUnderTreatment
-    };
-}
+    FoundedHome,
+    SeekingHome,
+    BeUnderTreatment
+};

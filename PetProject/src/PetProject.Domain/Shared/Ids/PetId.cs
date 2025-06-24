@@ -9,7 +9,7 @@ public record PetId
         Value = value;
     }
     public Guid Value { get; }
-    public static PetId NewGuidId() => new(Guid.NewGuid());
+    public static PetId NewPetId() => new(Guid.NewGuid());
     public static PetId Empty() => new(Guid.Empty);
     public static Result<PetId, string> Create(Guid value)
     {

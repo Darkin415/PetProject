@@ -2,21 +2,21 @@
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
 using Microsoft.Extensions.Logging;
+using PetProject.Application.Database;
+using PetProject.Contracts.Command;
 
 namespace PetProject.Application.Volunteers.UpdateMainInfo;
-
-public record UpdateMainInfoCommand(
-    Guid VolunteerId,
-    UpdateMainInfoRequest Request);
-
 public class UpdateMainInfoHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ILogger<UpdateMainInfoHandler> _logger;
+    private readonly IUnitOfWork _unitOfWork;
     public UpdateMainInfoHandler(
         IVolunteersRepository volunteersRepository,
-        ILogger<UpdateMainInfoHandler> logger)
+        ILogger<UpdateMainInfoHandler> logger,
+        IUnitOfWork unitOfWork)
     {
+        _unitOfWork = unitOfWork;
         _volunteersRepository = volunteersRepository;
         _logger = logger;
     }
@@ -27,7 +27,7 @@ public class UpdateMainInfoHandler
 
         var volunteerId = new VolunteerId(command.VolunteerId);
 
-        var volunteerResult = await _volunteersRepository.GetById(volunteerId, cancellationToken);
+        var volunteerResult = await _volunteersRepository.GetVolunteerById(volunteerId, cancellationToken);
 
         if (volunteerResult.IsFailure)
             return volunteerResult.Error;
@@ -43,10 +43,10 @@ public class UpdateMainInfoHandler
 
         volunteerResult.Value.UpdateMainInfo(fullNameResult, description, telephonNumber);
 
-        var result = await _volunteersRepository.Save(volunteerResult.Value, cancellationToken);
+        await _unitOfWork.SaveChanges(cancellationToken);
 
         _logger.LogInformation("Updated volunteer with id {volunteerId}" , volunteerId);
 
-        return result;
+        return volunteerResult.Value.Id.Value;
     }
 }

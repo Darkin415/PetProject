@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using PetProject.Domain.PetSpecies;
 using PetProject.Domain.Shared;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Volunteers;
@@ -17,34 +18,21 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             id => id.Value,
             guid => PetId.Create(guid).Value);
 
+       
+
+
         builder.ComplexProperty(p => p.Nickname, g =>
         {
             g.Property(g => g.Name)
-             .HasColumnName("nick_name")
+            .HasColumnName("nick_name")
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-        });
-
-        builder.ComplexProperty(p => p.View, g =>
-        {
-            g.Property(g => g.Value)
-             .HasColumnName("View")
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-        });
-
-        builder.ComplexProperty(p => p.Breed, g =>
-        {
-            g.Property(g => g.Name)
-             .HasColumnName("breed")
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-        });
+        });             
 
         builder.ComplexProperty(p => p.Color, g =>
         {
             g.Property(g => g.Value)
-             .HasColumnName("color")
+            .HasColumnName("color")
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
         });
@@ -60,10 +48,11 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         builder.ComplexProperty(p => p.Attributes, g =>
         {
             g.Property(g => g.Weight)
-             .HasColumnName("attributes")
+            .HasColumnName("weight")
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
             g.Property(g => g.Height)
+            .HasColumnName("height")
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
         });
@@ -93,21 +82,57 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         });
 
 
-        builder.Property(p => p.BirthDate)
+        builder.ComplexProperty(p => p.BirthDate, b =>
+        {
+            b.Property(b => b.BirthDate)
+            .HasColumnName("birth_date")
             .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+            .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
+        });
 
-        
         builder.Property(p => p.Status)
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
 
-        builder.Property(p => p.DateOfCreation)
+
+        builder.ComplexProperty(p => p.DateOfCreation, b =>
+        {
+            b.Property(b => b.CreationDate)
+            .HasColumnName("creation_date")
             .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+            .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
+        });
+
 
         builder.Property<bool>("_isDeleted")
             .UsePropertyAccessMode(PropertyAccessMode.Field)
             .HasColumnName("is_deleted");
+
+        builder.OwnsMany(p => p.Photos, sp =>
+        {
+        sp.ToJson("Photos");
+
+            sp.Property(f => f.PathToStorage)
+                .HasConversion(
+                p => p.Path,
+                value => FilePath.Create(value).Value)
+                .IsRequired()
+                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);                                
+        });
+
+        builder.ComplexProperty(p => p.PetInfo, pi =>
+        {
+            pi.Property(x => x.SpeciesId)
+            .HasColumnName("SpeciesId")
+            .HasConversion(
+                id => id.Value,
+                guid => SpeciesId.Create(guid).Value
+                );
+            pi.Property(x => x.BreedId)
+            .HasColumnName("BreedId")
+            .HasConversion(
+                id => id.Value,
+                guid => BreedId.Create(guid).Value);
+        });
     }
 }

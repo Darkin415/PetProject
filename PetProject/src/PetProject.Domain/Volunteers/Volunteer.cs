@@ -1,4 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
+using PetProject.Domain.Enum;
+using PetProject.Domain.Shared;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
 namespace PetProject.Domain.Volunteers;
@@ -87,5 +89,12 @@ public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
     public void Restore()
     {
         _isDeleted = false;
+    }
+
+    public UnitResult<Error> AddPet(Pet pet)
+    {
+        
+        _pets.Add(pet);
+        return Result.Success<Error>();
     }
 }

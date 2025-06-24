@@ -6,11 +6,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PetProject.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial2 : Migration
+    public partial class Initial3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "species",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_species", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "volunteers",
                 columns: table => new
@@ -31,25 +43,44 @@ namespace PetProject.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "breed",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title = table.Column<string>(type: "text", nullable: false),
+                    SpeciesId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_breed", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_breed_species_SpeciesId",
+                        column: x => x.SpeciesId,
+                        principalTable: "species",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "pets",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "timestamp with time zone", maxLength: 10, nullable: false),
                     Status = table.Column<int>(type: "integer", maxLength: 10, nullable: false),
-                    DateOfCreation = table.Column<DateTime>(type: "timestamp with time zone", maxLength: 10, nullable: false),
                     is_deleted = table.Column<bool>(type: "boolean", nullable: false),
                     volunteer_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Attributes_Height = table.Column<double>(type: "double precision", maxLength: 10, nullable: false),
-                    attributes = table.Column<double>(type: "double precision", maxLength: 10, nullable: false),
-                    breed = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
+                    height = table.Column<double>(type: "double precision", maxLength: 10, nullable: false),
+                    weight = table.Column<double>(type: "double precision", maxLength: 10, nullable: false),
+                    birth_date = table.Column<DateTime>(type: "timestamp with time zone", maxLength: 100, nullable: false),
                     castration_status = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     color = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
+                    creation_date = table.Column<DateTime>(type: "timestamp with time zone", maxLength: 100, nullable: false),
                     nick_name = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     owner_telephon_number = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    BreedId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SpeciesId = table.Column<Guid>(type: "uuid", nullable: false),
                     status_health = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     vaccination_status = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    View = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false)
+                    Photos = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -63,6 +94,11 @@ namespace PetProject.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_breed_SpeciesId",
+                table: "breed",
+                column: "SpeciesId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_pets_volunteer_id",
                 table: "pets",
                 column: "volunteer_id");
@@ -72,7 +108,13 @@ namespace PetProject.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "breed");
+
+            migrationBuilder.DropTable(
                 name: "pets");
+
+            migrationBuilder.DropTable(
+                name: "species");
 
             migrationBuilder.DropTable(
                 name: "volunteers");

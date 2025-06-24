@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using PetProject.Application.Validation;
+using PetProject.Contracts.Command;
 using PetProject.Domain.Volunteers;
 
 namespace PetProject.Application.Volunteers.Create.SocialList;

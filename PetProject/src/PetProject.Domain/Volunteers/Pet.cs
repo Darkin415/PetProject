@@ -1,31 +1,36 @@
 ﻿using CSharpFunctionalExtensions;
+using PetProject.Domain.Enum;
+using PetProject.Domain.PetSpecies;
+using PetProject.Domain.Shared;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
+using System.Collections.Generic;
 namespace PetProject.Domain.Volunteers;
 public class Pet : Shared.Entity<PetId>, ISoftDeletable
 {
     private bool _isDeleted = false;
+    private readonly List<Photos> _photos = [];
+
     private Pet(PetId id) : base(id)
     {
     }
-    private Pet(
+    public Pet(
         PetId id,
         NickName nickname,
-        View view,
-        Breed breed,
-        Color color,
+        PetInfo petInfo,
+        Color? color,
         StatusHealth statusHealth,
-        PhysicalAttributes attributes,
+        PhysicalAttributes? attributes,
         TelephonNumber telephoneNumber,
         CastrationStatus castrationStatus,
-        DateTime birthDate,
+        BirthDay birthDate,
         VaccinationStatus vaccinationStatus,
         StatusHelp status,
-        DateTime dateOfCreation) : base(id)
+        DateOfCreation dateOfCreation
+        ) : base(id)
     {
         Nickname = nickname;
-        View = view;
-        Breed = breed;
+        PetInfo = petInfo;
         Color = color;
         StatusHealth = statusHealth;
         Attributes = attributes;
@@ -34,13 +39,13 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
         BirthDate = birthDate;
         VaccinationStatus = vaccinationStatus;
         Status = status;
-        DateOfCreation = dateOfCreation;
+        DateOfCreation = dateOfCreation;     
     }
     public NickName Nickname { get; private set; } = default!;
 
-    public View View { get; private set; } = default!;
+    public IReadOnlyList<Photos> Photos => _photos;
 
-    public Breed Breed { get; private set; } = default!;
+    public PetInfo PetInfo { get; private set; }
 
     public Color Color { get; private set; } = default!;
 
@@ -52,58 +57,13 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
 
     public CastrationStatus CastrationStatus { get; private set; } = default!;
 
-    public DateTime BirthDate { get; private set; }
+    public BirthDay BirthDate { get; private set; }
 
     public VaccinationStatus VaccinationStatus { get; private set; } = default!;
 
     public StatusHelp Status { get; private set; }
 
-    public DateTime DateOfCreation { get; private set; }
-
-    public static Result<Pet, string> Create(
-        NickName nickname,
-        View view,
-        Breed breed,
-        Color color,
-        StatusHealth statusHealth,
-        PhysicalAttributes attributes,
-        TelephonNumber telephonNumber,
-        CastrationStatus castrationStatus,
-        DateTime birthDate,
-        VaccinationStatus vaccinationStatus,
-        StatusHelp status,
-        DateTime dateOfCreation)
-    {
-
-        if (birthDate == DateTime.MinValue)
-        
-            return "Birthdate can not be null";
-        
-
-        if (dateOfCreation == DateTime.MinValue)
-        
-            return "Date of creation can not be null";
-        
-        else
-        {
-            var pet = new Pet(
-                PetId.NewGuidId(),
-                 nickname,
-                 view,
-                 breed,
-                 color,
-                 statusHealth,
-                 attributes,
-                 telephonNumber,
-                 castrationStatus,
-                 birthDate,
-                 vaccinationStatus,
-                 status,
-                 dateOfCreation);
-
-            return pet;
-        }
-    }
+    public DateOfCreation DateOfCreation { get; private set; }
 
     public void Delete()
     {
@@ -114,6 +74,23 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
     public void Restore()
     {
         _isDeleted = false;
+    }
+
+    public UnitResult<Error> RemovePhotos(IEnumerable<Photos> photos)
+    {
+        foreach (var photo in photos)
+        {
+            _photos.Remove(photo);
+        }
+
+        return Result.Success<Error>();
+    }
+
+    public UnitResult<Error> AddPhotos(IEnumerable<Photos> photos)
+    {
+        _photos.AddRange(photos.ToList());
+
+        return UnitResult.Success<Error>();
     }
 }
 
