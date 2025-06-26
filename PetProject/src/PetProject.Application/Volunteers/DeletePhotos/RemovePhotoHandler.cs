@@ -20,16 +20,16 @@ public class RemovePhotoHandler
 {
     private readonly IFilesProvider _fileProvider;
     private readonly IVolunteersRepository _volunteersRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IApplicationDbContext _dbContext;
     private readonly ILogger<RemovePhotoHandler> _logger;
 
     public RemovePhotoHandler(IFilesProvider fileProvider,
-    IVolunteersRepository volunteersRepository,
-    IUnitOfWork unitOfWork,
+    IVolunteersRepository volunteersRepository,    
     IValidator<RemovePetPhotosCommand> validator,
-    ILogger<RemovePhotoHandler> logger)
+    ILogger<RemovePhotoHandler> logger,
+    IApplicationDbContext dbContext)
     {
-        _unitOfWork = unitOfWork;
+        _dbContext = dbContext;
         _logger = logger;
         _fileProvider = fileProvider;
         _volunteersRepository = volunteersRepository;      
@@ -78,7 +78,7 @@ public class RemovePhotoHandler
             return removePhotosResult.Error;
         }         
 
-        await _unitOfWork.SaveChanges(cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
       
         var photosPaths = photoPaths.Select(x => x.Path);
 

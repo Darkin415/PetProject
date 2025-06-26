@@ -2,7 +2,6 @@ using PetProject.Infrastructure;
 using PetProject.Application;
 using FluentValidation.AspNetCore;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
-using PetProject.API.Validation;
 using PetProject.API.Middlewares;
 using Serilog;
 using Serilog.Events;
@@ -34,10 +33,10 @@ builder.Services
 
 
 
-builder.Services.AddFluentValidationAutoValidation(configuration =>
-{
-    configuration.OverrideDefaultResultFactoryWith<CustomResultFactory>();
-});
+//builder.Services.AddFluentValidationAutoValidation(configuration =>
+//{
+//    configuration.OverrideDefaultResultFactoryWith<CustomResultFactory>();
+//});
 
 var app = builder.Build();
 

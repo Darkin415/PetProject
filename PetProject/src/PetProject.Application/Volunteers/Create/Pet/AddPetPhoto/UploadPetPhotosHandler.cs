@@ -19,8 +19,7 @@ namespace PetProject.Application.Volunteers.Create.Pet.AddPetPhoto;
 
 public class UploadPetPhotosHandler
 {
-    private const string BUCKET_NAME = "photos";
-    private readonly IUnitOfWork _unitOfWork;
+    private const string BUCKET_NAME = "photos";    
     private readonly ILogger<AddPetHandler> _logger;
     private readonly IFilesProvider _fileProvider;
     private readonly IVolunteersRepository _volunteersRepository;
@@ -28,10 +27,8 @@ public class UploadPetPhotosHandler
     public UploadPetPhotosHandler(
         IFilesProvider fileProvider,
         IVolunteersRepository volunteersRepository,
-        IUnitOfWork unitOfWork,
         ILogger<AddPetHandler> logger)
-    {
-        _unitOfWork = unitOfWork;
+    {        
         _logger = logger;
         _fileProvider = fileProvider;
         _volunteersRepository = volunteersRepository;       

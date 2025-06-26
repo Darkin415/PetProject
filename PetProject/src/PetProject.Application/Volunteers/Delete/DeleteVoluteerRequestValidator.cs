@@ -7,6 +7,6 @@ public class DeleteVoluteerCommandValidator : AbstractValidator<DeleteVolunteerC
 {
     public DeleteVoluteerCommandValidator()
     {
-        RuleFor(d => d.Request.VolunteerId).NotEmpty();
+        RuleFor(d => d.VolunteerId).NotEmpty();
     }
 }

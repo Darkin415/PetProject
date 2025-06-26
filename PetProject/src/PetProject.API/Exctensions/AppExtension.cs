@@ -1,5 +1,6 @@
 using PetProject.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using PetProject.Application.Database;
 
 public static class AppExtension
 {
@@ -7,7 +8,7 @@ public static class AppExtension
     {
         await using var scope = app.Services.CreateAsyncScope();
 
-        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
         await dbContext.Database.EnsureCreatedAsync();
         await dbContext.Database.MigrateAsync();       
     }

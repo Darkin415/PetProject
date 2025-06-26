@@ -9,6 +9,6 @@ public class UpdateSocialListCommandValidator : AbstractValidator<UpdateSocialNe
 {
     public UpdateSocialListCommandValidator()
     {
-        RuleForEach(c => c.Request.SocialMedias).MustBeValueObject(s => SocialMedia.Create(s.Title, s.LinkMedia));
+        RuleForEach(c => c.SocialMedias).MustBeValueObject(s => SocialMedia.Create(s.Title, s.LinkMedia));
     }
 }

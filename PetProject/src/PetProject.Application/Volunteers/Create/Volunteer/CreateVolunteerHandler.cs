@@ -1,60 +1,69 @@
 ﻿using CSharpFunctionalExtensions;
+using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Database;
+using PetProject.Application.Extensions;
 using PetProject.Application.Volunteers.Create.Volunteer;
+using PetProject.Contracts.Command;
+using PetProject.Contracts.Request;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
 using PetProject.Domain.Volunteers;
 
 namespace PetProject.Application.Volunteers.CreateVolunteer;
 
-public record AddVolunteerCommand(
-
-    CreateVolunteerRequest Request
-);
 public class CreateVolunteerHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ILogger<CreateVolunteerHandler> _logger;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IApplicationDbContext _dbContext;
+    private readonly IValidator<AddVolunteerCommand> _validator;
     public CreateVolunteerHandler(
         IVolunteersRepository volunteersRepository,
-        IUnitOfWork unitOfWork,
-        ILogger<CreateVolunteerHandler> logger)
+        IApplicationDbContext dbContext,
+        ILogger<CreateVolunteerHandler> logger,
+        IValidator<AddVolunteerCommand> validator)
     {
         _volunteersRepository = volunteersRepository;
-        _logger = logger;
-        _unitOfWork = unitOfWork;
+        _logger = logger;      
+        _dbContext = dbContext;
+        _validator = validator;
     }
-    public async Task<Result<Guid, Error>> Handle(AddVolunteerCommand command, CancellationToken cancellationToken = default)
+    public async Task<Result<Guid, ErrorList>> Handle(AddVolunteerCommand command, CancellationToken cancellationToken = default)
     {
-
+        var validationResult = await _validator.ValidateAsync(command, cancellationToken);
+        if (validationResult.IsValid == false)
+        {
+            return validationResult.ToErrorList();
+        }
+            
         var volunteerId = VolunteerId.NewVolunteerId();
-        var emailResult = Email.Create(command.Request.LinkMedia);
+
+        var emailResult = Email.Create(command.LinkMedia);
         if (emailResult.IsFailure)
-            return emailResult.Error;
+            return emailResult.Error.ToErrorList();
 
-        var descriptionResult = Description.Create(command.Request.Information);
+        var descriptionResult = Description.Create(command.Information);
         if (descriptionResult.IsFailure)
-            return descriptionResult.Error;
+            return descriptionResult.Error.ToErrorList();
 
-        var phoneResult = TelephonNumber.Create(command.Request.PhoneNumber);
+        var phoneResult = TelephonNumber.Create(command.PhoneNumber);
         if (phoneResult.IsFailure)
-            return phoneResult.Error;
+            return phoneResult.Error.ToErrorList();
 
         var fullNameResult = FullName.Create(
-            command.Request.FullName.FirstName,
-            command.Request.FullName.LastName,
-            command.Request.FullName.Surname);
+            command.FullName.FirstName,
+            command.FullName.LastName,
+            command.FullName.Surname);
         if (fullNameResult.IsFailure)
-            return fullNameResult.Error;
+            return fullNameResult.Error.ToErrorList();
 
-        var socialMediaResults = command.Request.SocialMedias
+        var socialMediaResults = command.SocialMedias
         .Select(dto => SocialMedia.Create(dto.Title, dto.LinkMedia))
         .ToList();
         if (socialMediaResults.Any(r => r.IsFailure))
 
-            return Result.Failure<Guid, Error>(socialMediaResults.First(r => r.IsFailure).Error);
+            return Result.Failure<Guid, ErrorList>(socialMediaResults.First(r => r.IsFailure).Error);
 
         var socialMediasList = socialMediaResults
     .Select(r => r.Value)
@@ -63,7 +72,12 @@ public class CreateVolunteerHandler
         var volunteer = await _volunteersRepository.GetByEmail(emailResult.Value);
 
         if (volunteer.IsSuccess)
-            return Errors.Volunteer.AlreadyExist();
+        {
+            var error = Errors.Volunteer.AlreadyExist();
+            var errorList = new ErrorList(new[] { error }); 
+            return Result.Failure<Guid, ErrorList>(errorList);
+        }
+            
 
         var volunteerToCreate = new Volunteer(
             volunteerId,
@@ -73,9 +87,9 @@ public class CreateVolunteerHandler
             phoneResult.Value,
             socialMediasList);
 
-        await _volunteersRepository.Add(volunteerToCreate, cancellationToken);
+        await _dbContext.Volunteers.AddAsync(volunteerToCreate, cancellationToken);
 
-        await _unitOfWork.SaveChanges(cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Created volunteer with id {volunteerId}", volunteerId);
 

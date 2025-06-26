@@ -12,28 +12,20 @@ using PetProject.Application.Volunteers.UpdateMainInfo;
 using PetProject.Contracts.Command;
 using PetProject.Contracts.Request;
 using PetProject.Contracts.ResponseExtensions;
-using PetProject.Domain.Shared.Ids;
-using PetProject.Domain.Volunteers;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-
 namespace PetProject.API.Controllers;
 public class VolunteersController : ApplicationController
 {
     [HttpPost]
     public async Task<ActionResult> Create(
         [FromServices] CreateVolunteerHandler handler,
-        [FromBody] AddVolunteerCommand command,
+        [FromBody] CreateVolunteerRequest request,
         [FromServices] IValidator<AddVolunteerCommand> validator,
         CancellationToken cancellationToken = default)
     {
-        var validationResult = await validator.ValidateAsync(command, cancellationToken);
 
-        if (validationResult.IsValid == false)
-        {
-            return validationResult.ToValidationErrorResponse();
-        }
-
-        var result = await handler.Handle(command, cancellationToken);
+        var validationResult = await validator.ValidateAsync(request.ToCommand(), cancellationToken);
+    
+        var result = await handler.Handle(request.ToCommand(), cancellationToken);
 
         if (result.IsFailure)
             return result.Error.ToResponse();
@@ -48,13 +40,10 @@ public class VolunteersController : ApplicationController
         [FromBody] UpdateMainInfoRequest request,
         CancellationToken cancellationToken = default)
     {
-        var command = new UpdateMainInfoCommand(id, request);
+        var command = request.ToCommand(id);
 
         var validationResult = await validator.ValidateAsync(command, cancellationToken);
-
-        if (validationResult.IsValid == false)
-            return validationResult.ToValidationErrorResponse();
-
+      
         var result = await handler.Handle(command, cancellationToken);
 
         if (result.IsFailure)
@@ -70,12 +59,7 @@ public class VolunteersController : ApplicationController
         [FromBody] UpdateSocialListRequest request,
         CancellationToken cancellationToken = default)
     {
-        var command = new UpdateSocialNetworksCommand(id, request);
-        var validationResult = await validator.ValidateAsync(command, cancellationToken);
-        if (validationResult.IsValid == false)
-        {
-            return validationResult.ToValidationErrorResponse();
-        }
+        var command = request.ToCommmand(id);       
 
         var result = await handler.Handle(command, cancellationToken);
 
@@ -90,15 +74,10 @@ public class VolunteersController : ApplicationController
         [FromRoute] Guid id,
         [FromServices] DeleteVolunteerHandler handler,
         [FromServices] IValidator<DeleteVolunteerCommand> validator,
+        [FromBody] DeleteVolunteerRequest request,
         CancellationToken cancellationToken = default)
     {
-        var request = new DeleteVolunteerRequest(VolunteerId: id);
-        var command = new DeleteVolunteerCommand(request);
-        var validationResult = await validator.ValidateAsync(command, cancellationToken);
-        if (validationResult.IsValid == false)
-        {
-            return validationResult.ToValidationErrorResponse();
-        }
+        var command = request.ToCommand(id);
 
         var result = await handler.Handle(command, cancellationToken);
 
@@ -115,22 +94,8 @@ public class VolunteersController : ApplicationController
         [FromServices] IValidator<AddPetCommand> validator,
         [FromForm] AddPetRequest request,
         CancellationToken cancellationToken)
-    {      
-        
-        var command = new AddPetCommand(
-                id,           
-                request.NickName,
-                request.Breed,
-                request.Species,
-                request.Attribute,
-                request.Color,           
-                request.StatusHealth,
-                request.OwnerTelephonNumber,
-                request.CastrationStatus,
-                request.VaccinationStatus,
-                request.BirthDate,
-                request.Status,
-                request.DateOfCreation);
+    {
+        var command = request.ToCommand(id);
 
         var result = await handler.Handle(command, cancellationToken);
 
@@ -176,3 +141,7 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
 }
+
+
+
+// передлать до конца команды как с UpdateSocialMediaList и еще раз пересмотреть с валидацией моменты чтобы лучше понять.

@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Database;
 using PetProject.Contracts.Command;
@@ -10,31 +11,36 @@ public class DeleteVolunteerHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ILogger<DeleteVolunteerHandler> _logger;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IApplicationDbContext _dbContext;
+    private readonly IValidator<DeleteVolunteerCommand> _validator;
     public DeleteVolunteerHandler(
         IVolunteersRepository volunteersRepository,
-        IUnitOfWork unitOfWork,
-        ILogger<DeleteVolunteerHandler> logger)
+        ILogger<DeleteVolunteerHandler> logger,
+        IValidator<DeleteVolunteerCommand> validator,
+        IApplicationDbContext dbContext)
     {
         _volunteersRepository = volunteersRepository;
         _logger = logger;
-        _unitOfWork = unitOfWork;
+        _dbContext = dbContext;
+        _validator = validator;
     }
 
-    public async Task<Result<Guid, Error>> Handle(
+    public async Task<Result<Guid, ErrorList>> Handle(
     DeleteVolunteerCommand command,
 
     CancellationToken cancellationToken = default)
     {
-        var volunteerId = new VolunteerId(command.Request.VolunteerId);
+        var validationResult = await _validator.ValidateAsync(command, cancellationToken);
+
+        var volunteerId = new VolunteerId(command.VolunteerId);
 
         var volunteerResult = await _volunteersRepository.GetVolunteerById(volunteerId, cancellationToken);
         if (volunteerResult.IsFailure)
-            return volunteerResult.Error;
+            return volunteerResult.Error.ToErrorList();
+        
+        _dbContext.Volunteers.Remove(volunteerResult.Value);
 
-        var result = _volunteersRepository.Delete(volunteerResult.Value, cancellationToken);
-
-        await _unitOfWork.SaveChanges(cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Volunteer deleted with id {volunteerId}", volunteerId);
 
