@@ -2,6 +2,7 @@
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Database;
+using PetProject.Application.Extensions;
 using PetProject.Contracts.Command;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
@@ -31,7 +32,9 @@ public class DeleteVolunteerHandler
     CancellationToken cancellationToken = default)
     {
         var validationResult = await _validator.ValidateAsync(command, cancellationToken);
-
+        if (validationResult.IsValid == false)       
+            return validationResult.ToErrorList();
+       
         var volunteerId = new VolunteerId(command.VolunteerId);
 
         var volunteerResult = await _volunteersRepository.GetVolunteerById(volunteerId, cancellationToken);

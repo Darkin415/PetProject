@@ -21,10 +21,7 @@ public class VolunteersController : ApplicationController
         [FromBody] CreateVolunteerRequest request,
         [FromServices] IValidator<AddVolunteerCommand> validator,
         CancellationToken cancellationToken = default)
-    {
-
-        var validationResult = await validator.ValidateAsync(request.ToCommand(), cancellationToken);
-    
+    {         
         var result = await handler.Handle(request.ToCommand(), cancellationToken);
 
         if (result.IsFailure)
@@ -40,9 +37,7 @@ public class VolunteersController : ApplicationController
         [FromBody] UpdateMainInfoRequest request,
         CancellationToken cancellationToken = default)
     {
-        var command = request.ToCommand(id);
-
-        var validationResult = await validator.ValidateAsync(command, cancellationToken);
+        var command = request.ToCommand(id);        
       
         var result = await handler.Handle(command, cancellationToken);
 
