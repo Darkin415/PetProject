@@ -12,18 +12,19 @@ public class DeleteVolunteerHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ILogger<DeleteVolunteerHandler> _logger;
-    private readonly IApplicationDbContext _dbContext;
     private readonly IValidator<DeleteVolunteerCommand> _validator;
+    private readonly IUnitOfWork _unitOfWork;
     public DeleteVolunteerHandler(
         IVolunteersRepository volunteersRepository,
         ILogger<DeleteVolunteerHandler> logger,
         IValidator<DeleteVolunteerCommand> validator,
-        IApplicationDbContext dbContext)
+        IUnitOfWork unitOfWork
+        )
     {
         _volunteersRepository = volunteersRepository;
         _logger = logger;
-        _dbContext = dbContext;
         _validator = validator;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Result<Guid, ErrorList>> Handle(
@@ -41,9 +42,9 @@ public class DeleteVolunteerHandler
         if (volunteerResult.IsFailure)
             return volunteerResult.Error.ToErrorList();
         
-        _dbContext.Volunteers.Remove(volunteerResult.Value);
+        _volunteersRepository.Delete(volunteerResult.Value, cancellationToken);
 
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.SaveChanges(cancellationToken);
 
         _logger.LogInformation("Volunteer deleted with id {volunteerId}", volunteerId);
 

@@ -12,15 +12,15 @@ public class UpdateSocialListHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ILogger<UpdateSocialListHandler> _logger;
-    private readonly IApplicationDbContext _dbContext;
+    private readonly IUnitOfWork _unitOfWork;
     public UpdateSocialListHandler(
-        IVolunteersRepository volunteersRepository,
-        IApplicationDbContext dbContext,
-        ILogger<UpdateSocialListHandler> logger)
+        IVolunteersRepository volunteersRepository,       
+        ILogger<UpdateSocialListHandler> logger,
+        IUnitOfWork unitOfWork)
     {
         _volunteersRepository = volunteersRepository;
         _logger = logger;
-        _dbContext = dbContext;
+        _unitOfWork = unitOfWork;
     }
     public async Task<Result<Guid, Error>> Handle(
     UpdateSocialNetworksCommand command,
@@ -45,7 +45,7 @@ public class UpdateSocialListHandler
 
         volunteerResult.Value.UpdateSocialList(socialMediasList);
 
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.SaveChanges(cancellationToken);
 
         _logger.LogInformation("Volunteer's social network has been updated with id {volunteerId}", volunteerId);
 

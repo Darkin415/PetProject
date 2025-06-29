@@ -8,7 +8,7 @@ public static class AppExtension
     {
         await using var scope = app.Services.CreateAsyncScope();
 
-        var dbContext = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         await dbContext.Database.EnsureCreatedAsync();
         await dbContext.Database.MigrateAsync();       
     }

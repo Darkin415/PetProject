@@ -8,28 +8,22 @@ using PetProject.Contracts.Command;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
 using PetProject.Domain.Volunteers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace PetProject.Application.Volunteers.DeletePhotos;
 
 public class RemovePhotoHandler
 {
     private readonly IFilesProvider _fileProvider;
     private readonly IVolunteersRepository _volunteersRepository;
-    private readonly IApplicationDbContext _dbContext;
     private readonly ILogger<RemovePhotoHandler> _logger;
+    private readonly IUnitOfWork _unitOfWork;
 
     public RemovePhotoHandler(IFilesProvider fileProvider,
     IVolunteersRepository volunteersRepository,    
     IValidator<RemovePetPhotosCommand> validator,
     ILogger<RemovePhotoHandler> logger,
-    IApplicationDbContext dbContext)
+    IUnitOfWork unitOfWork)
     {
-        _dbContext = dbContext;
+        _unitOfWork = unitOfWork;
         _logger = logger;
         _fileProvider = fileProvider;
         _volunteersRepository = volunteersRepository;      
@@ -76,9 +70,9 @@ public class RemovePhotoHandler
         {
             _logger.LogError("Failed to remove files from MinIO: {Error}", removeResult.Error);
             return removePhotosResult.Error;
-        }         
+        }
 
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.SaveChanges(cancellationToken);
       
         var photosPaths = photoPaths.Select(x => x.Path);
 

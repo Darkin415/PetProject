@@ -28,7 +28,7 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
         StatusHelp status,
         DateOfCreation dateOfCreation
         ) : base(id)
-    {
+    {       
         Nickname = nickname;
         PetInfo = petInfo;
         Color = color;
@@ -44,6 +44,9 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
     public NickName Nickname { get; private set; } = default!;
 
     public IReadOnlyList<Photos> Photos => _photos;
+
+    public SerialNumber SerialNumber { get; private set; }
+
 
     public PetInfo PetInfo { get; private set; }
 
@@ -92,5 +95,8 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
 
         return UnitResult.Success<Error>();
     }
+
+    public void SetSerialNumber(SerialNumber serialNumber) =>
+        SerialNumber = serialNumber;
 }
 

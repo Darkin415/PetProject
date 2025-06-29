@@ -12,6 +12,7 @@ using PetProject.Application.Volunteers.UpdateMainInfo;
 using PetProject.Contracts.Command;
 using PetProject.Contracts.Request;
 using PetProject.Contracts.ResponseExtensions;
+using PetProject.Domain.Volunteers;
 namespace PetProject.API.Controllers;
 public class VolunteersController : ApplicationController
 {
@@ -21,7 +22,7 @@ public class VolunteersController : ApplicationController
         [FromBody] CreateVolunteerRequest request,
         [FromServices] IValidator<AddVolunteerCommand> validator,
         CancellationToken cancellationToken = default)
-    {         
+    {
         var result = await handler.Handle(request.ToCommand(), cancellationToken);
 
         if (result.IsFailure)
@@ -37,8 +38,8 @@ public class VolunteersController : ApplicationController
         [FromBody] UpdateMainInfoRequest request,
         CancellationToken cancellationToken = default)
     {
-        var command = request.ToCommand(id);        
-      
+        var command = request.ToCommand(id);
+
         var result = await handler.Handle(command, cancellationToken);
 
         if (result.IsFailure)
@@ -54,7 +55,7 @@ public class VolunteersController : ApplicationController
         [FromBody] UpdateSocialListRequest request,
         CancellationToken cancellationToken = default)
     {
-        var command = request.ToCommmand(id);       
+        var command = request.ToCommmand(id);
 
         var result = await handler.Handle(command, cancellationToken);
 
@@ -119,7 +120,7 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
 
-    [HttpDelete("{volunteerId:guid}/pet/{petId:guid}/photo")]
+    [HttpDelete]
     public async Task<IActionResult> RemoveFiles(
        [FromServices] RemovePhotoHandler handler,
         Guid volunteerId,
@@ -130,13 +131,16 @@ public class VolunteersController : ApplicationController
         var command = new RemovePetPhotosCommand(volunteerId, petId, photosNames);
 
         var result = await handler.Handle(command, cancellationToken);
-        if (result.IsFailure)               
+        if (result.IsFailure)
             return BadRequest(result.Error);
-        
+
         return Ok(result.Value);
     }
+
+
+    
+
 }
 
 
 
-// передлать до конца команды как с UpdateSocialMediaList и еще раз пересмотреть с валидацией моменты чтобы лучше понять.

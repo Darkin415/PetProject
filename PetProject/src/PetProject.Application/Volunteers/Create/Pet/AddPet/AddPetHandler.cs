@@ -16,24 +16,25 @@ namespace PetProject.Application.Volunteers.Create.Pet.AddPet;
 
 public class AddPetHandler
 {
-    private const string BUCKET_NAME = "photos";
-    private readonly IApplicationDbContext _dbContext;
+    private const string BUCKET_NAME = "photos";   
     private readonly ILogger<AddPetHandler> _logger;
     private readonly IFilesProvider _fileProvider;
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ISpeciesRepository _speciesRepository;
+    private readonly IUnitOfWork _unitOfWork;
     public AddPetHandler(
         IFilesProvider fileProvider,
         ISpeciesRepository speciesRepository,
         IVolunteersRepository volunteersRepository,
         ILogger<AddPetHandler> logger,
-        IApplicationDbContext dbContext)
+        IUnitOfWork unitOfWork
+        )
     {
-        _dbContext = dbContext;
         _logger = logger;
         _fileProvider = fileProvider;
         _volunteersRepository = volunteersRepository;
         _speciesRepository = speciesRepository;
+        _unitOfWork = unitOfWork;
     }
     public async Task<Result<Guid, Error>> Handle(
     AddPetCommand command,
@@ -95,7 +96,7 @@ public class AddPetHandler
 
             volunteerResult.Value.AddPet(pet);
 
-            await _dbContext.SaveChangesAsync(cancellationToken);       
+            await _unitOfWork.SaveChanges(cancellationToken);   
 
             return pet.Id.Value;
         }

@@ -9,7 +9,7 @@ using System.Data;
 
 namespace PetProject.Infrastructure;
 public class ApplicationDbContext(IConfiguration configuration) 
-    : DbContext, IApplicationDbContext
+    : DbContext
 {   
     private const string DATABASE = "Database";
     public DbSet<Volunteer> Volunteers => Set<Volunteer>();

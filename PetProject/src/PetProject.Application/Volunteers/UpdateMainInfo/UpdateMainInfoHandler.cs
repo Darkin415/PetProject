@@ -12,18 +12,18 @@ public class UpdateMainInfoHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ILogger<UpdateMainInfoHandler> _logger;
-    private readonly IApplicationDbContext _dbContext;
     private readonly IValidator<UpdateMainInfoCommand> _validator;
+    private readonly IUnitOfWork _unitOfWork;
     public UpdateMainInfoHandler(
         IVolunteersRepository volunteersRepository,
         ILogger<UpdateMainInfoHandler> logger,
-        IApplicationDbContext dbContext,
-        IValidator<UpdateMainInfoCommand> validator)
+        IValidator<UpdateMainInfoCommand> validator,
+        IUnitOfWork unitOfWork)
     {
         _volunteersRepository = volunteersRepository;
         _validator = validator;
         _logger = logger;
-        _dbContext = dbContext;
+        _unitOfWork = unitOfWork;
     }
     public async Task<Result<Guid, ErrorList>> Handle(
     UpdateMainInfoCommand command,
@@ -53,7 +53,7 @@ public class UpdateMainInfoHandler
 
         volunteerResult.Value.UpdateMainInfo(fullNameResult, description, telephonNumber);
 
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.SaveChanges(cancellationToken);
 
         _logger.LogInformation("Updated volunteer with id {volunteerId}" , volunteerId);
 

@@ -7,6 +7,8 @@ using Serilog;
 using Serilog.Events;
 using PetProject.Infrastructure.Providers;
 using PetProject.Application.Providers;
+using PetProject.Application.Database;
+using PetProject.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 Log.Logger = new LoggerConfiguration()
@@ -25,7 +27,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSerilog();
-
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services
     .AddInfrastructure(builder.Configuration)
     .AddApplication();

@@ -18,7 +18,13 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             id => id.Value,
             guid => PetId.Create(guid).Value);
 
-       
+
+        builder.ComplexProperty(p => p.SerialNumber, g =>
+        {
+            g.Property(g => g.Value)
+            .HasColumnName("serial_number")
+            .IsRequired(true);
+        });
 
 
         builder.ComplexProperty(p => p.Nickname, g =>

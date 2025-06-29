@@ -4,6 +4,7 @@ using PetProject.Application.Volunteers;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
 using PetProject.Domain.Volunteers;
+using System.Threading.Tasks;
 
 namespace PetProject.Infrastructure.Repositories;
 
@@ -15,6 +16,24 @@ public class VolunteersRepository : IVolunteersRepository
     {
         _dbContext = dbContext;
     }    
+
+    public async Task<Guid> Add(Volunteer volunteer, CancellationToken cancellationToken = default)
+    {
+        await _dbContext.Volunteers.AddAsync(volunteer, cancellationToken);
+        return volunteer.Id.Value;
+    }
+
+    public Guid Save(Volunteer volunteer, CancellationToken cancellationToken)
+    {
+        _dbContext.Volunteers.Attach(volunteer);
+        return volunteer.Id.Value;
+    }
+
+    public Guid Delete(Volunteer volunteer, CancellationToken cancellationToken)
+    {
+        _dbContext.Volunteers.Remove(volunteer);
+        return volunteer.Id.Value;
+    } 
 
     public async Task<Result<Volunteer, Error>> GetVolunteerById(VolunteerId volunteerId, CancellationToken cancellationToken = default)
     {

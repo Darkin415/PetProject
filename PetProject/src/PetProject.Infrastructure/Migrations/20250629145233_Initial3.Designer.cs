@@ -13,7 +13,7 @@ using PetProject.Infrastructure;
 namespace PetProject.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250622172047_Initial3")]
+    [Migration("20250629145233_Initial3")]
     partial class Initial3
     {
         /// <inheritdoc />
@@ -165,6 +165,15 @@ namespace PetProject.Infrastructure.Migrations
                             b1.Property<Guid>("SpeciesId")
                                 .HasColumnType("uuid")
                                 .HasColumnName("SpeciesId");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("SerialNumber", "PetProject.Domain.Volunteers.Pet.SerialNumber#SerialNumber", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<int>("Value")
+                                .HasColumnType("integer")
+                                .HasColumnName("serial_number");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("StatusHealth", "PetProject.Domain.Volunteers.Pet.StatusHealth#StatusHealth", b1 =>

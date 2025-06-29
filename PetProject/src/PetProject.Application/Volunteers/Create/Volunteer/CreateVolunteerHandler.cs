@@ -16,18 +16,18 @@ public class CreateVolunteerHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ILogger<CreateVolunteerHandler> _logger;
-    private readonly IApplicationDbContext _dbContext;
     private readonly IValidator<AddVolunteerCommand> _validator;
+    private readonly IUnitOfWork _unitOfWork;
     public CreateVolunteerHandler(
         IVolunteersRepository volunteersRepository,
-        IApplicationDbContext dbContext,
         ILogger<CreateVolunteerHandler> logger,
-        IValidator<AddVolunteerCommand> validator)
+        IValidator<AddVolunteerCommand> validator,
+        IUnitOfWork unitOfWork)
     {
         _volunteersRepository = volunteersRepository;
         _logger = logger;      
-        _dbContext = dbContext;
         _validator = validator;
+        _unitOfWork = unitOfWork;
     }
     public async Task<Result<Guid, ErrorList>> Handle(AddVolunteerCommand command, CancellationToken cancellationToken = default)
     {
@@ -87,9 +87,9 @@ public class CreateVolunteerHandler
             phoneResult.Value,
             socialMediasList);
 
-        await _dbContext.Volunteers.AddAsync(volunteerToCreate, cancellationToken);
+        await _volunteersRepository.Add(volunteerToCreate, cancellationToken);
 
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.SaveChanges(cancellationToken);
 
         _logger.LogInformation("Created volunteer with id {volunteerId}", volunteerId);
 
