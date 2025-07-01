@@ -19,7 +19,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             guid => PetId.Create(guid).Value);
 
 
-        builder.ComplexProperty(p => p.SerialNumber, g =>
+        builder.ComplexProperty(p => p.Position, g =>
         {
             g.Property(g => g.Value)
             .HasColumnName("serial_number")
