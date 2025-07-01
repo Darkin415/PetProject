@@ -15,6 +15,8 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Contracts", "..\..\src\PetProject.Contracts\PetProject.Contracts.csproj", "{0ED5A38D-B731-4CF3-AD4F-0D425A347141}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Domain.UnitTests", "..\tests\PetProject.UnitTests\PetProject.Domain.UnitTests.csproj", "{46B62856-A4C5-4269-9DB0-F65E9A89B126}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{0ED5A38D-B731-4CF3-AD4F-0D425A347141}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0ED5A38D-B731-4CF3-AD4F-0D425A347141}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0ED5A38D-B731-4CF3-AD4F-0D425A347141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46B62856-A4C5-4269-9DB0-F65E9A89B126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46B62856-A4C5-4269-9DB0-F65E9A89B126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46B62856-A4C5-4269-9DB0-F65E9A89B126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46B62856-A4C5-4269-9DB0-F65E9A89B126}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

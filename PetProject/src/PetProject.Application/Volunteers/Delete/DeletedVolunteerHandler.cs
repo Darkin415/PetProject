@@ -1,6 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
+using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Database;
+using PetProject.Application.Extensions;
 using PetProject.Contracts.Command;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
@@ -10,29 +12,37 @@ public class DeleteVolunteerHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ILogger<DeleteVolunteerHandler> _logger;
+    private readonly IValidator<DeleteVolunteerCommand> _validator;
     private readonly IUnitOfWork _unitOfWork;
     public DeleteVolunteerHandler(
         IVolunteersRepository volunteersRepository,
-        IUnitOfWork unitOfWork,
-        ILogger<DeleteVolunteerHandler> logger)
+        ILogger<DeleteVolunteerHandler> logger,
+        IValidator<DeleteVolunteerCommand> validator,
+        IUnitOfWork unitOfWork
+        )
     {
         _volunteersRepository = volunteersRepository;
         _logger = logger;
+        _validator = validator;
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<Guid, Error>> Handle(
+    public async Task<Result<Guid, ErrorList>> Handle(
     DeleteVolunteerCommand command,
 
     CancellationToken cancellationToken = default)
     {
-        var volunteerId = new VolunteerId(command.Request.VolunteerId);
+        var validationResult = await _validator.ValidateAsync(command, cancellationToken);
+        if (validationResult.IsValid == false)       
+            return validationResult.ToErrorList();
+       
+        var volunteerId = new VolunteerId(command.VolunteerId);
 
         var volunteerResult = await _volunteersRepository.GetVolunteerById(volunteerId, cancellationToken);
         if (volunteerResult.IsFailure)
-            return volunteerResult.Error;
-
-        var result = _volunteersRepository.Delete(volunteerResult.Value, cancellationToken);
+            return volunteerResult.Error.ToErrorList();
+        
+        _volunteersRepository.Delete(volunteerResult.Value, cancellationToken);
 
         await _unitOfWork.SaveChanges(cancellationToken);
 

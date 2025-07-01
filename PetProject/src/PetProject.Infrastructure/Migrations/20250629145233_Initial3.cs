@@ -78,6 +78,7 @@ namespace PetProject.Infrastructure.Migrations
                     owner_telephon_number = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     BreedId = table.Column<Guid>(type: "uuid", nullable: false),
                     SpeciesId = table.Column<Guid>(type: "uuid", nullable: false),
+                    serial_number = table.Column<int>(type: "integer", nullable: false),
                     status_health = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     vaccination_status = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Photos = table.Column<string>(type: "jsonb", nullable: true)

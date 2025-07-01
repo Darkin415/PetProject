@@ -1,5 +1,6 @@
 using PetProject.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using PetProject.Application.Database;
 
 public static class AppExtension
 {

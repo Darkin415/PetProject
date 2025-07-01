@@ -2,12 +2,13 @@ using PetProject.Infrastructure;
 using PetProject.Application;
 using FluentValidation.AspNetCore;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
-using PetProject.API.Validation;
 using PetProject.API.Middlewares;
 using Serilog;
 using Serilog.Events;
 using PetProject.Infrastructure.Providers;
 using PetProject.Application.Providers;
+using PetProject.Application.Database;
+using PetProject.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 Log.Logger = new LoggerConfiguration()
@@ -26,7 +27,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSerilog();
-
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services
     .AddInfrastructure(builder.Configuration)
     .AddApplication();
@@ -34,10 +35,10 @@ builder.Services
 
 
 
-builder.Services.AddFluentValidationAutoValidation(configuration =>
-{
-    configuration.OverrideDefaultResultFactoryWith<CustomResultFactory>();
-});
+//builder.Services.AddFluentValidationAutoValidation(configuration =>
+//{
+//    configuration.OverrideDefaultResultFactoryWith<CustomResultFactory>();
+//});
 
 var app = builder.Build();
 

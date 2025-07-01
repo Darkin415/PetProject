@@ -1,21 +1,14 @@
 ﻿using CSharpFunctionalExtensions;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Database;
-using PetProject.Application.FileProvider;
 using PetProject.Application.Providers;
-using PetProject.Application.Volunteers.Create.SocialList;
 using PetProject.Contracts.Command;
 using PetProject.Domain;
 using PetProject.Domain.PetSpecies;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
-using PetProject.Domain.Volunteers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+
 
 
 namespace PetProject.Application.Volunteers.Create.Pet.AddPet;
@@ -23,24 +16,25 @@ namespace PetProject.Application.Volunteers.Create.Pet.AddPet;
 
 public class AddPetHandler
 {
-    private const string BUCKET_NAME = "photos";
-    private readonly IUnitOfWork _unitOfWork;
+    private const string BUCKET_NAME = "photos";   
     private readonly ILogger<AddPetHandler> _logger;
     private readonly IFilesProvider _fileProvider;
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ISpeciesRepository _speciesRepository;
+    private readonly IUnitOfWork _unitOfWork;
     public AddPetHandler(
         IFilesProvider fileProvider,
         ISpeciesRepository speciesRepository,
         IVolunteersRepository volunteersRepository,
-        IUnitOfWork unitOfWork,
-        ILogger<AddPetHandler> logger)
+        ILogger<AddPetHandler> logger,
+        IUnitOfWork unitOfWork
+        )
     {
-        _unitOfWork = unitOfWork;
         _logger = logger;
         _fileProvider = fileProvider;
         _volunteersRepository = volunteersRepository;
         _speciesRepository = speciesRepository;
+        _unitOfWork = unitOfWork;
     }
     public async Task<Result<Guid, Error>> Handle(
     AddPetCommand command,
@@ -102,7 +96,7 @@ public class AddPetHandler
 
             volunteerResult.Value.AddPet(pet);
 
-            await _unitOfWork.SaveChanges(cancellationToken);       
+            await _unitOfWork.SaveChanges(cancellationToken);   
 
             return pet.Id.Value;
         }

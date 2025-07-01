@@ -14,9 +14,9 @@ public class UpdateSocialListHandler
     private readonly ILogger<UpdateSocialListHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
     public UpdateSocialListHandler(
-        IVolunteersRepository volunteersRepository,
-        IUnitOfWork unitOfWork,
-        ILogger<UpdateSocialListHandler> logger)
+        IVolunteersRepository volunteersRepository,       
+        ILogger<UpdateSocialListHandler> logger,
+        IUnitOfWork unitOfWork)
     {
         _volunteersRepository = volunteersRepository;
         _logger = logger;
@@ -33,7 +33,7 @@ public class UpdateSocialListHandler
         if (volunteerResult.IsFailure)
             return volunteerResult.Error;
              
-        var socialMediaResults = command.Request.SocialMedias
+        var socialMediaResults = command.SocialMedias
         .Select(dto => SocialMedia.Create(dto.Title, dto.LinkMedia))
         .ToList();
         if (socialMediaResults.Any(r => r.IsFailure))

@@ -1,26 +1,27 @@
 ﻿namespace PetProject.Domain.Shared.ValueObject;
 using System;
+
 public record Error
 {
     public const string SEPARATOR = "||";
-    private Error(string code, string message, ErrorType type)
+    private Error(string code, string message, ErrorType type, string? invalidField = null)
     {
         Code = code;
         Message = message;
         Type = type;
+        InvalidField = invalidField;
     }
     public string Code { get; }
     public string Message { get; }
     public ErrorType Type { get; }
 
-    public static Error Validation(string? code, string message) =>
-        new Error("validation.is.error" ?? code, message, ErrorType.Validation);
-    public static Error NotFound(string? code, string message) =>
-        new Error("not.found" ?? code, message, ErrorType.NotFound);
-    public static Error Failure(string? code, string message) =>
-        new Error("failure" ?? code, message, ErrorType.Failure);
-    public static Error Conflict(string? code, string message) =>
-        new Error("value.is.conflict" ?? code, message, ErrorType.Conflict);
+    public string? InvalidField { get; } = null;
+
+    public static Error Validation(string? code, string message, string? invalidField = null) 
+        => new (code, message, ErrorType.Validation, invalidField);
+    public static Error NotFound(string? code, string message) => new (code, message, ErrorType.NotFound);
+    public static Error Failure(string? code, string message) => new (code, message, ErrorType.Failure);
+    public static Error Conflict(string? code, string message) => new (code, message, ErrorType.Conflict);
 
     public string Serialize()
     {
@@ -44,7 +45,10 @@ public record Error
         return new Error(parts[0], parts[1], type);
     }
 
+    public ErrorList ToErrorList() => new([this]);
+
 }
+
 public enum ErrorType
 {
     Validation,

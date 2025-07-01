@@ -1,4 +1,5 @@
 ﻿using PetProject.Application.Volunteers.Create.Pet.AddPet;
+using PetProject.Contracts.Command;
 using PetProject.Contracts.Dtos;
 using PetProject.Domain.Enum;
 
@@ -16,5 +17,21 @@ public record AddPetRequest(
     string VaccinationStatus,
     DateTime BirthDate,
     StatusHelp Status,
-    DateTime DateOfCreation);
+    DateTime DateOfCreation)
+{
+    public AddPetCommand ToCommand(Guid id) => new(
+        id,
+        NickName,
+        Breed,
+        Species,
+        Attribute,
+        Color,
+        StatusHealth,
+        OwnerTelephonNumber,
+        CastrationStatus,
+        VaccinationStatus,
+        BirthDate, 
+        Status, 
+        DateOfCreation);
+}
 

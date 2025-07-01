@@ -1,4 +1,5 @@
 ﻿using PetProject.Contracts;
+using PetProject.Domain.Shared.ValueObject;
 using static PetProject.Contracts.Envelope;
 
 namespace PetProject.API.Middlewares;
@@ -24,9 +25,9 @@ public class ExceptionMiddleware
         {
             _logger.LogError(ex, ex.Message);
 
+            var error = PetProject.Domain.Shared.ValueObject.Error.Failure("server.internal", ex.Message);
 
-            var responseError = new ResponseError("server.internal", ex.Message, null);
-            var envelope = Envelope.Error([responseError]);
+            var envelope = Envelope.Error(error);
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;

@@ -39,11 +39,14 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
         BirthDate = birthDate;
         VaccinationStatus = vaccinationStatus;
         Status = status;
-        DateOfCreation = dateOfCreation;     
+        DateOfCreation = dateOfCreation;
     }
     public NickName Nickname { get; private set; } = default!;
 
     public IReadOnlyList<Photos> Photos => _photos;
+
+    public Position Position { get; private set; }
+
 
     public PetInfo PetInfo { get; private set; }
 
@@ -92,5 +95,36 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
 
         return UnitResult.Success<Error>();
     }
+
+    public void SetSerialNumber(Position serialNumber) =>
+        Position = serialNumber;
+
+    public UnitResult<Error> MoveForward()
+    {
+        var newPosition = Position.Forward();
+
+        if (newPosition.IsFailure)
+            return newPosition.Error;
+
+        Position = newPosition.Value;
+
+        return Result.Success<Error>();
+    }
+
+    public UnitResult<Error> MoveBack()
+    {
+        var newPosition = Position.Back();
+
+        if (newPosition.IsFailure)
+            return newPosition.Error;
+
+        Position = newPosition.Value;
+
+        return Result.Success<Error>();
+    }
+
+    public void Move(Position newPosition) =>    
+        Position = newPosition;
+    
 }
 

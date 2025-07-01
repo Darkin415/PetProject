@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetProject.Infrastructure;
+namespace PetProject.Infrastructure.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {

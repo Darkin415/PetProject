@@ -9,8 +9,8 @@ using PetProject.Infrastructure.Options;
 using PetProject.Infrastructure.Providers;
 using PetProject.Infrastructure.Repositories;
 using MinioOptions = PetProject.Infrastructure.Options.MinioOptions;
-
 namespace PetProject.Infrastructure;
+
 public static class Inject
 {
     public static IServiceCollection AddInfrastructure(
@@ -18,14 +18,11 @@ public static class Inject
     {
         services.AddScoped<ApplicationDbContext>();
 
-
-
         services.AddScoped<IVolunteersRepository, VolunteersRepository>();
 
         services.AddScoped<ISpeciesRepository, SpeciesRepository>();
 
         services.AddMinio(configuration);
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
         return services;
     }
     private static IServiceCollection AddMinio(
