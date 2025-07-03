@@ -26,11 +26,9 @@ public static class Inject
 
         services.AddHostedService<FilesCleanerBackgroundService>();
 
-        services.AddSingleton
-            <IMessageQueue<IEnumerable<PetProject.Application.FileProvider.FileInfo>>,
+        services.AddSingleton<IMessageQueue<IEnumerable<PetProject.Application.FileProvider.FileInfo>>,
             InMemoryMessageQueue<IEnumerable<PetProject.Application.FileProvider.FileInfo>>
 >();
-
 
         services.AddMinio(configuration);
 
