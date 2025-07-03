@@ -13,7 +13,7 @@ using PetProject.Infrastructure;
 namespace PetProject.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250629145233_Initial3")]
+    [Migration("20250703111437_Initial3")]
     partial class Initial3
     {
         /// <inheritdoc />

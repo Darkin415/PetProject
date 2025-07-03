@@ -32,14 +32,6 @@ builder.Services
     .AddInfrastructure(builder.Configuration)
     .AddApplication();
 
-
-
-
-//builder.Services.AddFluentValidationAutoValidation(configuration =>
-//{
-//    configuration.OverrideDefaultResultFactoryWith<CustomResultFactory>();
-//});
-
 var app = builder.Build();
 
 app.UseExceptionMiddleware();
