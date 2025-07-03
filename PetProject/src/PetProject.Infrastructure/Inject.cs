@@ -5,6 +5,8 @@ using Minio.AspNetCore;
 using PetProject.Application.Database;
 using PetProject.Application.Providers;
 using PetProject.Application.Volunteers;
+using PetProject.Infrastructure.BackgroundServices;
+using PetProject.Infrastructure.MessageQueues;
 using PetProject.Infrastructure.Options;
 using PetProject.Infrastructure.Providers;
 using PetProject.Infrastructure.Repositories;
@@ -22,7 +24,16 @@ public static class Inject
 
         services.AddScoped<ISpeciesRepository, SpeciesRepository>();
 
+        services.AddHostedService<FilesCleanerBackgroundService>();
+
+        services.AddSingleton
+            <IMessageQueue<IEnumerable<PetProject.Application.FileProvider.FileInfo>>,
+            InMemoryMessageQueue<IEnumerable<PetProject.Application.FileProvider.FileInfo>>
+>();
+
+
         services.AddMinio(configuration);
+
         return services;
     }
     private static IServiceCollection AddMinio(

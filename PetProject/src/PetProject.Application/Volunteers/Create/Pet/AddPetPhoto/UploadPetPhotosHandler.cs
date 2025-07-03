@@ -1,48 +1,51 @@
 ﻿using CSharpFunctionalExtensions;
-using Microsoft.Extensions.FileProviders;
+using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Database;
 using PetProject.Application.FileProvider;
 using PetProject.Application.Providers;
-using PetProject.Application.Volunteers.Create.Pet.AddPet;
 using PetProject.Contracts.Command;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObject;
 using PetProject.Domain.Volunteers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PetProject.Infrastructure.MessageQueues;
+using FileInfo = PetProject.Application.FileProvider.FileInfo;
 
 namespace PetProject.Application.Volunteers.Create.Pet.AddPetPhoto;
 
 public class UploadPetPhotosHandler
 {
     private const string BUCKET_NAME = "photos";    
-    private readonly ILogger<AddPetHandler> _logger;
+    private readonly ILogger<UploadPetPhotosHandler> _logger;
     private readonly IFilesProvider _fileProvider;
     private readonly IVolunteersRepository _volunteersRepository;
+    private readonly IValidator<UploadPetPhotoCommand> _validator;
+    private readonly IMessageQueue<IEnumerable<FileInfo>> _messageQueue;
 
     public UploadPetPhotosHandler(
         IFilesProvider fileProvider,
+        IValidator<UploadPetPhotoCommand> validator,
         IVolunteersRepository volunteersRepository,
-        ILogger<AddPetHandler> logger)
+        IMessageQueue<IEnumerable<FileInfo>> messageQueue,
+        ILogger<UploadPetPhotosHandler> logger)
     {        
         _logger = logger;
+        _validator = validator;
         _fileProvider = fileProvider;
-        _volunteersRepository = volunteersRepository;       
+        _volunteersRepository = volunteersRepository;
+        _messageQueue = messageQueue;
     }            
-    public async Task<Result<List<string>, Error>> Handle(
+    public async Task<Result<Guid, ErrorList>> Handle(
         UploadPetPhotoCommand command, CancellationToken cancellationToken = default)
-    {      
+    {
+        var validationResult = await _validator.ValidateAsync(command, cancellationToken);
         var volunteerId = VolunteerId.Create(command.VolunteerId);
 
         var volunteerResult = await _volunteersRepository.GetVolunteerById(volunteerId.Value, cancellationToken);
         if (volunteerResult.IsFailure)
         {
             _logger.LogError("Волонтер не найден. VolunteerId: {VolunteerId}", command.VolunteerId);
-            return volunteerResult.Error;
+            return volunteerResult.Error.ToErrorList();
         }
             
 
@@ -52,7 +55,7 @@ public class UploadPetPhotosHandler
         if (petResult.IsFailure)
         {
             _logger.LogError("Питомец не найден. PetId: {PetId}", command.PetId);
-            return petResult.Error;
+            return petResult.Error.ToErrorList();
         }           
 
         List<FileData> photosData = [];
@@ -65,10 +68,10 @@ public class UploadPetPhotosHandler
             if (photoPath.IsFailure)
             {
                 _logger.LogError("Ошибка создания пути. Файл: {FileName}", photo.FileName);
-                return photoPath.Error;
+                return photoPath.Error.ToErrorList();
             }                               
 
-            var photoContent = new FileData(photo.Content, photoPath.Value, BUCKET_NAME);
+            var photoContent = new FileData(photo.Content, new FileInfo(photoPath.Value, BUCKET_NAME));
 
             photosData.Add(photoContent);          
         }
@@ -76,12 +79,13 @@ public class UploadPetPhotosHandler
         var uploadResult = await _fileProvider.UploadFiles(photosData, cancellationToken);
         if (uploadResult.IsFailure)
         {
-            _logger.LogError("Ошибка загрузки в MinIO: {Error}", uploadResult.Error);
-            return uploadResult.Error;
+            await _messageQueue.WriteAsync(photosData.Select(p => p.Info), cancellationToken);
+            
+            return uploadResult.Error.ToErrorList();
         }
             
         var petPhotos = photosData
-            .Select(f => f.FilePath)
+            .Select(f => f.Info.FilePath)
             .Select(f => new Photos(f))
             .ToList();
 
@@ -89,13 +93,13 @@ public class UploadPetPhotosHandler
         if(addPhotosResult.IsFailure)
         {
             _logger.LogError("Ошибка добавления фото в БД: {Error}", addPhotosResult.Error);
-            return addPhotosResult.Error;
+            return addPhotosResult.Error.ToErrorList();
         }
 
         _logger.LogInformation("Files upload completed");
 
-        var filesPaths = photosData.Select(x => x.FilePath.Path);
+        var filesPaths = photosData.Select(x => x.Info.FilePath.Path);
 
-        return filesPaths.ToList();
+        return petResult.Value.Id.Value;
     }
 }

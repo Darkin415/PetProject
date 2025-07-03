@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Database;
 using PetProject.Application.Providers;
@@ -22,8 +23,10 @@ public class AddPetHandler
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ISpeciesRepository _speciesRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IValidator<AddPetCommand> _validator;
     public AddPetHandler(
         IFilesProvider fileProvider,
+        IValidator<AddPetCommand> validator,
         ISpeciesRepository speciesRepository,
         IVolunteersRepository volunteersRepository,
         ILogger<AddPetHandler> logger,
@@ -31,6 +34,7 @@ public class AddPetHandler
         )
     {
         _logger = logger;
+        _validator = validator;
         _fileProvider = fileProvider;
         _volunteersRepository = volunteersRepository;
         _speciesRepository = speciesRepository;
