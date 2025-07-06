@@ -15,8 +15,7 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\src\PetProject.Contracts\PetProject.Contracts.csproj" />    
+  <ItemGroup>    
     <ProjectReference Include="..\..\PetProject\src\PetProject.API\PetProject.API.csproj" />
     <ProjectReference Include="..\..\PetProject\src\PetProject.Application\PetProject.Application.csproj" />
     <ProjectReference Include="..\..\PetProject\src\PetProject.Infrastructure\PetProject.Infrastructure.csproj" />

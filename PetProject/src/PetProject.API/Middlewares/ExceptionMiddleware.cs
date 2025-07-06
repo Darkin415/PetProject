@@ -1,6 +1,6 @@
-﻿using PetProject.Contracts;
+﻿using PetProject.Contracts.Response;
 using PetProject.Domain.Shared.ValueObject;
-using static PetProject.Contracts.Envelope;
+using static PetProject.Contracts.Response.Envelope;
 
 namespace PetProject.API.Middlewares;
 

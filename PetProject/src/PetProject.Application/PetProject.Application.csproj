@@ -13,12 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\src\PetProject.Contracts\PetProject.Contracts.csproj" />
-    <ProjectReference Include="..\PetProject.Domain\PetProject.Domain.csproj" />
+    <Folder Include="Messaginng\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Messaginng\" />
+    <ProjectReference Include="..\PetProject.Contracts\PetProject.Contracts.csproj" />
+    <ProjectReference Include="..\PetProject.Domain\PetProject.Domain.csproj" />
   </ItemGroup>
 
 </Project>
