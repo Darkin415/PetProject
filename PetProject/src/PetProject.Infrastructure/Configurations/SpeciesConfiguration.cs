@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PetProject.Domain.PetSpecies;
 
-namespace PetProject.Infrastructure.Configurations;
+namespace PetProject.Infrastructure.Configurations.Write;
 
 public class SpeciesConfiguration : IEntityTypeConfiguration<Species>
 {

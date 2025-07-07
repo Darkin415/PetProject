@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetProject.Contracts.Command
+namespace PetProject.Contracts.Commands
 {
     public record AddPetCommand(
     Guid VolunteerId,

@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using PetProject.Domain.Shared.Ids;
-using PetProject.Domain.Shared.ValueObject;
+using PetProject.Domain.Shared.ValueObjects;
 using PetProject.Domain.Volunteers;
 
 namespace PetProject.Application.Volunteers;

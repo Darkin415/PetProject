@@ -3,9 +3,9 @@ using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Database;
 using PetProject.Application.Extensions;
-using PetProject.Contracts.Command;
+using PetProject.Contracts.Commands;
 using PetProject.Domain.Shared.Ids;
-using PetProject.Domain.Shared.ValueObject;
+using PetProject.Domain.Shared.ValueObjects;
 
 namespace PetProject.Application.Volunteers.Delete;
 public class DeleteVolunteerHandler

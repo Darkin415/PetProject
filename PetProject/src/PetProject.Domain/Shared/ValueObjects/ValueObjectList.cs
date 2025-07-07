@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetProject.Domain.Shared.ValueObject;
+namespace PetProject.Domain.Shared.ValueObjects;
 
 public class ValueObjectList<T> : IReadOnlyList<T>
 {

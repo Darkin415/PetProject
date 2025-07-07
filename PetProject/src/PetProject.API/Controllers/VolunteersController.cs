@@ -1,21 +1,41 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using PetProject.API.Contracts;
+using PetProject.API.Controllers.Pets.Requests;
 using PetProject.API.Processors;
 using PetProject.Application.Volunteers.Create.Pet.AddPet;
 using PetProject.Application.Volunteers.Create.Pet.AddPetPhoto;
 using PetProject.Application.Volunteers.Create.SocialList;
+using PetProject.Application.Volunteers.Create.Volunteer;
 using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Application.Volunteers.Delete;
 using PetProject.Application.Volunteers.DeletePhotos;
+using PetProject.Application.Volunteers.Queries.GetVolunteerWithPagination;
 using PetProject.Application.Volunteers.UpdateMainInfo;
-using PetProject.Contracts.Command;
-using PetProject.Contracts.Request;
-using PetProject.Contracts.ResponseExtensions;
-using PetProject.Domain.Volunteers;
+using PetProject.Contracts.Commands;
+using PetProject.Contracts.Extensions;
+using PetProject.Contracts.Requests;
+using PetProject.Contracts.Response;
+
 namespace PetProject.API.Controllers;
 public class VolunteersController : ApplicationController
 {
+
+    [HttpGet]
+    public async Task<ActionResult> Get(
+        [FromQuery] GetVolunteerWithPaginationRequest request,
+        [FromServices] GetVolunteersWithPaginationHandler handler,
+        CancellationToken cancellationToken)
+    {
+        var query = request.ToQuery();
+
+        var response = await handler.Handle(query, cancellationToken);
+
+        return Ok(response);
+    }
+
+
+
     [HttpPost]
     public async Task<ActionResult> Create(
         [FromServices] CreateVolunteerHandler handler,

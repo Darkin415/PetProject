@@ -2,31 +2,33 @@
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using PetProject.Application.Database;
+using PetProject.Contracts.Dtos;
 using PetProject.Domain.PetSpecies;
-using PetProject.Domain.Volunteers;
-using System.Data;
 
-namespace PetProject.Infrastructure;
-public class ApplicationDbContext(IConfiguration configuration) 
-    : DbContext
-{   
-    private const string DATABASE = "Database";
-    public DbSet<Volunteer> Volunteers => Set<Volunteer>();
-    public DbSet<Species> Species => Set<Species>();
-    public DbSet<Breed> Breeds => Set<Breed>();
+namespace PetProject.Infrastructure.DbContexts;
+public class ReadDbContext(IConfiguration configuration)
+    : DbContext, IReadDbContext
+{
+    
+    public DbSet<VolunteerDto> Volunteers => Set<VolunteerDto>();
+
+    public DbSet<PetDto> Pets => Set<PetDto>();
+    public DbSet<SpeciesDto> Species => Set<SpeciesDto>();
+    public DbSet<BreedDto> Breeds => Set<BreedDto>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(configuration.GetConnectionString(DATABASE));        
+        optionsBuilder.UseNpgsql(configuration.GetConnectionString(Constants.DATABASE));
         optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
         optionsBuilder.EnableSensitiveDataLogging();
-        
+
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-    }   
+        modelBuilder.ApplyConfigurationsFromAssembly(
+            typeof(WriteDbContext).Assembly,
+            type => type.FullName?.Contains("Configurations.Read") ?? false);
+    }
     private ILoggerFactory CreateLoggerFactory() =>
         LoggerFactory.Create(builder => { builder.AddConsole(); });
 

@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PetProject.Domain.Shared;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Volunteers;
 
-namespace PetProject.Infrastructure.Configurations;
+namespace PetProject.Infrastructure.Configurations.Write;
 public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
 {
     public void Configure(EntityTypeBuilder<Volunteer> builder)
@@ -21,24 +20,24 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             b.Property(b => b.Value)
             .HasColumnName("telehon_number")
             .IsRequired()
-            .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
+            .HasMaxLength(Domain.Shared.Constants.MIDDLE_TEXT_LENGTH);
         });
 
         builder.ComplexProperty(v => v.FullName, b =>
         {
             b.Property(b => b.FirstName)
             .IsRequired()
-            .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH)
+            .HasMaxLength(Domain.Shared.Constants.MIDDLE_TEXT_LENGTH)
             .HasColumnName("first_name");
 
             b.Property(b => b.LastName)
             .IsRequired()
-            .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH)
+            .HasMaxLength(Domain.Shared.Constants.MIDDLE_TEXT_LENGTH)
             .HasColumnName("last_name");
 
             b.Property(b => b.Surname)
             .IsRequired()
-            .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH)
+            .HasMaxLength(Domain.Shared.Constants.MIDDLE_TEXT_LENGTH)
             .HasColumnName("surname");
         });
 
@@ -48,11 +47,11 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
 
             sb.Property(s => s.LinkMedia)
                 .IsRequired()
-                .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH)
+                .HasMaxLength(Domain.Shared.Constants.MIDDLE_TEXT_LENGTH)
                 .HasColumnName("link_media");
 
             sb.Property(s => s.Title)
-                .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH)
+                .HasMaxLength(Domain.Shared.Constants.MIDDLE_TEXT_LENGTH)
                 .HasColumnName("title");
         });
 
@@ -62,7 +61,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             b.Property(b => b.Link)
             .HasColumnName("link")
             .IsRequired()
-            .HasMaxLength(Constants.MIDDLE_TEXT_LENGTH);
+            .HasMaxLength(Domain.Shared.Constants.MIDDLE_TEXT_LENGTH);
         });
 
         builder.ComplexProperty(v => v.Description, b =>
@@ -70,7 +69,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             b.Property(b => b.Information)
             .HasColumnName("description")
             .IsRequired()
-            .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH);
+            .HasMaxLength(Domain.Shared.Constants.MAX_HIGH_TEXT_LENGTH);
         });
            
         

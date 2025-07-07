@@ -15,7 +15,7 @@ public class Breed : Entity<BreedId>
         Title = title;
     }
    
-    public string Title { get; set; }
+    public string Title { get; private set; }
 
     public BreedId Id { get; private set; }
 

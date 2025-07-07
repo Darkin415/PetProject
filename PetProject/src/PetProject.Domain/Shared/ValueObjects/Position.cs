@@ -1,8 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace PetProject.Domain.Shared.ValueObject;
+namespace PetProject.Domain.Shared.ValueObjects;
 
-public class Position : CSharpFunctionalExtensions.ValueObject
+public class Position : ValueObject
 {
     public static Position First => new(1);
     private Position(int value)

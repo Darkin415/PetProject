@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using PetProject.Infrastructure;
+using PetProject.Infrastructure.DbContexts;
 
 #nullable disable
 
 namespace PetProject.Infrastructure.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250703111437_Initial3")]
+    [DbContext(typeof(WriteDbContext))]
+    [Migration("20250707170405_Initial3")]
     partial class Initial3
     {
         /// <inheritdoc />

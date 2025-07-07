@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.VisualBasic;
 
-namespace PetProject.Domain.Shared.ValueObject;
+namespace PetProject.Domain.Shared.ValueObjects;
 
 public record BirthDay
 {

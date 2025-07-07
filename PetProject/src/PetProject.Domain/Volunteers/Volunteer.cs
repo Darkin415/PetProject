@@ -2,7 +2,7 @@
 using PetProject.Domain.Enum;
 using PetProject.Domain.Shared;
 using PetProject.Domain.Shared.Ids;
-using PetProject.Domain.Shared.ValueObject;
+using PetProject.Domain.Shared.ValueObjects;
 namespace PetProject.Domain.Volunteers;
 public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
 {

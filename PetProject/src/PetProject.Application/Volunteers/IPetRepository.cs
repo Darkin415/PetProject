@@ -1,13 +1,13 @@
 ﻿using CSharpFunctionalExtensions;
 using PetProject.Domain.PetSpecies;
 using PetProject.Domain.Shared.Ids;
-using PetProject.Domain.Shared.ValueObject;
+using PetProject.Domain.Shared.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static PetProject.Domain.Shared.ValueObject.Errors;
+using static PetProject.Domain.Shared.ValueObjects.Errors;
 
 namespace PetProject.Application.Volunteers;
 

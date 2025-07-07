@@ -3,7 +3,7 @@ using PetProject.Domain.Enum;
 using PetProject.Domain.PetSpecies;
 using PetProject.Domain.Shared;
 using PetProject.Domain.Shared.Ids;
-using PetProject.Domain.Shared.ValueObject;
+using PetProject.Domain.Shared.ValueObjects;
 using System.Collections.Generic;
 namespace PetProject.Domain.Volunteers;
 public class Pet : Shared.Entity<PetId>, ISoftDeletable

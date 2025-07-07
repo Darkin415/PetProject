@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using PetProject.Application.FileProvider;
+using PetProject.Application;
 using PetProject.Application.Providers;
-using PetProject.Infrastructure.MessageQueues;
 using FileInfo = PetProject.Application.FileProvider.FileInfo;
+using PetProject.Infrastructure.MessageQueues;
 
 namespace PetProject.Infrastructure.BackgroundServices;
 
