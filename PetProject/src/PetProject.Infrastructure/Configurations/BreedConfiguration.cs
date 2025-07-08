@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetProject.Infrastructure.Configurations;
+namespace PetProject.Infrastructure.Configurations.Write;
 
 public class BreedConfiguration : IEntityTypeConfiguration<Breed>
 {

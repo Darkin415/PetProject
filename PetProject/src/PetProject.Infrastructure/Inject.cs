@@ -2,10 +2,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using Minio;
 using Minio.AspNetCore;
+using PetProject.Application;
 using PetProject.Application.Database;
 using PetProject.Application.Providers;
 using PetProject.Application.Volunteers;
 using PetProject.Infrastructure.BackgroundServices;
+using PetProject.Infrastructure.DbContexts;
 using PetProject.Infrastructure.MessageQueues;
 using PetProject.Infrastructure.Options;
 using PetProject.Infrastructure.Providers;
@@ -18,22 +20,71 @@ public static class Inject
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<ApplicationDbContext>();
+        services
+            .AddDbContexts()
+            .AddMinio(configuration)
+            .AddRepositories()
+            .AddDatabase()
+            .AddHostedServices()
+            .AddMessageQueues();     
+       
+        return services;
+    }
 
+    //private static IServiceCollection AddServices(
+    //    this IServiceCollection services)
+    //{
+    //    services.AddScoped<IFIlesCleanerService, FilesCleanerBackgroundService>();
+
+    //    return services;
+    //}
+
+    private static IServiceCollection AddMessageQueues(
+        this IServiceCollection services)
+    {
+        services.AddSingleton<IMessageQueue<IEnumerable<PetProject.Application.FileProvider.FileInfo>>,
+            InMemoryMessageQueue<IEnumerable<PetProject.Application.FileProvider.FileInfo>>>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddHostedServices(
+        this IServiceCollection services)
+    {
+        services.AddHostedService<FilesCleanerBackgroundService>();
+
+        return services;
+    }
+
+
+    private static IServiceCollection AddDatabase(
+        this IServiceCollection services)
+    {
+        services.AddScoped<IUnitOfWork, UnitOfWork>(); 
+
+        return services;
+    }
+
+    private static IServiceCollection AddRepositories(
+        this IServiceCollection services)
+    {
         services.AddScoped<IVolunteersRepository, VolunteersRepository>();
 
         services.AddScoped<ISpeciesRepository, SpeciesRepository>();
 
-        services.AddHostedService<FilesCleanerBackgroundService>();
+        return services;
+    }
 
-        services.AddSingleton<IMessageQueue<IEnumerable<PetProject.Application.FileProvider.FileInfo>>,
-            InMemoryMessageQueue<IEnumerable<PetProject.Application.FileProvider.FileInfo>>
->();
-
-        services.AddMinio(configuration);
+    private static IServiceCollection AddDbContexts(
+        this IServiceCollection services)
+    {
+        services.AddScoped<WriteDbContext>();
+        services.AddScoped<IReadDbContext, ReadDbContext>();
 
         return services;
     }
+
+
     private static IServiceCollection AddMinio(
         this IServiceCollection services, IConfiguration configuration)
     {

@@ -9,6 +9,10 @@ namespace PetProject.Domain.PetSpecies;
 
 public record BreedId
 {
+    public BreedId()
+    {
+        
+    }
     public BreedId(Guid value)
     {
         Value = value;

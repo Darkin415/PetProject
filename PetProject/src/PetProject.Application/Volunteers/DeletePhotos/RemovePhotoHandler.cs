@@ -4,9 +4,9 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Database;
 using PetProject.Application.Providers;
-using PetProject.Contracts.Command;
+using PetProject.Contracts.Commands;
 using PetProject.Domain.Shared.Ids;
-using PetProject.Domain.Shared.ValueObject;
+using PetProject.Domain.Shared.ValueObjects;
 using PetProject.Domain.Volunteers;
 namespace PetProject.Application.Volunteers.DeletePhotos;
 

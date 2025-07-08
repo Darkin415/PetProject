@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PetProject.Contracts.Response;
-using PetProject.Domain.Shared.ValueObject;
+using PetProject.Domain.Shared.ValueObjects;
 
 
-namespace PetProject.Contracts.ResponseExtensions;
+namespace PetProject.Contracts.Extensions;
 
 public static class ResponseExtensions
 {

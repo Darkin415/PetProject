@@ -1,5 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
-using PetProject.Domain.Shared.ValueObject;
+using PetProject.Domain.Shared.ValueObjects;
 namespace PetProject.Domain.Volunteers;
 public record SocialMedia
 {

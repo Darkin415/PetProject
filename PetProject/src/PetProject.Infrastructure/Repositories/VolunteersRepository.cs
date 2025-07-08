@@ -2,17 +2,16 @@
 using Microsoft.EntityFrameworkCore;
 using PetProject.Application.Volunteers;
 using PetProject.Domain.Shared.Ids;
-using PetProject.Domain.Shared.ValueObject;
+using PetProject.Domain.Shared.ValueObjects;
 using PetProject.Domain.Volunteers;
-using System.Threading.Tasks;
-
+using PetProject.Infrastructure.DbContexts;
 namespace PetProject.Infrastructure.Repositories;
 
 public class VolunteersRepository : IVolunteersRepository
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly WriteDbContext _dbContext;
     private List<Pet> _pets = [];
-    public VolunteersRepository(ApplicationDbContext dbContext)
+    public VolunteersRepository(WriteDbContext dbContext)
     {
         _dbContext = dbContext;
     }    
@@ -47,6 +46,8 @@ public class VolunteersRepository : IVolunteersRepository
 
         return volunteer;
     }
+
+    
     public async Task<Result<Volunteer, Error>> GetByEmail(Email email, CancellationToken cancellationToken = default)
     {
         var volunteer = await _dbContext.Volunteers
@@ -71,4 +72,6 @@ public class VolunteersRepository : IVolunteersRepository
         var pet = volunteer.Pets.First(p => p.Id == id);
         return pet;       
     }    
+
+
 }

@@ -1,8 +1,7 @@
 ﻿using FluentValidation;
 using PetProject.Application.Validation;
-using PetProject.Application.Volunteers.CreateVolunteer;
-using PetProject.Contracts.Command;
-using PetProject.Domain.Shared.ValueObject;
+using PetProject.Contracts.Commands;
+using PetProject.Domain.Shared.ValueObjects;
 using PetProject.Domain.Volunteers;
 
 namespace PetProject.Application.Volunteers.Create.Volunteer;

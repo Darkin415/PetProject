@@ -1,4 +1,4 @@
-﻿namespace PetProject.Domain.Shared.ValueObject;
+﻿namespace PetProject.Domain.Shared.ValueObjects;
 using System;
 
 public record Error

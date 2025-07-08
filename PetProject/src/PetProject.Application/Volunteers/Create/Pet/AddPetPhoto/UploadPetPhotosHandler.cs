@@ -4,11 +4,10 @@ using Microsoft.Extensions.Logging;
 using PetProject.Application.Database;
 using PetProject.Application.FileProvider;
 using PetProject.Application.Providers;
-using PetProject.Contracts.Command;
+using PetProject.Contracts.Commands;
 using PetProject.Domain.Shared.Ids;
-using PetProject.Domain.Shared.ValueObject;
+using PetProject.Domain.Shared.ValueObjects;
 using PetProject.Domain.Volunteers;
-using PetProject.Infrastructure.MessageQueues;
 using FileInfo = PetProject.Application.FileProvider.FileInfo;
 
 namespace PetProject.Application.Volunteers.Create.Pet.AddPetPhoto;

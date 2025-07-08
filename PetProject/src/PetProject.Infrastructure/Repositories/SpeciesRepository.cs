@@ -2,7 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using PetProject.Application.Volunteers;
 using PetProject.Domain.PetSpecies;
-using PetProject.Domain.Shared.ValueObject;
+using PetProject.Domain.Shared.ValueObjects;
+using PetProject.Infrastructure.DbContexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,8 @@ namespace PetProject.Infrastructure.Repositories;
 
 public class SpeciesRepository : ISpeciesRepository
 {
-    private readonly ApplicationDbContext _dbContext;
-    public SpeciesRepository(ApplicationDbContext dbContext)
+    private readonly WriteDbContext _dbContext;
+    public SpeciesRepository(WriteDbContext dbContext)
     {
         _dbContext = dbContext;
     }

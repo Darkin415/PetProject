@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using System.Text.RegularExpressions;
 
-namespace PetProject.Domain.Shared.ValueObject;
+namespace PetProject.Domain.Shared.ValueObjects;
 
 public record TelephonNumber
 {

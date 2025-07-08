@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using PetProject.Contracts.Command;
+using PetProject.Contracts.Commands;
 
 namespace PetProject.Application.Volunteers.Delete;
 

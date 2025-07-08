@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using PetProject.Application.Validation;
-using PetProject.Contracts.Command;
-using PetProject.Domain.Shared.ValueObject;
+using PetProject.Contracts.Commands;
+using PetProject.Domain.Shared.ValueObjects;
 
 namespace PetProject.Application.Volunteers.UpdateMainInfo;
 

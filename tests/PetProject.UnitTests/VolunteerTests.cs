@@ -4,12 +4,12 @@ using PetProject.Domain;
 using PetProject.Domain.Enum;
 using PetProject.Domain.PetSpecies;
 using PetProject.Domain.Shared.Ids;
-using PetProject.Domain.Shared.ValueObject;
+using PetProject.Domain.Shared.ValueObjects;
 using PetProject.Domain.Volunteers;
 using System;
 using System.Security.Cryptography.X509Certificates;
 
-namespace PetProject.UnitTests;
+namespace PetProject.Domain.UnitTests;
 
 public class VolunteerTests
 {

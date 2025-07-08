@@ -1,4 +1,5 @@
-﻿using System.Threading.Channels;
+﻿using PetProject.Application;
+using System.Threading.Channels;
 namespace PetProject.Infrastructure.MessageQueues;
 public class InMemoryMessageQueue<TMessage> : IMessageQueue<TMessage>
 {

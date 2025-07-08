@@ -1,8 +1,8 @@
-﻿using PetProject.Contracts.Command;
+﻿using PetProject.Contracts.Commands;
 using PetProject.Domain.Enum;
 using PetProject.Domain.PetSpecies;
 using PetProject.Domain.Shared.Ids;
-using PetProject.Domain.Shared.ValueObject;
+using PetProject.Domain.Shared.ValueObjects;
 using PetProject.Domain;
 using PetProject.Domain.Volunteers;
 using System.Threading.Tasks;
