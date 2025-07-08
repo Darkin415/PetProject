@@ -11,6 +11,7 @@ using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Application.Volunteers.Delete;
 using PetProject.Application.Volunteers.DeletePhotos;
 using PetProject.Application.Volunteers.GetVolunteers;
+using PetProject.Application.Volunteers.Queries;
 using PetProject.Application.Volunteers.UpdateMainInfo;
 using PetProject.Contracts.Commands;
 using PetProject.Contracts.Extensions;
@@ -30,23 +31,26 @@ public class VolunteersController : ApplicationController
         var query = request.ToQuery();
 
         var response = await handler.Handle(query, cancellationToken);
-
+        
         return Ok(response);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult> Get(
-        [FromRoute] Guid id,
-        [FromQuery] GetVolunteerByIdRequest request,
+        [FromRoute] Guid id,      
         [FromServices] GetVolunteerByIdHandler handler,
         CancellationToken cancellationToken)
     {
-        var query = request.ToQuery(id);
+        var query = new GetVolunteerByIdQuery(id);
 
-        var response = await handler.Handle(query, cancellationToken);
+        var result = await handler.Handle(query, cancellationToken);
 
-        return Ok(response);
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+
+        return Ok(result.Value);
     }
+
 
 
 

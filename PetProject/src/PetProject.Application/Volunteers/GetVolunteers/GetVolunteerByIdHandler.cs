@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CSharpFunctionalExtensions;
+using Microsoft.EntityFrameworkCore;
 using PetProject.Application.Volunteers.Queries;
 using PetProject.Contracts.Dtos;
+using PetProject.Domain.Shared.ValueObjects;
 using PetProject.Infrastructure.DbContexts;
 
 namespace PetProject.Application.Volunteers.GetVolunteers;
@@ -13,9 +15,10 @@ public class GetVolunteerByIdHandler
     {
         _readDbContext = readDbContext;
     }
-    public async Task<VolunteerDto> Handle(GetVolunteerByIdQuery query, CancellationToken cancellationToken)
+
+    public async Task<Result<VolunteerDto, Error>> Handle(GetVolunteerByIdQuery query, CancellationToken cancellationToken)
     {
-        var volunteerResult = await _readDbContext.Volunteers
+        var volunteerDto = await _readDbContext.Volunteers
             .AsNoTracking()
             .Where(v => v.Id == query.Id)
             .Select(v => new VolunteerDto
@@ -25,9 +28,9 @@ public class GetVolunteerByIdHandler
             })
             .FirstOrDefaultAsync(cancellationToken);
 
-        if(volunteerResult == null)
-            throw new ArgumentNullException(nameof(volunteerResult));  
+        if (volunteerDto == null)
+            return Error.NotFound("volunteer_not_found", "Volunteer not found");
 
-        return volunteerResult;      
+        return volunteerDto;
     }
 }
