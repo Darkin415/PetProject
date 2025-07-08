@@ -10,11 +10,7 @@ public class VolunteerDtoConfiguration : IEntityTypeConfiguration<VolunteerDto>
     {
         builder.ToTable("volunteers");
 
-        builder.HasKey(p => p.Id);
-
-        builder.HasMany(i => i.Pets)
-            .WithOne()
-            .HasForeignKey(p => p.VolunteerId);
+        builder.HasKey(p => p.Id);       
 
         builder.Property(v => v.Description).HasColumnName("description");        
     }

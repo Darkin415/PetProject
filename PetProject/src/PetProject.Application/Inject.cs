@@ -6,7 +6,7 @@ using PetProject.Application.Volunteers.Create.SocialList;
 using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Application.Volunteers.Delete;
 using PetProject.Application.Volunteers.DeletePhotos;
-using PetProject.Application.Volunteers.Queries.GetVolunteerWithPagination;
+using PetProject.Application.Volunteers.GetVolunteers;
 using PetProject.Application.Volunteers.UpdateMainInfo;
 
 namespace PetProject.Application;
@@ -23,6 +23,7 @@ public static class Inject
         services.AddScoped<RemovePhotoHandler>();
         services.AddScoped<GetVolunteersWithPaginationHandler>();
         services.AddScoped<UploadPetPhotosHandler>();
+        services.AddScoped<GetVolunteerByIdHandler>();
         services.AddValidatorsFromAssembly(typeof(Inject).Assembly);
         return services;
     }

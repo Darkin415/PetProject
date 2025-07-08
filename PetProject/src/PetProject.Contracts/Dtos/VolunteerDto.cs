@@ -14,7 +14,5 @@ public class VolunteerDto
 {
     public Guid Id { get; init; }
 
-    public string Description { get; init; } = string.Empty;
-
-    public PetDto[] Pets { get; init; } = [];
+    public string Description { get; init; } = string.Empty;   
 }

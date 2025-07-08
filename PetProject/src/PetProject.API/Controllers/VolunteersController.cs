@@ -10,7 +10,7 @@ using PetProject.Application.Volunteers.Create.Volunteer;
 using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Application.Volunteers.Delete;
 using PetProject.Application.Volunteers.DeletePhotos;
-using PetProject.Application.Volunteers.Queries.GetVolunteerWithPagination;
+using PetProject.Application.Volunteers.GetVolunteers;
 using PetProject.Application.Volunteers.UpdateMainInfo;
 using PetProject.Contracts.Commands;
 using PetProject.Contracts.Extensions;
@@ -28,6 +28,20 @@ public class VolunteersController : ApplicationController
         CancellationToken cancellationToken)
     {
         var query = request.ToQuery();
+
+        var response = await handler.Handle(query, cancellationToken);
+
+        return Ok(response);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult> Get(
+        [FromRoute] Guid id,
+        [FromQuery] GetVolunteerByIdRequest request,
+        [FromServices] GetVolunteerByIdHandler handler,
+        CancellationToken cancellationToken)
+    {
+        var query = request.ToQuery(id);
 
         var response = await handler.Handle(query, cancellationToken);
 
