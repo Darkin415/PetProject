@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.Extensions.Logging;
+using PetProject.Application.Abstraction;
 using PetProject.Application.Database;
 using PetProject.Contracts.Commands;
 using PetProject.Domain.Shared.Ids;
@@ -8,7 +9,7 @@ using PetProject.Domain.Volunteers;
 
 namespace PetProject.Application.Volunteers.Create.SocialList;
 
-public class UpdateSocialListHandler
+public class UpdateSocialListHandler : ICommandHandler<Guid, UpdateSocialNetworksCommand>
 {
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ILogger<UpdateSocialListHandler> _logger;
@@ -22,7 +23,7 @@ public class UpdateSocialListHandler
         _logger = logger;
         _unitOfWork = unitOfWork;
     }
-    public async Task<Result<Guid, Error>> Handle(
+    public async Task<Result<Guid, ErrorList>> Handle(
     UpdateSocialNetworksCommand command,
     CancellationToken cancellationToken = default)
     {
@@ -31,13 +32,13 @@ public class UpdateSocialListHandler
 
         var volunteerResult = await _volunteersRepository.GetVolunteerById(volunteerId, cancellationToken);
         if (volunteerResult.IsFailure)
-            return volunteerResult.Error;
+            return volunteerResult.Error.ToErrorList();
              
         var socialMediaResults = command.SocialMedias
         .Select(dto => SocialMedia.Create(dto.Title, dto.LinkMedia))
         .ToList();
         if (socialMediaResults.Any(r => r.IsFailure))
-            return Result.Failure<Guid, Error>(socialMediaResults.First(r => r.IsFailure).Error);
+            return Result.Failure<Guid, ErrorList>(socialMediaResults.First(r => r.IsFailure).Error.ToErrorList());
 
         var socialMediasList = socialMediaResults
     .Select(r => r.Value)
@@ -45,10 +46,14 @@ public class UpdateSocialListHandler
 
         volunteerResult.Value.UpdateSocialList(socialMediasList);
 
+        if (volunteerResult.IsFailure)
+            return volunteerResult.Error.ToErrorList();
+
         await _unitOfWork.SaveChanges(cancellationToken);
 
         _logger.LogInformation("Volunteer's social network has been updated with id {volunteerId}", volunteerId);
 
         return volunteerResult.Value.Id.Value;
     }
+    
 }

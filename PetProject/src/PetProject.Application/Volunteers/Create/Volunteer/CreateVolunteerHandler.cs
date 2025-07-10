@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
+using PetProject.Application.Abstraction;
 using PetProject.Application.Database;
 using PetProject.Application.Extensions;
 using PetProject.Contracts.Commands;
@@ -10,7 +11,7 @@ using PetProject.Domain.Volunteers;
 
 namespace PetProject.Application.Volunteers.CreateVolunteer;
 
-public class CreateVolunteerHandler
+public class CreateVolunteerHandler : ICommandHandler<Guid, AddVolunteerCommand>
 {
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ILogger<CreateVolunteerHandler> _logger;

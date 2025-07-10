@@ -1,13 +1,16 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
+using PetProject.Application.Abstraction;
+using PetProject.Application.Models;
 using PetProject.Application.Volunteers.Queries;
+using PetProject.Application.Volunteers.Queries.GetVolunteerWithPagination;
 using PetProject.Contracts.Dtos;
 using PetProject.Domain.Shared.ValueObjects;
 using PetProject.Infrastructure.DbContexts;
 
 namespace PetProject.Application.Volunteers.GetVolunteers;
 
-public class GetVolunteerByIdHandler
+public class GetVolunteerByIdHandler : IQueryHandler<Result<VolunteerDto, Error>, GetVolunteerByIdQuery>
 {
     public readonly IReadDbContext _readDbContext;
 

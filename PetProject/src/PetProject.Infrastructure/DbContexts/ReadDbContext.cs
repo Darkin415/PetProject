@@ -10,17 +10,18 @@ public class ReadDbContext(IConfiguration configuration)
     : DbContext, IReadDbContext
 {
     
-    public DbSet<VolunteerDto> Volunteers => Set<VolunteerDto>();
+    public IQueryable<VolunteerDto> Volunteers => Set<VolunteerDto>();
 
-    public DbSet<PetDto> Pets => Set<PetDto>();
-    public DbSet<SpeciesDto> Species => Set<SpeciesDto>();
-    public DbSet<BreedDto> Breeds => Set<BreedDto>();
+    public IQueryable<PetDto> Pets => Set<PetDto>();
+    public IQueryable<SpeciesDto> Species => Set<SpeciesDto>();
+    public IQueryable<BreedDto> Breeds => Set<BreedDto>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(configuration.GetConnectionString(Constants.DATABASE));
         optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
         optionsBuilder.EnableSensitiveDataLogging();
+        optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)

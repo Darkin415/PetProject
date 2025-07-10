@@ -9,9 +9,7 @@ public class PetDto
 
     public string Nickname { get; init; } = default!;
 
-    public string Photos { get; init; } = string.Empty;
-
-    public int Position { get; init; } 
+    public int Position { get; private set; } 
 
     public string PetInfo { get; init; } = string.Empty;
 
@@ -27,4 +25,15 @@ public class PetDto
 
     public string VaccinationStatus { get; init; } = default!;
 
+    public PetFileDto[] Photos { get; private set; } = null!;
+
+    public class PetFileDto
+    {
+        public string PathToStorage { get; set; } = string.Empty;
+
+        public int Size { get; set; }
+    }
+    
 }
+
+

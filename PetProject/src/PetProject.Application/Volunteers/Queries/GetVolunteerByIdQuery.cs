@@ -1,3 +1,5 @@
-﻿namespace PetProject.Application.Volunteers.Queries;
+﻿using PetProject.Application.Abstraction;
 
-public record GetVolunteerByIdQuery(Guid Id); 
+namespace PetProject.Application.Volunteers.Queries;
+
+public record GetVolunteerByIdQuery(Guid Id) : IQuery;

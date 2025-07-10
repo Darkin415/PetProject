@@ -68,6 +68,8 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
 
     public DateOfCreation DateOfCreation { get; private set; }
 
+    
+
     public void Delete()
     {
         _isDeleted = true;

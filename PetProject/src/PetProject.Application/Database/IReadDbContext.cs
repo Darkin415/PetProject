@@ -5,6 +5,6 @@ namespace PetProject.Infrastructure.DbContexts;
 
 public interface IReadDbContext
 {
-    DbSet<VolunteerDto> Volunteers { get; }
-    DbSet<PetDto> Pets { get; }
+    IQueryable<VolunteerDto> Volunteers { get; }
+    IQueryable<PetDto> Pets { get; }
 }

@@ -1,9 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetProject.Domain.PetSpecies;
 using PetProject.Domain.Shared;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Volunteers;
+using System.Text.Json;
+using static PetProject.Contracts.Dtos.PetDto;
+using static PetProject.Domain.Volunteers.Pet;
 
 namespace PetProject.Infrastructure.Configurations.Write;
 
@@ -114,17 +118,25 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             .UsePropertyAccessMode(PropertyAccessMode.Field)
             .HasColumnName("is_deleted");
 
-        builder.OwnsMany(p => p.Photos, sp =>
-        {
-        sp.ToJson("Photos");
+        builder.Property(p => p.Photos)
+            .HasConversion(
+            photos => JsonSerializer.Serialize(
+                photos.Select(p => new PetFileDto
+                {
+                    PathToStorage = p.PathToStorage.Path
+                }),
+                JsonSerializerOptions.Default),
 
-            sp.Property(f => f.PathToStorage)
-                .HasConversion(
-                p => p.Path,
-                value => FilePath.Create(value).Value)
-                .IsRequired()
-                .HasMaxLength(Domain.Shared.Constants.MAX_LOW_TEXT_LENGTH);                                
-        });
+
+            json => JsonSerializer.Deserialize<List<PetFileDto>>(json, JsonSerializerOptions.Default)!
+            .Select(p =>
+            new Photos(FilePath.Create(p.PathToStorage).Value))
+            .ToList(),
+
+            new ValueComparer<IReadOnlyList<Photos>>(
+                (c1, c2) => c1!.SequenceEqual(c2!),
+                c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                c => (IReadOnlyList<Photos>)c.ToList()));
 
         builder.ComplexProperty(p => p.PetInfo, pi =>
         {

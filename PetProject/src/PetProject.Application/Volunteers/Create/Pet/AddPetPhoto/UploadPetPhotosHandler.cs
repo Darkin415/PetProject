@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
+using PetProject.Application.Abstraction;
 using PetProject.Application.Database;
 using PetProject.Application.FileProvider;
 using PetProject.Application.Providers;
@@ -12,7 +13,7 @@ using FileInfo = PetProject.Application.FileProvider.FileInfo;
 
 namespace PetProject.Application.Volunteers.Create.Pet.AddPetPhoto;
 
-public class UploadPetPhotosHandler
+public class UploadPetPhotosHandler : ICommandHandler<Guid, UploadPetPhotoCommand>
 {
     private const string BUCKET_NAME = "photos";    
     private readonly ILogger<UploadPetPhotosHandler> _logger;
@@ -20,15 +21,18 @@ public class UploadPetPhotosHandler
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly IValidator<UploadPetPhotoCommand> _validator;
     private readonly IMessageQueue<IEnumerable<FileInfo>> _messageQueue;
+    private readonly IUnitOfWork _unitOfWork;  
 
     public UploadPetPhotosHandler(
         IFilesProvider fileProvider,
+        IUnitOfWork unitOfWOrk,
         IValidator<UploadPetPhotoCommand> validator,
         IVolunteersRepository volunteersRepository,
         IMessageQueue<IEnumerable<FileInfo>> messageQueue,
         ILogger<UploadPetPhotosHandler> logger)
     {        
         _logger = logger;
+        _unitOfWork = unitOfWOrk;
         _validator = validator;
         _fileProvider = fileProvider;
         _volunteersRepository = volunteersRepository;
@@ -89,7 +93,9 @@ public class UploadPetPhotosHandler
             .ToList();
 
         var addPhotosResult = petResult.Value.AddPhotos(petPhotos);
-        if(addPhotosResult.IsFailure)
+
+        await _unitOfWork.SaveChanges(cancellationToken);
+        if (addPhotosResult.IsFailure)
         {
             _logger.LogError("Ошибка добавления фото в БД: {Error}", addPhotosResult.Error);
             return addPhotosResult.Error.ToErrorList();

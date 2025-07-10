@@ -1,4 +1,4 @@
-﻿using PetProject.Contracts.Commands;
+﻿//using PetProject.Contracts.Commands;
 using PetProject.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
@@ -15,17 +15,17 @@ public record CreateVolunteerRequest(
     string Email,
     string PhoneNumber,
     CreateFullNameDto FullName,
-    IEnumerable<SocialMediaDto> SocialMedias)
-{
-    public AddVolunteerCommand ToCommand() => new(
-        Title,
-        LinkMedia,
-        Information,
-        Email,
-        PhoneNumber,
-        FullName,
-        SocialMedias);
-}
+    IEnumerable<SocialMediaDto> SocialMedias);
+//{
+//    public AddVolunteerCommand ToCommand() => new(
+//        Title,
+//        LinkMedia,
+//        Information,
+//        Email,
+//        PhoneNumber,
+//        FullName,
+//        SocialMedias);
+//}
 
 
 

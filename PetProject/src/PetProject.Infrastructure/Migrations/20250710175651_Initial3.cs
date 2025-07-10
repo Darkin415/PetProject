@@ -65,6 +65,7 @@ namespace PetProject.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Photos = table.Column<string>(type: "text", nullable: false),
                     Status = table.Column<int>(type: "integer", maxLength: 10, nullable: false),
                     is_deleted = table.Column<bool>(type: "boolean", nullable: false),
                     volunteer_id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -80,8 +81,7 @@ namespace PetProject.Infrastructure.Migrations
                     SpeciesId = table.Column<Guid>(type: "uuid", nullable: false),
                     serial_number = table.Column<int>(type: "integer", nullable: false),
                     status_health = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
-                    vaccination_status = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Photos = table.Column<string>(type: "jsonb", nullable: true)
+                    vaccination_status = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
