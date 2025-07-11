@@ -6,7 +6,7 @@ using PetProject.Domain.Shared;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Volunteers;
 using System.Text.Json;
-using static PetProject.Contracts.Dtos.PetDto;
+using static PetProject.Application.Volunteers.Create.Pet.GetPets.PetsDto;
 using static PetProject.Domain.Volunteers.Pet;
 
 namespace PetProject.Infrastructure.Configurations.Write;

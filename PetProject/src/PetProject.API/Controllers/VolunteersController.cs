@@ -5,6 +5,7 @@ using PetProject.API.Controllers.Pets.Requests;
 using PetProject.API.Processors;
 using PetProject.Application.Volunteers.Create.Pet.AddPet;
 using PetProject.Application.Volunteers.Create.Pet.AddPetPhoto;
+using PetProject.Application.Volunteers.Create.Pet.GetPets;
 using PetProject.Application.Volunteers.Create.SocialList;
 using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Application.Volunteers.Delete;
@@ -20,9 +21,23 @@ using PetProject.Contracts.Requests;
 namespace PetProject.API.Controllers;
 public class VolunteersController : ApplicationController
 {
+    [HttpGet("pets")]
+    public async Task<ActionResult> GetPets(
+        [FromRoute] Guid id,
+        [FromQuery] GetPetsWithPaginationRequest request,
+        [FromServices] GetPetsWithPaginationHandler handler,
+        CancellationToken cancellationToken)
+    {
+        var query = request.ToQuery(id);
+
+        var response = await handler.Handle(query, cancellationToken);
+
+        return Ok(response);
+    }
+
 
     [HttpGet]
-    public async Task<ActionResult> Get(
+    public async Task<ActionResult> GetVolunteer(
         [FromQuery] GetVolunteerWithPaginationRequest request,
         [FromServices] GetVolunteersWithPaginationHandler handler,
         CancellationToken cancellationToken)

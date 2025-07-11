@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PetProject.Application.Volunteers.Create.Pet.GetPets;
 using PetProject.Contracts.Dtos;
 
 namespace PetProject.Infrastructure.DbContexts;
@@ -6,5 +7,5 @@ namespace PetProject.Infrastructure.DbContexts;
 public interface IReadDbContext
 {
     IQueryable<VolunteerDto> Volunteers { get; }
-    IQueryable<PetDto> Pets { get; }
+    IQueryable<PetsDto> Pets { get; }
 }
