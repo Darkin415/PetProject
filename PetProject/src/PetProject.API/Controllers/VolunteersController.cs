@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PetProject.API.Contracts;
 using PetProject.API.Controllers.Pets.Requests;
 using PetProject.API.Processors;
+using PetProject.Application.Commands;
 using PetProject.Application.Volunteers.Create.Pet.AddPet;
 using PetProject.Application.Volunteers.Create.Pet.AddPetPhoto;
 using PetProject.Application.Volunteers.Create.Pet.GetPets;
@@ -21,21 +22,6 @@ using PetProject.Contracts.Requests;
 namespace PetProject.API.Controllers;
 public class VolunteersController : ApplicationController
 {
-    [HttpGet("pets")]
-    public async Task<ActionResult> GetPets(
-        [FromRoute] Guid id,
-        [FromQuery] GetPetsWithPaginationRequest request,
-        [FromServices] GetPetsWithPaginationHandler handler,
-        CancellationToken cancellationToken)
-    {
-        var query = request.ToQuery(id);
-
-        var response = await handler.Handle(query, cancellationToken);
-
-        return Ok(response);
-    }
-
-
     [HttpGet]
     public async Task<ActionResult> GetVolunteer(
         [FromQuery] GetVolunteerWithPaginationRequest request,
@@ -155,7 +141,20 @@ public class VolunteersController : ApplicationController
         [FromForm] AddPetRequest request,
         CancellationToken cancellationToken)
     {
-        var command = request.ToCommand(id);
+        var command = new AddPetCommand(
+            id,
+            request.NickName,
+            request.Breed,
+            request.Species,
+            request.Attribute,
+            request.Color,
+            request.StatusHealth,
+            request.OwnerTelephonNumber,
+            request.CastrationStatus,
+            request.VaccinationStatus,
+            request.BirthDate,
+            request.Status,
+            request.DateOfCreation);
 
         var result = await handler.Handle(command, cancellationToken);
 

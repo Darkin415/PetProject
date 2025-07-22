@@ -8,6 +8,7 @@ using Serilog.Events;
 using PetProject.Infrastructure.Providers;
 using PetProject.Application.Providers;
 using PetProject.Application.Database;
+using PetProject.Application.Volunteers.Create.Pet.GetPets;
 using PetProject.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,7 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 builder.Services.AddHttpLogging();
+builder.Services.AddScoped<GetPetByIdHandler>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

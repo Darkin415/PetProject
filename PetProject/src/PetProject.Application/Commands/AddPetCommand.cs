@@ -1,6 +1,7 @@
 ﻿using PetProject.Contracts.Dtos;
 using PetProject.Domain.Enum;
-namespace PetProject.Contracts.Commands
+
+namespace PetProject.Application.Commands
 {
     public record AddPetCommand(
     Guid VolunteerId,

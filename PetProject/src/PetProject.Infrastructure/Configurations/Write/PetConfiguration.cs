@@ -6,7 +6,7 @@ using PetProject.Domain.Shared;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Volunteers;
 using System.Text.Json;
-using static PetProject.Application.Volunteers.Create.Pet.GetPets.PetsDto;
+using static PetProject.Contracts.Dtos.PetsDto;
 using static PetProject.Domain.Volunteers.Pet;
 
 namespace PetProject.Infrastructure.Configurations.Write;
@@ -119,6 +119,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             .HasColumnName("is_deleted");
 
         builder.Property(p => p.Photos)
+            .HasColumnType("jsonb")
             .HasConversion(
             photos => JsonSerializer.Serialize(
                 photos.Select(p => new PetFileDto

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using static PetProject.Application.Volunteers.Create.Pet.GetPets.PetsDto;
+using static PetProject.Contracts.Dtos.PetsDto;
 
 
 namespace PetProject.Infrastructure.Configurations.Read;

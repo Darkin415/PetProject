@@ -1,6 +1,5 @@
 ﻿using PetProject.Application.Abstraction;
 
-
 namespace PetProject.Application.Volunteers.Create.Pet.GetPets;
 
 public record GetPetsWithPaginationQuery(

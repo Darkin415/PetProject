@@ -12,17 +12,17 @@ public record GetVolunteerWithPaginationRequest(int Page, int PageSize)
 public record GetPetsWithPaginationRequest(
     int Page, 
     int PageSize,
-    string NickName, 
-    string Color,     
-    string CastrationStatus,
-    string VaccinationStatus
+    string? NickName,
+    string? Color,     
+    string? CastrationStatus,
+    string? VaccinationStatus
     )
 {
     public GetPetsWithPaginationQuery ToQuery(Guid VolunteerId) =>
         new(VolunteerId, 
             Page, 
             PageSize, 
-            NickName, 
+            NickName,
             Color,            
             CastrationStatus, 
             VaccinationStatus);         

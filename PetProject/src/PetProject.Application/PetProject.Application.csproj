@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Messaginng\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PetProject.Contracts\PetProject.Contracts.csproj" />
     <ProjectReference Include="..\PetProject.Domain\PetProject.Domain.csproj" />
   </ItemGroup>

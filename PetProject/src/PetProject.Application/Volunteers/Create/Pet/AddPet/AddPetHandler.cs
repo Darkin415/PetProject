@@ -2,6 +2,7 @@
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Abstraction;
+using PetProject.Application.Commands;
 using PetProject.Application.Database;
 using PetProject.Application.Providers;
 using PetProject.Contracts.Commands;
@@ -54,6 +55,7 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
                 return volunteerResult.Error.ToErrorList();
 
             var petId = PetId.NewPetId();
+            
 
             var nickName = NickName.Create(command.NickName).Value;
 
@@ -61,9 +63,17 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
 
             var breedId = BreedId.NewBreedId();
 
-            var species = await _speciesRepository.GetSpeciesAsync(speciesId, cancellationToken);
+            var species = Species.Create(speciesId);
+            
+            var breed = Breed.Create(breedId);
 
-            var breed = await _speciesRepository.GetBreedAsync(breedId, cancellationToken);
+            // var species = await _speciesRepository.GetSpeciesAsync(speciesId, cancellationToken);
+            // if (species.IsFailure)
+            //     return species.Error.ToErrorList();
+            //
+            // var breed = await _speciesRepository.GetBreedAsync(breedId, cancellationToken);
+            // if (breed.IsFailure)
+            //     return breed.Error.ToErrorList();
 
             var petInfo = PetInfo.Create(speciesId, breedId).Value;
 

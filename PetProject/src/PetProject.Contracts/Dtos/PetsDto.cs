@@ -1,9 +1,9 @@
-﻿namespace PetProject.Application.Volunteers.Create.Pet.GetPets;
+﻿namespace PetProject.Contracts.Dtos;
 
 public class PetsDto
 {
     public Guid Id;
-
+    
     public Guid VolunteerId { get; init; }
 
     public string? Nickname { get; private set; } = null;

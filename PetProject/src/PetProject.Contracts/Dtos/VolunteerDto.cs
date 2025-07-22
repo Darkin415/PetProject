@@ -16,3 +16,8 @@ public class VolunteerDto
 
     public string Description { get; init; } = string.Empty;   
 }
+
+public class PetDto
+{
+    public Guid Id { get; init; }
+}
