@@ -24,10 +24,9 @@ public class SpeciesRepository : ISpeciesRepository
     public async Task<Result<Species, Error>> GetSpeciesAsync(SpeciesId id, CancellationToken cancellationToken)
     {
         var species = await _dbContext.Species
-            .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
+            .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);   
 
         if (species == null)
-
             return Errors.General.NotFound(id.Value);
 
         return species;

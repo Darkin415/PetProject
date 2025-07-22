@@ -20,7 +20,8 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
         PetInfo petInfo,
         Color? color,
         StatusHealth statusHealth,
-        PhysicalAttributes? attributes,
+        Weight? weight,
+        Height? height,
         TelephonNumber telephoneNumber,
         CastrationStatus castrationStatus,
         BirthDay birthDate,
@@ -33,7 +34,8 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
         PetInfo = petInfo;
         Color = color;
         StatusHealth = statusHealth;
-        Attributes = attributes;
+        Weight = weight;
+        Height = height;
         OwnerTelephoneNumber = telephoneNumber;
         CastrationStatus = castrationStatus;
         BirthDate = birthDate;
@@ -42,6 +44,11 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
         DateOfCreation = dateOfCreation;
     }
     public NickName Nickname { get; private set; } = default!;
+    
+    public Weight Weight { get; private set; }
+    
+    public Height Height { get; private set; }
+    
 
     public IReadOnlyList<Photos> Photos => _photos;
 
@@ -52,9 +59,7 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
     public Color Color { get; private set; } = default!;
 
     public StatusHealth StatusHealth { get; private set; } = default!;
-
-    public PhysicalAttributes Attributes { get; private set; }
-
+    
     public TelephonNumber OwnerTelephoneNumber { get; private set; } = default!;
 
     public CastrationStatus CastrationStatus { get; private set; } = default!;
@@ -128,4 +133,3 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
         Position = newPosition;
     
 }
-

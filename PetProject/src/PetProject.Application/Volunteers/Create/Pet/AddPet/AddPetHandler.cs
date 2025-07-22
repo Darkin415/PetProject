@@ -10,8 +10,7 @@ using PetProject.Domain;
 using PetProject.Domain.PetSpecies;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObjects;
-
-
+using PetProject.Domain.Volunteers;
 
 
 namespace PetProject.Application.Volunteers.Create.Pet.AddPet;
@@ -63,17 +62,17 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
 
             var breedId = BreedId.NewBreedId();
 
-            var species = Species.Create(speciesId);
-            
-            var breed = Breed.Create(breedId);
-
-            // var species = await _speciesRepository.GetSpeciesAsync(speciesId, cancellationToken);
-            // if (species.IsFailure)
-            //     return species.Error.ToErrorList();
+            // var species = Species.Create(speciesId);
             //
-            // var breed = await _speciesRepository.GetBreedAsync(breedId, cancellationToken);
-            // if (breed.IsFailure)
-            //     return breed.Error.ToErrorList();
+            // var breed = Breed.Create(breedId);
+
+            var species = await _speciesRepository.GetSpeciesAsync(speciesId, cancellationToken);
+            if (species.IsFailure)
+                return species.Error.ToErrorList();
+            
+            var breed = await _speciesRepository.GetBreedAsync(breedId, cancellationToken);
+            if (breed.IsFailure)
+                return breed.Error.ToErrorList();
 
             var petInfo = PetInfo.Create(speciesId, breedId).Value;
 
@@ -91,8 +90,11 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
 
             var color = Color.Create(command.Color).Value;
 
-            var attribute = PhysicalAttributes.Create(command.PhysicalAttribute.Weight, command.PhysicalAttribute.Height).Value;
+            var weight = Weight.Create(command.Weight).Value;
 
+            var height = Height.Create(command.Height).Value;
+
+            
             var status = command.Status;
 
             var pet = new Domain.Volunteers.Pet(
@@ -101,7 +103,8 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
             petInfo,
             color,
             statusHealth,
-            attribute,
+            weight,
+            height,
             ownerTelephonNumber,
             castrationStatus,
             birthDate,

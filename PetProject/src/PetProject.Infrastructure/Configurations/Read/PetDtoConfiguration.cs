@@ -24,6 +24,10 @@ public class PetDtoConfiguration : IEntityTypeConfiguration<PetsDto>
 
         builder.Property(p => p.Nickname).HasColumnName("nick_name");
 
+        builder.Property(p => p.Height).HasColumnName("height");
+
+        builder.Property(p => p.Weight).HasColumnName("weight");
+
         builder.Property(p => p.VolunteerId).HasColumnName("volunteer_id");
 
         builder.Property(p => p.Color).HasColumnName("color");

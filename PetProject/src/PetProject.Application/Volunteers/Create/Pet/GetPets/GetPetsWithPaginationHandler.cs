@@ -20,6 +20,9 @@ public class GetPetsWithPaginationHandler : IQueryHandler<PagedList<PetsDto>, Ge
         
         if (!string.IsNullOrEmpty(query.NickName))
             petsQuery = petsQuery.Where(p => p.Nickname.Contains(query.NickName));
+
+        if (query.Weight.HasValue)
+            petsQuery = petsQuery.Where(p => p.Weight == query.Weight);
         
         if (!string.IsNullOrEmpty(query.Color))
             petsQuery = petsQuery.Where(p => p.Color.Contains(query.Color));      

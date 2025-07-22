@@ -12,6 +12,8 @@ public record GetVolunteerWithPaginationRequest(int Page, int PageSize)
 public record GetPetsWithPaginationRequest(
     int Page, 
     int PageSize,
+    double? Weight,
+    double? Height,
     string? NickName,
     string? Color,     
     string? CastrationStatus,
@@ -22,6 +24,8 @@ public record GetPetsWithPaginationRequest(
         new(VolunteerId, 
             Page, 
             PageSize, 
+            Weight,
+            Height,
             NickName,
             Color,            
             CastrationStatus, 
