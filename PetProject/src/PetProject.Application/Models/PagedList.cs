@@ -9,7 +9,7 @@ public class PagedList<T>
     public int PageSize { get; init; }
 
     public int Page { get; init; }
-
+    
     public bool HasNextPage => Page * PageSize < TotalCount;
 
     public bool HasPreviousPage => Page > 1;
