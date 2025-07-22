@@ -137,7 +137,7 @@ public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
         return Result.Success<Error>();
 
     }
-    // 1 2 3 4 5    1 4 2 3 5 
+    
     private UnitResult<Error> MovePetBetweenPosition(Position newPosition, Position currentPosition)
     {
         if (newPosition.Value < currentPosition.Value)

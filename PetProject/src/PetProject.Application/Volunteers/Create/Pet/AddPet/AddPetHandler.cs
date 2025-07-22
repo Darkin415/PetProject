@@ -1,6 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
+using PetProject.Application.Abstraction;
+using PetProject.Application.Commands;
 using PetProject.Application.Database;
 using PetProject.Application.Providers;
 using PetProject.Contracts.Commands;
@@ -15,7 +17,7 @@ using PetProject.Domain.Shared.ValueObjects;
 namespace PetProject.Application.Volunteers.Create.Pet.AddPet;
 
 
-public class AddPetHandler
+public class AddPetHandler : ICommandHandler<Guid, AddPetCommand> 
 {
     private const string BUCKET_NAME = "photos";   
     private readonly ILogger<AddPetHandler> _logger;
@@ -40,7 +42,7 @@ public class AddPetHandler
         _speciesRepository = speciesRepository;
         _unitOfWork = unitOfWork;
     }
-    public async Task<Result<Guid, Error>> Handle(
+    public async Task<Result<Guid, ErrorList>> Handle(
     AddPetCommand command,
     CancellationToken cancellationToken = default)
     {       
@@ -50,9 +52,10 @@ public class AddPetHandler
                 .GetVolunteerById(VolunteerId.Create(command.VolunteerId).Value, cancellationToken);
 
             if (volunteerResult.IsFailure)
-                return volunteerResult.Error;
+                return volunteerResult.Error.ToErrorList();
 
             var petId = PetId.NewPetId();
+            
 
             var nickName = NickName.Create(command.NickName).Value;
 
@@ -60,9 +63,17 @@ public class AddPetHandler
 
             var breedId = BreedId.NewBreedId();
 
-            var species = await _speciesRepository.GetSpeciesAsync(speciesId, cancellationToken);
+            var species = Species.Create(speciesId);
+            
+            var breed = Breed.Create(breedId);
 
-            var breed = await _speciesRepository.GetBreedAsync(breedId, cancellationToken);
+            // var species = await _speciesRepository.GetSpeciesAsync(speciesId, cancellationToken);
+            // if (species.IsFailure)
+            //     return species.Error.ToErrorList();
+            //
+            // var breed = await _speciesRepository.GetBreedAsync(breedId, cancellationToken);
+            // if (breed.IsFailure)
+            //     return breed.Error.ToErrorList();
 
             var petInfo = PetInfo.Create(speciesId, breedId).Value;
 
@@ -108,9 +119,9 @@ public class AddPetHandler
         catch (Exception ex)
         {
 
-            _logger.LogError(ex, "Can not add pet to volunteer - {id} in transaction", command.VolunteerId);        
+            _logger.LogError(ex, "Can not add pet to volunteer - {id} in transaction", command.VolunteerId);
 
-            return Error.Failure("volunteer.pet.failure", "Can not add pet to volunteer - {id}");
+            return Error.Failure("AddPetFailed", ex.Message).ToErrorList();
         }
     }
 }

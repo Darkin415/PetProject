@@ -46,8 +46,7 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
     public IReadOnlyList<Photos> Photos => _photos;
 
     public Position Position { get; private set; }
-
-
+    
     public PetInfo PetInfo { get; private set; }
 
     public Color Color { get; private set; } = default!;
@@ -67,6 +66,8 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
     public StatusHelp Status { get; private set; }
 
     public DateOfCreation DateOfCreation { get; private set; }
+
+    
 
     public void Delete()
     {

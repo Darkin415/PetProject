@@ -1,4 +1,4 @@
-﻿using PetProject.Contracts.Dtos;
+﻿using PetProject.Contracts.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,4 +7,7 @@ using System.Threading.Tasks;
 
 namespace PetProject.Contracts.Commands;
 
-public record UploadPetPhotoCommand(IEnumerable<CreateFileDto> Photos, Guid VolunteerId, Guid PetId);
+public record DeleteVolunteerCommand(
+
+    Guid VolunteerId
+) :ICommand;

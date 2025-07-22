@@ -1,12 +1,7 @@
 ﻿using PetProject.Contracts.Dtos;
 using PetProject.Domain.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PetProject.Contracts.Commands
+namespace PetProject.Application.Commands
 {
     public record AddPetCommand(
     Guid VolunteerId,
@@ -21,5 +16,5 @@ namespace PetProject.Contracts.Commands
     string VaccinationStatus,
     DateTime BirthDate,
     StatusHelp Status,
-    DateTime DateOfCreation);
+    DateTime DateOfCreation) : ICommand;
 }

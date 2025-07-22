@@ -1,3 +1,5 @@
-﻿namespace PetProject.Application.Volunteers.Queries.GetVolunteerWithPagination;
+﻿using PetProject.Application.Abstraction;
 
-public record GetVolunteersWithPaginationQuery(int Page, int PageSize);
+namespace PetProject.Application.Volunteers.Queries.GetVolunteerWithPagination;
+
+public record GetVolunteersWithPaginationQuery(int Page, int PageSize) : IQuery;

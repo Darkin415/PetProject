@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using PetProject.API.Contracts;
 using PetProject.API.Controllers.Pets.Requests;
 using PetProject.API.Processors;
+using PetProject.Application.Commands;
 using PetProject.Application.Volunteers.Create.Pet.AddPet;
 using PetProject.Application.Volunteers.Create.Pet.AddPetPhoto;
+using PetProject.Application.Volunteers.Create.Pet.GetPets;
+using PetProject.Application.Volunteers.Create.Pet.MovePet;
 using PetProject.Application.Volunteers.Create.SocialList;
-using PetProject.Application.Volunteers.Create.Volunteer;
 using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Application.Volunteers.Delete;
 using PetProject.Application.Volunteers.DeletePhotos;
@@ -16,14 +18,34 @@ using PetProject.Application.Volunteers.UpdateMainInfo;
 using PetProject.Contracts.Commands;
 using PetProject.Contracts.Extensions;
 using PetProject.Contracts.Requests;
-using PetProject.Contracts.Response;
+
 
 namespace PetProject.API.Controllers;
 public class VolunteersController : ApplicationController
 {
+    [HttpPut("pet/move-position/{volunteerId:guid}/{petId:guid}/{newPosition:int}")]
 
+    public async Task<ActionResult> MovePet(
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        [FromRoute] int newPosition,
+        [FromServices] MovePetHandler handler,
+        CancellationToken cancellationToken)
+    {
+        var command = new MovePetCommand(volunteerId, petId, newPosition);
+
+        var result = await handler.Handle(command, cancellationToken);
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+
+        return Ok(result.Value);
+    }
+    
+    
+    
+    
     [HttpGet]
-    public async Task<ActionResult> Get(
+    public async Task<ActionResult> GetVolunteer(
         [FromQuery] GetVolunteerWithPaginationRequest request,
         [FromServices] GetVolunteersWithPaginationHandler handler,
         CancellationToken cancellationToken)
@@ -61,7 +83,16 @@ public class VolunteersController : ApplicationController
         [FromServices] IValidator<AddVolunteerCommand> validator,
         CancellationToken cancellationToken = default)
     {
-        var result = await handler.Handle(request.ToCommand(), cancellationToken);
+        var command = new AddVolunteerCommand(
+            request.Title,
+            request.LinkMedia,
+            request.Information,
+            request.Email,
+            request.PhoneNumber,
+            request.FullName,
+            request.SocialMedias);
+
+        var result = await handler.Handle(command, cancellationToken);
 
         if (result.IsFailure)
             return result.Error.ToResponse();
@@ -76,7 +107,11 @@ public class VolunteersController : ApplicationController
         [FromBody] UpdateMainInfoRequest request,
         CancellationToken cancellationToken = default)
     {
-        var command = request.ToCommand(id);
+        var command = new UpdateMainInfoCommand(
+            id, 
+            request.FullName, 
+            request.TelephonNumber, 
+            request.Description);
 
         var result = await handler.Handle(command, cancellationToken);
 
@@ -93,7 +128,7 @@ public class VolunteersController : ApplicationController
         [FromBody] UpdateSocialListRequest request,
         CancellationToken cancellationToken = default)
     {
-        var command = request.ToCommmand(id);
+        var command = new UpdateSocialNetworksCommand(id, request.SocialMedias);
 
         var result = await handler.Handle(command, cancellationToken);
 
@@ -107,11 +142,10 @@ public class VolunteersController : ApplicationController
     public async Task<ActionResult> Delete(
         [FromRoute] Guid id,
         [FromServices] DeleteVolunteerHandler handler,
-        [FromServices] IValidator<DeleteVolunteerCommand> validator,
-        [FromBody] DeleteVolunteerRequest request,
+        [FromServices] IValidator<DeleteVolunteerCommand> validator,     
         CancellationToken cancellationToken = default)
     {
-        var command = request.ToCommand(id);
+        var command = new DeleteVolunteerCommand(id);
 
         var result = await handler.Handle(command, cancellationToken);
 
@@ -129,7 +163,20 @@ public class VolunteersController : ApplicationController
         [FromForm] AddPetRequest request,
         CancellationToken cancellationToken)
     {
-        var command = request.ToCommand(id);
+        var command = new AddPetCommand(
+            id,
+            request.NickName,
+            request.Breed,
+            request.Species,
+            request.Attribute,
+            request.Color,
+            request.StatusHealth,
+            request.OwnerTelephonNumber,
+            request.CastrationStatus,
+            request.VaccinationStatus,
+            request.BirthDate,
+            request.Status,
+            request.DateOfCreation);
 
         var result = await handler.Handle(command, cancellationToken);
 
@@ -173,11 +220,7 @@ public class VolunteersController : ApplicationController
             return BadRequest(result.Error);
 
         return Ok(result.Value);
-    }
-
-
-    
-
+    }   
 }
 
 

@@ -1,22 +1,22 @@
-﻿using PetProject.Domain.Shared;
+﻿using CSharpFunctionalExtensions;
 using PetProject.Domain.Shared.Ids;
+using PetProject.Domain.Shared.ValueObjects;
 
 namespace PetProject.Domain.PetSpecies;
 
-public class Breed : Entity<BreedId>
+public class Breed : Shared.Entity<BreedId>
 {
     // для ef core
     private Breed(BreedId id) : base(id)
     {
         
     }
-    public Breed(BreedId id, string title) : base(id)
-    {
-        Title = title;
-    }
-   
-    public string Title { get; private set; }
 
     public BreedId Id { get; private set; }
+    
+    public static Result<Breed, Error> Create(BreedId id)
+    {
+        return new Breed(id);
+    }
 
 }

@@ -13,4 +13,4 @@ public record AddVolunteerCommand(string Title,
     string Email,
     string PhoneNumber,
     CreateFullNameDto FullName,
-    IEnumerable<SocialMediaDto> SocialMedias);
+    IEnumerable<SocialMediaDto> SocialMedias) :ICommand;

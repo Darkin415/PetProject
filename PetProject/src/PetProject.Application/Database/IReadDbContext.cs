@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PetProject.Application.Volunteers.Create.Pet.GetPets;
 using PetProject.Contracts.Dtos;
 
 namespace PetProject.Infrastructure.DbContexts;
 
 public interface IReadDbContext
 {
-    DbSet<VolunteerDto> Volunteers { get; }
-    DbSet<PetDto> Pets { get; }
+    IQueryable<VolunteerDto> Volunteers { get; }
+    IQueryable<PetsDto> Pets { get; }
 }

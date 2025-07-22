@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using PetProject.Application.Volunteers.Create.Pet.GetPets;
 using PetProject.Contracts.Dtos;
 using PetProject.Domain.PetSpecies;
 
@@ -10,17 +11,18 @@ public class ReadDbContext(IConfiguration configuration)
     : DbContext, IReadDbContext
 {
     
-    public DbSet<VolunteerDto> Volunteers => Set<VolunteerDto>();
+    public IQueryable<VolunteerDto> Volunteers => Set<VolunteerDto>();
 
-    public DbSet<PetDto> Pets => Set<PetDto>();
-    public DbSet<SpeciesDto> Species => Set<SpeciesDto>();
-    public DbSet<BreedDto> Breeds => Set<BreedDto>();
+    public IQueryable<PetsDto> Pets => Set<PetsDto>();
+    public IQueryable<SpeciesDto> Species => Set<SpeciesDto>();
+    public IQueryable<BreedDto> Breeds => Set<BreedDto>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(configuration.GetConnectionString(Constants.DATABASE));
         optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
         optionsBuilder.EnableSensitiveDataLogging();
+        optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
