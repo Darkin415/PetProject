@@ -7,6 +7,7 @@ using PetProject.Application.Commands;
 using PetProject.Application.Volunteers.Create.Pet.AddPet;
 using PetProject.Application.Volunteers.Create.Pet.AddPetPhoto;
 using PetProject.Application.Volunteers.Create.Pet.GetPets;
+using PetProject.Application.Volunteers.Create.Pet.MovePet;
 using PetProject.Application.Volunteers.Create.SocialList;
 using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Application.Volunteers.Delete;
@@ -22,6 +23,27 @@ using PetProject.Contracts.Requests;
 namespace PetProject.API.Controllers;
 public class VolunteersController : ApplicationController
 {
+    [HttpPut("pet/move-position/{volunteerId:guid}/{petId:guid}/{newPosition:int}")]
+
+    public async Task<ActionResult> MovePet(
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        [FromRoute] int newPosition,
+        [FromServices] MovePetHandler handler,
+        CancellationToken cancellationToken)
+    {
+        var command = new MovePetCommand(volunteerId, petId, newPosition);
+
+        var result = await handler.Handle(command, cancellationToken);
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+
+        return Ok(result.Value);
+    }
+    
+    
+    
+    
     [HttpGet]
     public async Task<ActionResult> GetVolunteer(
         [FromQuery] GetVolunteerWithPaginationRequest request,

@@ -9,6 +9,7 @@ using PetProject.Infrastructure.Providers;
 using PetProject.Application.Providers;
 using PetProject.Application.Database;
 using PetProject.Application.Volunteers.Create.Pet.GetPets;
+using PetProject.Application.Volunteers.Create.Pet.MovePet;
 using PetProject.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +26,7 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Services.AddHttpLogging();
 builder.Services.AddScoped<GetPetByIdHandler>();
+builder.Services.AddScoped<MovePetHandler>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
