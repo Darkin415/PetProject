@@ -13,8 +13,8 @@ using PetProject.Infrastructure.DbContexts;
 namespace PetProject.Infrastructure.Migrations
 {
     [DbContext(typeof(WriteDbContext))]
-    [Migration("20250708085231_Initial3")]
-    partial class Initial3
+    [Migration("20250721185822_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
