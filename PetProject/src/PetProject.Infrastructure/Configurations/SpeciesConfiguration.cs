@@ -19,5 +19,12 @@ public class SpeciesConfiguration : IEntityTypeConfiguration<Species>
             .HasConversion(
             id => id.Value,
             guid => SpeciesId.Create(guid).Value);
+
+        builder.ComplexProperty(p => p.Title, g =>
+        {
+            g.Property(g => g.Name)
+                .IsRequired()
+                .HasColumnName("title");
+        });
     }
 }

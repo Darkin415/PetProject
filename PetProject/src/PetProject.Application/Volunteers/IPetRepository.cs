@@ -17,4 +17,8 @@ public interface ISpeciesRepository
 
     Task<Result<Breed, Error>> GetBreedAsync(BreedId id, CancellationToken cancellationToken);
 
+    // Task<Result<Guid, ErrorList>> CreateBreed(string title, CancellationToken cancellationToken);
+    //
+    // Task<Result<Guid, ErrorList>> CreateSpecies(string title, CancellationToken cancellationToken);
+    
 }

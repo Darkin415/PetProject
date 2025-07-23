@@ -6,9 +6,11 @@ using PetProject.API.Processors;
 using PetProject.Application.Commands;
 using PetProject.Application.Volunteers.Create.Pet.AddPet;
 using PetProject.Application.Volunteers.Create.Pet.AddPetPhoto;
+using PetProject.Application.Volunteers.Create.Pet.Breed;
 using PetProject.Application.Volunteers.Create.Pet.GetPets;
 using PetProject.Application.Volunteers.Create.Pet.MovePet;
 using PetProject.Application.Volunteers.Create.SocialList;
+using PetProject.Application.Volunteers.Create.Species;
 using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Application.Volunteers.Delete;
 using PetProject.Application.Volunteers.DeletePhotos;
@@ -23,6 +25,40 @@ using PetProject.Contracts.Requests;
 namespace PetProject.API.Controllers;
 public class VolunteersController : ApplicationController
 {
+    
+    // [HttpPost("")]
+    //
+    // public async Task<ActionResult> CreateSpecies(
+    //     [FromQuery] CreateSpeciesRequest request,
+    //     [FromServices] CreateSpeciesHandler handler,
+    //     CancellationToken cancellationToken)
+    // {
+    //     var command = new CreateSpeciesCommand(request.Title);
+    //
+    //     var result = await handler.Handle(command, cancellationToken);
+    //
+    //     return Ok(result);
+    // }
+    //
+    //
+    // [HttpPost("{id}")]
+    //
+    // public async Task<ActionResult> CreateBreeds(
+    //     [FromQuery] CreateBreedRequest request,
+    //     [FromServices] CreateBreedHandler handler,
+    //     CancellationToken cancellationToken)
+    // {
+    //     var command = new CreateBreedCommand(request.Title);
+    //
+    //     var result = await handler.Handle(command, cancellationToken);
+    //
+    //     return Ok(result);
+    // }
+    //
+    //
+    
+    
+    
     [HttpPut("pet/move-position/{volunteerId:guid}/{petId:guid}/{newPosition:int}")]
 
     public async Task<ActionResult> MovePet(
