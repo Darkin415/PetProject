@@ -57,24 +57,26 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
             
 
             var nickName = NickName.Create(command.NickName).Value;
+            
 
-            var speciesId = SpeciesId.NewSpeciesId();
+            var titleSpecies = Title.Create(command.Species);
+            if (titleSpecies.IsFailure)
+                return titleSpecies.Error.ToErrorList();
 
-            var breedId = BreedId.NewBreedId();
+            var titleBreed = Title.Create(command.Breed);
+            if (titleSpecies.IsFailure)
+                return titleSpecies.Error.ToErrorList();
+            
 
-            // var species = Species.Create(speciesId);
-            //
-            // var breed = Breed.Create(breedId);
-
-            var species = await _speciesRepository.GetSpeciesAsync(speciesId, cancellationToken);
+            var species = await _speciesRepository.GetSpeciesByNameAsync(titleSpecies.Value, cancellationToken);
             if (species.IsFailure)
                 return species.Error.ToErrorList();
             
-            var breed = await _speciesRepository.GetBreedAsync(breedId, cancellationToken);
+            var breed = await _speciesRepository.GetBreedByNameAsync(titleBreed.Value, cancellationToken);
             if (breed.IsFailure)
                 return breed.Error.ToErrorList();
 
-            var petInfo = PetInfo.Create(speciesId, breedId).Value;
+            var petInfo = PetInfo.Create(species.Value.Id, breed.Value.Id).Value;
 
             var statusHealth = StatusHealth.Create(command.StatusHealth).Value;
 

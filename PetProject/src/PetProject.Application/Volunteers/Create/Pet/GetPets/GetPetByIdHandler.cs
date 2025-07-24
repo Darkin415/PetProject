@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
+using PetProject.Application.Database;
 using PetProject.Application.Volunteers.Queries;
 using PetProject.Contracts.Dtos;
 using PetProject.Domain.Shared.ValueObjects;
-using PetProject.Infrastructure.DbContexts;
 
 namespace PetProject.Application.Volunteers.Create.Pet.GetPets;
 

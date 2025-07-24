@@ -3,6 +3,10 @@
 public class PetsDto
 {
     public Guid Id;
+
+    public Guid BreedId { get; init; }
+    
+    public Guid SpeciesId { get; init; }
     
     public Guid VolunteerId { get; init; }
     

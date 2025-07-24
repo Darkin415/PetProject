@@ -13,8 +13,8 @@ using PetProject.Infrastructure.DbContexts;
 namespace PetProject.Infrastructure.Migrations
 {
     [DbContext(typeof(WriteDbContext))]
-    [Migration("20250722174925_Initial")]
-    partial class Initial
+    [Migration("20250724145404_d")]
+    partial class d
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,8 +31,18 @@ namespace PetProject.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("SpeciesId")
+                    b.Property<Guid>("SpeciesId")
                         .HasColumnType("uuid");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Title", "PetProject.Domain.PetSpecies.Breed.Title#Title", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("title");
+                        });
 
                     b.HasKey("Id");
 
@@ -45,6 +55,16 @@ namespace PetProject.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Title", "PetProject.Domain.PetSpecies.Species.Title#Title", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("title");
+                        });
 
                     b.HasKey("Id");
 
@@ -280,7 +300,9 @@ namespace PetProject.Infrastructure.Migrations
                 {
                     b.HasOne("PetProject.Domain.PetSpecies.Species", null)
                         .WithMany("Breeds")
-                        .HasForeignKey("SpeciesId");
+                        .HasForeignKey("SpeciesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PetProject.Domain.Volunteers.Pet", b =>

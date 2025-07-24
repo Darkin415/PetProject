@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using PetProject.Application.Database;
 using PetProject.Application.Volunteers.Create.Pet.GetPets;
 using PetProject.Contracts.Dtos;
 using PetProject.Domain.PetSpecies;
@@ -14,6 +15,8 @@ public class ReadDbContext(IConfiguration configuration)
     public IQueryable<VolunteerDto> Volunteers => Set<VolunteerDto>();
 
     public IQueryable<PetsDto> Pets => Set<PetsDto>();
+    
+    public IQueryable<BreedDto> Breed { get; }
     public IQueryable<SpeciesDto> Species => Set<SpeciesDto>();
     public IQueryable<BreedDto> Breeds => Set<BreedDto>();
 

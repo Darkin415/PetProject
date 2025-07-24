@@ -1,8 +1,8 @@
 ﻿using PetProject.Application.Abstraction;
+using PetProject.Application.Database;
 using PetProject.Application.Extensions;
 using PetProject.Application.Models;
 using PetProject.Contracts.Dtos;
-using PetProject.Infrastructure.DbContexts;
 
 namespace PetProject.Application.Volunteers.Create.Pet.GetPets;
 

@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PetProject.Application.Abstraction;
+using PetProject.Application.Database;
 using PetProject.Application.Extensions;
 using PetProject.Application.Models;
 using PetProject.Application.Volunteers.Queries.GetVolunteerWithPagination;
 using PetProject.Contracts.Dtos;
-using PetProject.Infrastructure.DbContexts;
 
 namespace PetProject.Application.Volunteers.GetVolunteers;
 public class GetVolunteersWithPaginationHandler : IQueryHandler<PagedList<VolunteerDto>, GetVolunteersWithPaginationQuery>
