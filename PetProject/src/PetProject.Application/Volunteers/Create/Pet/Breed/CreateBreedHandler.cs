@@ -18,7 +18,16 @@ public class CreateBreedHandler : ICommandHandler<Guid, CreateBreedCommand>
     {
         var speciesId = SpeciesId.Create(command.SpeciesId);
         
-        var breedResult = await _speciesRepository.CreateBreed(speciesId.Value, command.Title, cancellationToken);
+        var name = Title.Create(command.Title);
+        if (name.IsFailure)
+            return name.Error.ToErrorList();
+        
+        var breedId = BreedId.NewBreedId();
+        
+        var breed = new Domain.PetSpecies.Breed(speciesId.Value, breedId, name.Value);
+
+        var breedResult = await _speciesRepository.AddBreed(breed, cancellationToken);
+        
         if (breedResult.IsFailure)
             return breedResult.Error;
 

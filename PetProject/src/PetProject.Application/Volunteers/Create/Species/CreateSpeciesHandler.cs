@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using PetProject.Application.Abstraction;
+using PetProject.Domain.PetSpecies;
 using PetProject.Domain.Shared.ValueObjects;
 
 namespace PetProject.Application.Volunteers.Create.Species;
@@ -14,12 +15,18 @@ public class CreateSpeciesHandler : ICommandHandler<Guid, CreateSpeciesCommand>
     }
     public async Task<Result<Guid, ErrorList>> Handle(CreateSpeciesCommand command, CancellationToken cancellationToken)
     {
+        var name = Title.Create(command.Title);
+        if (name.IsFailure)
+            return name.Error.ToErrorList();
         
-        var speciesResult = await _speciesRepository.CreateSpecies(command.Title, cancellationToken);
-        if (speciesResult.IsFailure)
-            return speciesResult.Error;
+        var speciesId = SpeciesId.NewSpeciesId();
+        
+        var species = new Domain.PetSpecies.Species(speciesId, name.Value);
 
-        return speciesResult.Value;
+        var speciesResult = await _speciesRepository.AddSpecies(species, cancellationToken);
+        
+
+        return species.Id.Value;
 
     }
 }

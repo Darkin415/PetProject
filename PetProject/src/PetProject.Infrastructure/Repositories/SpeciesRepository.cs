@@ -37,11 +37,11 @@ public class SpeciesRepository : ISpeciesRepository
         return species;
     }
 
-    public async Task<Result<List<Breed>, Error>> GetBreedsBySpeciesId(SpeciesId speciesId)
+    public async Task<Result<List<Breed>, Error>> GetBreedsBySpeciesId(SpeciesId speciesId, CancellationToken cancellationToken)
     {
         var breeds = await _dbContext.Breeds
             .Where(b => b.SpeciesId == speciesId)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         return breeds;
 
@@ -69,19 +69,12 @@ public class SpeciesRepository : ISpeciesRepository
         return species;
     }
     
-    public async Task<Result<Guid, ErrorList>> CreateSpecies(string title, CancellationToken cancellationToken)
+    public async Task<Result<Guid, ErrorList>> AddSpecies(Species species, CancellationToken cancellationToken)
     {
-        var name = Title.Create(title);
-        if (name.IsFailure)
-            return name.Error.ToErrorList();
-        
-        var speciesId = SpeciesId.NewSpeciesId();
-
-        if (await _dbContext.Species.AnyAsync(s => s.Title.Name == title, cancellationToken))
+       
+        if (await _dbContext.Species.AnyAsync(s => s.Title.Name == species.Title.Name, cancellationToken))
             return Error.Conflict("species.already.exists", "Species already exists").ToErrorList();
         
-        var species = new Species(speciesId, name.Value);
-
         await _dbContext.Species.AddAsync(species, cancellationToken);
 
         await _unitOfWork.SaveChanges(cancellationToken);
@@ -90,19 +83,12 @@ public class SpeciesRepository : ISpeciesRepository
 
     }
     
-    public async Task<Result<Guid, ErrorList>> CreateBreed(SpeciesId speciesId, string title, CancellationToken cancellationToken)
+    public async Task<Result<Guid, ErrorList>> AddBreed(Breed breed, CancellationToken cancellationToken)
     {
-        var name = Title.Create(title);
-        if (name.IsFailure)
-            return name.Error.ToErrorList();
-
-        var breedId = BreedId.NewBreedId();
         
-        if (await _dbContext.Breeds.AnyAsync(s => s.Title.Name == title, cancellationToken))
+        if (await _dbContext.Breeds.AnyAsync(s => s.Title.Name == breed.Title.Name, cancellationToken))
             return Error.Conflict("breed.already.exists", "Breed already exists").ToErrorList();
         
-        var breed = new Breed(speciesId, breedId, name.Value);
-
         await _dbContext.Breeds.AddAsync(breed, cancellationToken);
 
         await _unitOfWork.SaveChanges(cancellationToken);

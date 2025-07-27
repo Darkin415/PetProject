@@ -24,7 +24,7 @@ public class GetBreedBySpeciesIdHandler
     {
         var speciesId = SpeciesId.Create(command.SpeciesId);
 
-        var breedsResult = await _speciesRepository.GetBreedsBySpeciesId(speciesId.Value);
+        var breedsResult = await _speciesRepository.GetBreedsBySpeciesId(speciesId.Value, cancellationToken);
         if (breedsResult.IsFailure)
             return breedsResult.Error.ToErrorList();
 
