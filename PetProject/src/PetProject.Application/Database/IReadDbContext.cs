@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PetProject.Application.Volunteers.Create.Pet.GetPets;
-using PetProject.Contracts.Dtos;
+﻿using PetProject.Contracts.Dtos;
 
-namespace PetProject.Infrastructure.DbContexts;
+namespace PetProject.Application.Database;
 
 public interface IReadDbContext
 {
     IQueryable<VolunteerDto> Volunteers { get; }
     IQueryable<PetsDto> Pets { get; }
+    IQueryable<BreedDto> Breed { get; }
+    
+    IQueryable<SpeciesDto> Species { get; }
 }

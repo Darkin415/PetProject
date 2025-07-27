@@ -8,8 +8,14 @@ using Serilog.Events;
 using PetProject.Infrastructure.Providers;
 using PetProject.Application.Providers;
 using PetProject.Application.Database;
+using PetProject.Application.Volunteers.Create.Pet.Breed;
+using PetProject.Application.Volunteers.Create.Pet.DeleteBreed;
+using PetProject.Application.Volunteers.Create.Pet.DeleteSpecies;
+using PetProject.Application.Volunteers.Create.Pet.GetBreedBySpeciesId;
 using PetProject.Application.Volunteers.Create.Pet.GetPets;
+using PetProject.Application.Volunteers.Create.Pet.GetSpecies;
 using PetProject.Application.Volunteers.Create.Pet.MovePet;
+using PetProject.Application.Volunteers.Create.Species;
 using PetProject.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +33,12 @@ Log.Logger = new LoggerConfiguration()
 builder.Services.AddHttpLogging();
 builder.Services.AddScoped<GetPetByIdHandler>();
 builder.Services.AddScoped<MovePetHandler>();
+builder.Services.AddScoped<CreateSpeciesHandler>();
+builder.Services.AddScoped<CreateBreedHandler>();
+builder.Services.AddScoped<DeleteBreedHandler>();
+builder.Services.AddScoped<DeleteSpeciesHandler>();
+builder.Services.AddScoped<GetSpeciesWithPaginationHandler>();
+builder.Services.AddScoped<GetBreedBySpeciesIdHandler>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

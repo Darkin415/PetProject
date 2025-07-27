@@ -21,5 +21,17 @@ public class BreedConfiguration : IEntityTypeConfiguration<Breed>
             .HasConversion(
             id => id.Value,
             guid => BreedId.Create(guid).Value);
+        
+        builder.Property(p => p.SpeciesId)
+            .HasConversion(
+                id => id.Value,
+                guid => SpeciesId.Create(guid).Value);
+
+        builder.ComplexProperty(p => p.Title, g =>
+        {
+            g.Property(g => g.Name)
+                .IsRequired()
+                .HasColumnName("title");
+        });
     }
 }

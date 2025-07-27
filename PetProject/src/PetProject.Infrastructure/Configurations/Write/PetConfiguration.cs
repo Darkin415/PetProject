@@ -47,6 +47,22 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             .HasMaxLength(Domain.Shared.Constants.MAX_LOW_TEXT_LENGTH);
         });
 
+        builder.ComplexProperty(p => p.Height, g =>
+        {
+            g.Property(g => g.Value)
+                .HasColumnName("height")
+                .IsRequired()
+                .HasMaxLength(Domain.Shared.Constants.MAX_LOW_TEXT_LENGTH);
+        });
+        
+        builder.ComplexProperty(p => p.Weight, g =>
+        {
+            g.Property(g => g.Value)
+                .HasColumnName("weight")
+                .IsRequired()
+                .HasMaxLength(Domain.Shared.Constants.MAX_LOW_TEXT_LENGTH);
+        });
+
         builder.ComplexProperty(p => p.StatusHealth, g =>
         {
             g.Property(g => g.Value)
@@ -55,18 +71,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             .HasMaxLength(Domain.Shared.Constants.MAX_LOW_TEXT_LENGTH);
         });
 
-        builder.ComplexProperty(p => p.Attributes, g =>
-        {
-            g.Property(g => g.Weight)
-            .HasColumnName("weight")
-            .IsRequired()
-            .HasMaxLength(Domain.Shared.Constants.MAX_LOW_TEXT_LENGTH);
-            g.Property(g => g.Height)
-            .HasColumnName("height")
-            .IsRequired()
-            .HasMaxLength(Domain.Shared.Constants.MAX_LOW_TEXT_LENGTH);
-        });
-
+        
         builder.ComplexProperty(P => P.OwnerTelephoneNumber, b =>
         {
             b.Property(b => b.Value)

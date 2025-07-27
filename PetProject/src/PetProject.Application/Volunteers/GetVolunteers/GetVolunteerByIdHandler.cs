@@ -1,12 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using PetProject.Application.Abstraction;
+using PetProject.Application.Database;
 using PetProject.Application.Models;
 using PetProject.Application.Volunteers.Queries;
 using PetProject.Application.Volunteers.Queries.GetVolunteerWithPagination;
 using PetProject.Contracts.Dtos;
 using PetProject.Domain.Shared.ValueObjects;
-using PetProject.Infrastructure.DbContexts;
 
 namespace PetProject.Application.Volunteers.GetVolunteers;
 

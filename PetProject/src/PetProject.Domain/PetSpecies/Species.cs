@@ -13,11 +13,14 @@ public class Species : Shared.Entity<SpeciesId>
         :base(id)
     {      
     }
- 
-   
 
+
+    public Species(SpeciesId id, Title title) : base(id)
+    {
+        Title = title;
+    }
    
-    
+    public Title Title { get; private set; }
     public IReadOnlyCollection<Breed> Breeds => _breeds.AsReadOnly();
     
     public static Result<Species, Error> Create(SpeciesId id)

@@ -6,9 +6,13 @@ using PetProject.API.Processors;
 using PetProject.Application.Commands;
 using PetProject.Application.Volunteers.Create.Pet.AddPet;
 using PetProject.Application.Volunteers.Create.Pet.AddPetPhoto;
+using PetProject.Application.Volunteers.Create.Pet.Breed;
+using PetProject.Application.Volunteers.Create.Pet.DeleteBreed;
+using PetProject.Application.Volunteers.Create.Pet.DeleteSpecies;
 using PetProject.Application.Volunteers.Create.Pet.GetPets;
 using PetProject.Application.Volunteers.Create.Pet.MovePet;
 using PetProject.Application.Volunteers.Create.SocialList;
+using PetProject.Application.Volunteers.Create.Species;
 using PetProject.Application.Volunteers.CreateVolunteer;
 using PetProject.Application.Volunteers.Delete;
 using PetProject.Application.Volunteers.DeletePhotos;
@@ -18,11 +22,79 @@ using PetProject.Application.Volunteers.UpdateMainInfo;
 using PetProject.Contracts.Commands;
 using PetProject.Contracts.Extensions;
 using PetProject.Contracts.Requests;
+using PetProject.Domain.PetSpecies;
 
 
 namespace PetProject.API.Controllers;
 public class VolunteersController : ApplicationController
 {
+    
+    [HttpDelete("species/{speciesId:guid}")]
+    public async Task<ActionResult> DeleteSpecies(
+        [FromRoute] Guid speciesId,
+        [FromServices] DeleteSpeciesHandler handler,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new DeleteSpeciesCommand(speciesId);
+
+        var result = await handler.Handle(command, cancellationToken);
+
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+
+        return Ok(result.Value);
+    }
+
+    
+    [HttpDelete("breed/{breedId:guid}")]
+    public async Task<ActionResult> DeleteBreed(
+        [FromRoute] Guid breedId,
+        [FromServices] DeleteBreedHandler handler,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new DeleteBreedCommand(breedId);
+
+        var result = await handler.Handle(command, cancellationToken);
+
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+
+        return Ok(result.Value);
+    }
+    
+    [HttpPost("species")]
+    
+    public async Task<ActionResult> CreateSpecies(
+        [FromQuery] CreateSpeciesRequest request,
+        [FromServices] CreateSpeciesHandler handler,
+        CancellationToken cancellationToken)
+    {
+        var command = new CreateSpeciesCommand(request.Title);
+    
+        var result = await handler.Handle(command, cancellationToken);
+    
+        return Ok(result.Value);
+    }
+    
+    [HttpPost("species/{speciesId:guid}/breeds")]
+    
+    public async Task<ActionResult> CreateBreed(
+        [FromRoute] Guid speciesId,
+        [FromQuery] CreateBreedRequest request,
+        [FromServices] CreateBreedHandler handler,
+        CancellationToken cancellationToken)
+    {
+        
+        var command = new CreateBreedCommand(request.Title, speciesId);
+    
+        var result = await handler.Handle(command, cancellationToken);
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+    
+        return Ok(result.Value);
+    }
+    
+    
     [HttpPut("pet/move-position/{volunteerId:guid}/{petId:guid}/{newPosition:int}")]
 
     public async Task<ActionResult> MovePet(
@@ -42,8 +114,6 @@ public class VolunteersController : ApplicationController
     }
     
     
-    
-    
     [HttpGet]
     public async Task<ActionResult> GetVolunteer(
         [FromQuery] GetVolunteerWithPaginationRequest request,
@@ -58,7 +128,7 @@ public class VolunteersController : ApplicationController
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult> Get(
+    public async Task<ActionResult> GetVolunteerById(
         [FromRoute] Guid id,      
         [FromServices] GetVolunteerByIdHandler handler,
         CancellationToken cancellationToken)
@@ -72,9 +142,7 @@ public class VolunteersController : ApplicationController
 
         return Ok(result.Value);
     }
-
-
-
+    
 
     [HttpPost]
     public async Task<ActionResult> Create(
@@ -168,7 +236,8 @@ public class VolunteersController : ApplicationController
             request.NickName,
             request.Breed,
             request.Species,
-            request.Attribute,
+            request.Weight,
+            request.Height,
             request.Color,
             request.StatusHealth,
             request.OwnerTelephonNumber,

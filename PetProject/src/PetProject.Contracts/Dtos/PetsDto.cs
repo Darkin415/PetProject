@@ -3,8 +3,16 @@
 public class PetsDto
 {
     public Guid Id;
+
+    public Guid BreedId { get; init; }
+    
+    public Guid SpeciesId { get; init; }
     
     public Guid VolunteerId { get; init; }
+    
+    public double? Weight { get; private set; }
+    
+    public double? Height { get; private set; }
 
     public string? Nickname { get; private set; } = null;
 

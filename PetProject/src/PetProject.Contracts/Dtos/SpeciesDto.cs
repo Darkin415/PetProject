@@ -9,5 +9,6 @@ namespace PetProject.Contracts.Dtos;
 public class SpeciesDto
 {
     public Guid Id { get; init; }
-    public string Title { get; init; } = default!;
+    
+    public string title { get; init; } = default!;
 }
