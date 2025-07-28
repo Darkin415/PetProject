@@ -1,11 +1,6 @@
 ﻿using PetProject.Contracts.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PetProject.Contracts.Commands;
+namespace PetProject.Application.Commands;
 
 public record AddVolunteerCommand(string Title,
     string LinkMedia,

@@ -1,8 +1,13 @@
-﻿using FluentValidation;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PetProject.API.Contracts;
+using Microsoft.IdentityModel.Tokens;
 using PetProject.API.Controllers.Pets.Requests;
 using PetProject.API.Processors;
+using PetProject.API.Requests;
 using PetProject.Application.Commands;
 using PetProject.Application.Volunteers.Create.Pet.AddPet;
 using PetProject.Application.Volunteers.Create.Pet.AddPetPhoto;
@@ -13,13 +18,12 @@ using PetProject.Application.Volunteers.Create.Pet.GetPets;
 using PetProject.Application.Volunteers.Create.Pet.MovePet;
 using PetProject.Application.Volunteers.Create.SocialList;
 using PetProject.Application.Volunteers.Create.Species;
-using PetProject.Application.Volunteers.CreateVolunteer;
-using PetProject.Application.Volunteers.Delete;
+using PetProject.Application.Volunteers.Create.Volunteer;
 using PetProject.Application.Volunteers.DeletePhotos;
+using PetProject.Application.Volunteers.DeleteVolunteer;
 using PetProject.Application.Volunteers.GetVolunteers;
 using PetProject.Application.Volunteers.Queries;
 using PetProject.Application.Volunteers.UpdateMainInfo;
-using PetProject.Contracts.Commands;
 using PetProject.Contracts.Extensions;
 using PetProject.Contracts.Requests;
 using PetProject.Domain.PetSpecies;
@@ -143,9 +147,9 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
     
-
+    [Authorize]
     [HttpPost]
-    public async Task<ActionResult> Create(
+    public async Task<ActionResult> CreateVolunteer(
         [FromServices] CreateVolunteerHandler handler,
         [FromBody] CreateVolunteerRequest request,
         [FromServices] IValidator<AddVolunteerCommand> validator,

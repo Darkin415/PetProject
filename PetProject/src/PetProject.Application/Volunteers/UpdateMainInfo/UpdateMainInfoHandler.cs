@@ -3,9 +3,9 @@ using PetProject.Domain.Shared.Ids;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Database;
 using FluentValidation;
+using PetProject.Application.Commands;
 using PetProject.Application.Extensions;
 using PetProject.Domain.Shared.ValueObjects;
-using PetProject.Contracts.Commands;
 
 namespace PetProject.Application.Volunteers.UpdateMainInfo;
 public class UpdateMainInfoHandler

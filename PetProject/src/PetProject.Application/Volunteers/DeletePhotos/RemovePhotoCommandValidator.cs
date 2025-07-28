@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using PetProject.Application.Validation;
-using PetProject.Contracts.Commands;
 using PetProject.Domain.Shared.ValueObjects;
 using PetProject.Domain.Volunteers;
 using System;
@@ -8,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PetProject.Application.Commands;
 
 namespace PetProject.Application.Volunteers.DeletePhotos;
 

@@ -2,13 +2,13 @@
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Abstraction;
+using PetProject.Application.Commands;
 using PetProject.Application.Database;
 using PetProject.Application.Extensions;
-using PetProject.Contracts.Commands;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObjects;
 
-namespace PetProject.Application.Volunteers.Delete;
+namespace PetProject.Application.Volunteers.DeleteVolunteer;
 public class DeleteVolunteerHandler : ICommandHandler<Guid, DeleteVolunteerCommand>
 {
     private readonly IVolunteersRepository _volunteersRepository;
