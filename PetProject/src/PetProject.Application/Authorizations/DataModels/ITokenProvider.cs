@@ -2,5 +2,5 @@
 
 public interface ITokenProvider
 {
-    
+    string GenerateAccessToken(User user);
 }

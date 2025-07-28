@@ -1,6 +1,8 @@
-﻿namespace PetProject.Application.Authorizations.DataModels;
+﻿using Microsoft.AspNetCore.Identity;
 
-public class User
+namespace PetProject.Application.Authorizations.DataModels;
+
+public class User : IdentityUser<Guid>
 {
-    
+
 }

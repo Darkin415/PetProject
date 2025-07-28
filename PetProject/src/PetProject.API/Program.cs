@@ -1,6 +1,7 @@
 using PetProject.Infrastructure;
 using PetProject.Application;
 using FluentValidation.AspNetCore;
+using Microsoft.OpenApi.Models;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using PetProject.API.Middlewares;
 using Serilog;
@@ -53,18 +54,43 @@ var app = builder.Build();
 app.UseExceptionMiddleware();
 app.UseSerilogRequestLogging();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+builder.Services.AddSwaggerGen(c => {
+    c.SwaggerDoc("v1", new OpenApiInfo {
+        Title = "My API",
+        Version = "v1"
+    });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
+        In = ParameterLocation.Header,
+        Description = "Please insert JWT with Bearer into field",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] { }
+        }
+    });
+});
 
-    await app.AplyMigration();
+builder.Services
+    .AddInfrastructure(builder.Configuration)
+    .AddApplication();
+    .AddAuthorizationInfrastructure(builder.Configuration);
 
-}
+
+
 
 app.UseHttpLogging();
 app.MapControllers();
 app.UseHttpsRedirection();
 app.UseAuthorization();
-
+app.UseAuthentication();
 app.Run();
