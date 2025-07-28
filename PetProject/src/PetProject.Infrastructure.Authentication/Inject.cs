@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using PetProject.Application.Authorization.DataModels;
 using PetProject.Application.Database;
 using PetProject.Infrastructure.DbContexts;
 
@@ -10,14 +11,17 @@ namespace PetProject.Infrastructure.Authentication;
 
 public static class Inject
 {
-    public static IServiceCollection AddInfrastructure(
-        this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddAuthorizationInfrastructure(
+        this IServiceCollection services)
     {
         services
-            .AddIdentity<User, Role>()
+            .AddIdentity<User, Role>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            })
             .AddEntityFrameworkStores<AuthorizationDbContext>();
         
-        
+        services.AddScoped<AuthorizationDbContext>();
         
         services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

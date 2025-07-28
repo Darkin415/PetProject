@@ -20,6 +20,7 @@ using PetProject.Application.Volunteers.Create.Pet.GetPets;
 using PetProject.Application.Volunteers.Create.Pet.GetSpecies;
 using PetProject.Application.Volunteers.Create.Pet.MovePet;
 using PetProject.Application.Volunteers.Create.Species;
+using PetProject.Infrastructure.Authentication;
 using PetProject.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -74,7 +75,8 @@ builder.Services.AddSerilog();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services
     .AddInfrastructure(builder.Configuration)
-    .AddApplication();
+    .AddApplication()
+    .AddAuthorizationInfrastructure();
 
 
 
