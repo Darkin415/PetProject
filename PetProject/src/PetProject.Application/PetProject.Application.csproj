@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Messaginng\**" />
-    <EmbeddedResource Remove="Messaginng\**" />
-    <None Remove="Messaginng\**" />
+    <Compile Remove="Messaging\**" />
+    <EmbeddedResource Remove="Messaging\**" />
+    <None Remove="Messaging\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,10 +17,7 @@
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
- ID-B-15
     <PackageReference Include="Scrutor" Version="6.1.0" />
-=======
- main
   </ItemGroup>
 
   <ItemGroup>
