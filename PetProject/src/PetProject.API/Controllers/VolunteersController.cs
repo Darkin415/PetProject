@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PetProject.API.Contracts;
 using PetProject.API.Controllers.Pets.Requests;
@@ -62,7 +63,9 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
     
+    [Authorize] 
     [HttpPost("species")]
+    
     
     public async Task<ActionResult> CreateSpecies(
         [FromQuery] CreateSpeciesRequest request,

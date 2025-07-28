@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Contracts", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Application", "src\PetProject.Application\PetProject.Application.csproj", "{05FD8CD6-437B-405A-AB44-B226B18AEB26}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Infrastucture.Authentication", "src\PetProject.Infrastucture.Authentication\PetProject.Infrastucture.Authentication.csproj", "{BCF6C172-2179-438E-8733-4CAF4F1915A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{05FD8CD6-437B-405A-AB44-B226B18AEB26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05FD8CD6-437B-405A-AB44-B226B18AEB26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05FD8CD6-437B-405A-AB44-B226B18AEB26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCF6C172-2179-438E-8733-4CAF4F1915A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCF6C172-2179-438E-8733-4CAF4F1915A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCF6C172-2179-438E-8733-4CAF4F1915A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCF6C172-2179-438E-8733-4CAF4F1915A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
