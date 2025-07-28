@@ -83,7 +83,7 @@ builder.Services.AddSwaggerGen(c => {
 builder.Services
     .AddInfrastructure(builder.Configuration)
     .AddApplication();
-    .AddAuthorizationInfrastructure(builder.Configuration);
+    // .AddAuthorizationInfrastructure(builder.Configuration);
 
 
 
