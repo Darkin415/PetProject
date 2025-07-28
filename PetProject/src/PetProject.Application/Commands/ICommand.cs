@@ -1,1 +1,3 @@
-﻿public interface ICommand;
+﻿namespace PetProject.Application.Commands;
+
+public interface ICommand;

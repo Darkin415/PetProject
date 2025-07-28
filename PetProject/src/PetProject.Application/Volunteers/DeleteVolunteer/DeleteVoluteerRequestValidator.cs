@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using PetProject.Contracts.Commands;
+using PetProject.Application.Commands;
 
-namespace PetProject.Application.Volunteers.Delete;
+namespace PetProject.Application.Volunteers.DeleteVolunteer;
 
 public class DeleteVoluteerCommandValidator : AbstractValidator<DeleteVolunteerCommand>
 {

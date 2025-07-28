@@ -1,9 +1,6 @@
-﻿using PetProject.Application.Volunteers.Create.Pet.AddPet;
-using PetProject.Contracts.Commands;
-using PetProject.Contracts.Dtos;
-using PetProject.Domain.Enum;
+﻿using PetProject.Domain.Enum;
 
-namespace PetProject.API.Contracts;
+namespace PetProject.API.Requests;
 
 public record AddPetRequest(
     string NickName,

@@ -1,15 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PetProject.Domain;
 using PetProject.Domain.PetSpecies;
-using PetProject.Domain.Volunteers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PetProject.Infrastructure.Configurations.Write;
+namespace PetProject.Infrastructure.Configurations;
 
 public class BreedConfiguration : IEntityTypeConfiguration<Breed>
 {

@@ -2,14 +2,14 @@
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetProject.Application.Abstraction;
+using PetProject.Application.Commands;
 using PetProject.Application.Database;
 using PetProject.Application.Extensions;
-using PetProject.Contracts.Commands;
 using PetProject.Domain.Shared.Ids;
 using PetProject.Domain.Shared.ValueObjects;
 using PetProject.Domain.Volunteers;
 
-namespace PetProject.Application.Volunteers.CreateVolunteer;
+namespace PetProject.Application.Volunteers.Create.Volunteer;
 
 public class CreateVolunteerHandler : ICommandHandler<Guid, AddVolunteerCommand>
 {
@@ -72,13 +72,13 @@ public class CreateVolunteerHandler : ICommandHandler<Guid, AddVolunteerCommand>
 
         if (volunteer.IsSuccess)
         {
-            var error = Errors.Volunteer.AlreadyExist();
+            var error = Errors.General.AlreadyExist();
             var errorList = new ErrorList(new[] { error }); 
             return Result.Failure<Guid, ErrorList>(errorList);
         }
             
 
-        var volunteerToCreate = new Volunteer(
+        var volunteerToCreate = new Domain.Volunteers.Volunteer(
             volunteerId,
             fullNameResult.Value,
             emailResult.Value,

@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using PetProject.Application.Commands;
 using PetProject.Application.Validation;
-using PetProject.Contracts.Commands;
 using PetProject.Domain;
 using PetProject.Domain.PetSpecies;
 using PetProject.Domain.Shared.ValueObjects;
