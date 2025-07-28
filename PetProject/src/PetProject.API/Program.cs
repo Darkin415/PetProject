@@ -75,22 +75,8 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services
     .AddInfrastructure(builder.Configuration)
     .AddApplication();
-builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidIssuer = "test",
-            ValidAudience = "test",
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("dasdfasdfasfaasdfasdfasdfasdfassdf")),
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = false,
-            ValidateIssuerSigningKey = true
-        };
-    });
-builder.Services.AddAuthorization();
+
+
 
 var app = builder.Build();
 

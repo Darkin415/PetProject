@@ -34,8 +34,8 @@
   <ItemGroup>
     <ProjectReference Include="..\PetProject.Application\PetProject.Application.csproj" />
     <ProjectReference Include="..\PetProject.Domain\PetProject.Domain.csproj" />
+    <ProjectReference Include="..\PetProject.Infrastructure.Authentication\PetProject.Infrastructure.Authentication.csproj" />
     <ProjectReference Include="..\PetProject.Infrastructure\PetProject.Infrastructure.csproj" />
-    <ProjectReference Include="..\PetProject.Infrastucture.Authentication\PetProject.Infrastucture.Authentication.csproj" />
   </ItemGroup>
 
 </Project>
