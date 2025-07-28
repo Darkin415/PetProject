@@ -72,7 +72,7 @@ public class CreateVolunteerHandler : ICommandHandler<Guid, AddVolunteerCommand>
 
         if (volunteer.IsSuccess)
         {
-            var error = Errors.Volunteer.AlreadyExist();
+            var error = Errors.General.AlreadyExist();
             var errorList = new ErrorList(new[] { error }); 
             return Result.Failure<Guid, ErrorList>(errorList);
         }

@@ -5,7 +5,7 @@ using PetProject.Application.Abstraction;
 using PetProject.Application.Authorization.DataModels;
 using PetProject.Domain.Shared.ValueObjects;
 
-namespace PetProject.Application.AccountManagement.Commands;
+namespace PetProject.Application.Authorization.Commands.Register;
 
 public class RegisterUserHandler : ICommandHandler<RegisterUserCommand>
 {

@@ -16,28 +16,6 @@ namespace PetProject.API.Controllers.Pets;
 
 public class PetsController : ApplicationController
 {
-    [HttpPost("jwt")]
-    public ActionResult Login(CancellationToken cancelOptionToken)
-    {
-        var claims = new[] 
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, "userId"),
-            new Claim("Kirill", "Sachkov"),
-        };
-
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("dasdfasdfasfaasdfasdfasdfasdfassdf"));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        var token = new JwtSecurityToken(
-            issuer: "test",
-            audience: "test",
-            claims: claims,
-            signingCredentials: creds
-        );
-        var stringToken = new JwtSecurityTokenHandler().WriteToken(token);
-
-        return Ok(stringToken);
-    }
     
     [HttpGet("breed/{breedId:guid}")]
     public async Task<IActionResult> GetBreedBySpeciesId(

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using PetProject.Application.Authorization;
 using PetProject.Application.Authorization.DataModels;
 using PetProject.Application.Database;
 using PetProject.Infrastructure.DbContexts;
@@ -12,8 +13,9 @@ namespace PetProject.Infrastructure.Authentication;
 public static class Inject
 {
     public static IServiceCollection AddAuthorizationInfrastructure(
-        this IServiceCollection services)
+        this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddTransient<ITokenProvider, JwtTokenProvider>();
         services
             .AddIdentity<User, Role>(options =>
             {
@@ -25,17 +27,19 @@ public static class Inject
         
         services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
+            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
+                var jwtOptions = configuration.GetSection(JwtOptions.JWT).Get<JwtOptions>()
+                    ?? throw new ApplicationException("Missing jwt configuration");
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidIssuer = "test",
-                    ValidAudience = "test",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("dasdfasdfasfaasdfasdfasdfasdfassdf")),
-                    ValidateIssuer = true,
+                    ValidIssuer = jwtOptions.Issuer,
+                    ValidAudience = jwtOptions.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key)),
+                    ValidateIssuer = false,
                     ValidateAudience = true,
                     ValidateLifetime = false,
-                    ValidateIssuerSigningKey = true
+                    ValidateIssuerSigningKey = true 
                 };
             });
         

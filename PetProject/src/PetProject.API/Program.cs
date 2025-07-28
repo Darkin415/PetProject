@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using PetProject.API.Middlewares;
+using PetProject.Application.Authorization.Commands.Login;
 using Serilog;
 using Serilog.Events;
 using PetProject.Infrastructure.Providers;
@@ -44,6 +45,7 @@ builder.Services.AddScoped<DeleteBreedHandler>();
 builder.Services.AddScoped<DeleteSpeciesHandler>();
 builder.Services.AddScoped<GetSpeciesWithPaginationHandler>();
 builder.Services.AddScoped<GetBreedBySpeciesIdHandler>();
+builder.Services.AddScoped<LoginHandler>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => {
@@ -73,10 +75,11 @@ builder.Services.AddSwaggerGen(c => {
 });
 builder.Services.AddSerilog();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 builder.Services
     .AddInfrastructure(builder.Configuration)
     .AddApplication()
-    .AddAuthorizationInfrastructure();
+    .AddAuthorizationInfrastructure(builder.Configuration); 
 
 
 
