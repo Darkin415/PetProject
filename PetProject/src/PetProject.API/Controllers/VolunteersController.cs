@@ -116,7 +116,7 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
     
-    
+    [Authorize] 
     [HttpGet]
     public async Task<ActionResult> GetVolunteer(
         [FromQuery] GetVolunteerWithPaginationRequest request,
@@ -146,7 +146,7 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
     
-
+    [Authorize] 
     [HttpPost]
     public async Task<ActionResult> Create(
         [FromServices] CreateVolunteerHandler handler,
@@ -170,6 +170,8 @@ public class VolunteersController : ApplicationController
 
         return Ok(result.Value);
     }
+    
+    [Authorize] 
     [HttpPut("{id:guid}")]
     public async Task<ActionResult> UpdateMainInfo(
         [FromRoute] Guid id,
@@ -191,6 +193,8 @@ public class VolunteersController : ApplicationController
 
         return Ok(result.Value);
     }
+    
+    [Authorize] 
     [HttpPut("{id:guid}/social-medias")]
     public async Task<ActionResult> UpdateSocialList(
         [FromRoute] Guid id,
@@ -208,7 +212,7 @@ public class VolunteersController : ApplicationController
 
         return Ok(result.Value);
     }
-
+    
     [HttpDelete("{id:guid}")]
     public async Task<ActionResult> Delete(
         [FromRoute] Guid id,
@@ -225,7 +229,8 @@ public class VolunteersController : ApplicationController
 
         return Ok(result.Value);
     }
-
+    
+    [Authorize] 
     [HttpPost("{id:guid}/pet")]
     public async Task<ActionResult> AddPet(
         [FromRoute] Guid id,
@@ -257,7 +262,8 @@ public class VolunteersController : ApplicationController
 
         return Ok(result.Value);
     }
-
+    
+    [Authorize] 
     [HttpPost("{volunteerId:guid}/pet/{petId:guid}/photo")]
     public async Task<IActionResult> UploadFiles(
          [FromServices] UploadPetPhotosHandler handler,

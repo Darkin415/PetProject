@@ -21,11 +21,13 @@ public class JwtTokenProvider : ITokenProvider
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key));
         var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+        
         Claim[] claims = 
         [
             new Claim(CustomClaims.Sub, user.Id.ToString()),
             new Claim(CustomClaims.Email, user.Email ?? "")
         ]; 
+        
         var jwtToken = new JwtSecurityToken(
             issuer: _jwtOptions.Issuer,
             audience: _jwtOptions.Audience,
