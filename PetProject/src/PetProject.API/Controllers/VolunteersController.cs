@@ -63,7 +63,7 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
     
-    [Authorize] 
+    [Authorize (Policy = "RequireAdministratorRole")] 
     [HttpPost("species")]
     
     
@@ -79,6 +79,7 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
     
+    [Authorize(Policy = "RequireAdministratorRole")]
     [HttpPost("species/{speciesId:guid}/breeds")]
     
     public async Task<ActionResult> CreateBreed(

@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -48,8 +49,27 @@ public static class Inject
                 };
             });
         
-        services.AddAuthorization();
-        
+        services.AddAuthorization(options =>
+        {
+            // options.DefaultPolicy = new AuthorizationPolicyBuilder()
+            //     .RequireClaim("Role", "User")
+            //     .RequireAuthenticatedUser()
+            //     .Build();
+            
+            options.AddPolicy("CreateIssueRequirement", 
+                policy => { policy.AddRequirements(new PermissionRequirement("create.issue")); });
+            
+            options.AddPolicy("CreateIssueRequirement", 
+                policy => { policy.AddRequirements(new PermissionRequirement("create.issue")); });
+            
+            options.AddPolicy("CreateIssueRequirement", 
+                policy => { policy.AddRequirements(new PermissionRequirement("create.issue")); });
+            
+            options.AddPolicy("CreateIssueRequirement", 
+                policy => { policy.AddRequirements(new PermissionRequirement("create.issue")); });
+        });
+
+        services.AddSingleton<IAuthorizationHandler, CreateIssueRequirementHandler>();
         return services;
     }
     

@@ -28,15 +28,17 @@ public class RegisterUserHandler : ICommandHandler<RegisterUserCommand>
         };
 
         var result = await _userManager.CreateAsync(user, command.Password);
-        if (result.Succeeded)
+        if (!result.Succeeded)
         {
-            _logger.LogInformation("User created: {userName} a new account with password.", command.UserName);
-            return Result.Success<ErrorList>();
+            
+            var errors = result.Errors.Select(e => Error.Failure(e.Code, e.Description)).ToList();
+
+            return new ErrorList(errors);
+            
         }
         
-        var errors = result.Errors.Select(e => Error.Failure(e.Code, e.Description)).ToList();
-
-        return new ErrorList(errors);
-
+        _logger.LogInformation("User created: {userName} a new account with password.", command.UserName);
+        
+        return Result.Success<ErrorList>();
     }
 }
