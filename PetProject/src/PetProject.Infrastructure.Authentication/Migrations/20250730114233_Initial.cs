@@ -13,6 +13,19 @@ namespace PetProject.Infrastructure.Authentication.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "permissions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Code = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_permissions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "roles",
                 columns: table => new
                 {
@@ -31,6 +44,7 @@ namespace PetProject.Infrastructure.Authentication.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    SocialNetworks = table.Column<string>(type: "text", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -66,6 +80,30 @@ namespace PetProject.Infrastructure.Authentication.Migrations
                     table.PrimaryKey("PK_role_claims", x => x.Id);
                     table.ForeignKey(
                         name: "FK_role_claims_roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "role_permissions",
+                columns: table => new
+                {
+                    RoleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    PermissionId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_role_permissions", x => new { x.RoleId, x.PermissionId });
+                    table.ForeignKey(
+                        name: "FK_role_permissions_permissions_PermissionId",
+                        column: x => x.PermissionId,
+                        principalTable: "permissions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_role_permissions_roles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "roles",
                         principalColumn: "Id",
@@ -158,9 +196,20 @@ namespace PetProject.Infrastructure.Authentication.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_permissions_Code",
+                table: "permissions",
+                column: "Code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_role_claims_RoleId",
                 table: "role_claims",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_role_permissions_PermissionId",
+                table: "role_permissions",
+                column: "PermissionId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
@@ -202,6 +251,9 @@ namespace PetProject.Infrastructure.Authentication.Migrations
                 name: "role_claims");
 
             migrationBuilder.DropTable(
+                name: "role_permissions");
+
+            migrationBuilder.DropTable(
                 name: "user_claims");
 
             migrationBuilder.DropTable(
@@ -212,6 +264,9 @@ namespace PetProject.Infrastructure.Authentication.Migrations
 
             migrationBuilder.DropTable(
                 name: "user_tokens");
+
+            migrationBuilder.DropTable(
+                name: "permissions");
 
             migrationBuilder.DropTable(
                 name: "roles");

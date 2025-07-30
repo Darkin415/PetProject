@@ -26,6 +26,10 @@ public static class Inject
         
         services.AddScoped<AuthorizationDbContext>();
         
+        services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+
+        services.AddSingleton<IAuthorizationHandler, CreateIssueRequirementHandler>();
+        
         services
             .AddAuthentication(options =>
             {
@@ -45,31 +49,14 @@ public static class Inject
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true 
+                    ValidateIssuerSigningKey = true,
+                    ClockSkew = TimeSpan.Zero
                 };
             });
         
-        services.AddAuthorization(options =>
-        {
-            // options.DefaultPolicy = new AuthorizationPolicyBuilder()
-            //     .RequireClaim("Role", "User")
-            //     .RequireAuthenticatedUser()
-            //     .Build();
-            
-            options.AddPolicy("CreateIssueRequirement", 
-                policy => { policy.AddRequirements(new PermissionRequirement("create.issue")); });
-            
-            options.AddPolicy("CreateIssueRequirement", 
-                policy => { policy.AddRequirements(new PermissionRequirement("create.issue")); });
-            
-            options.AddPolicy("CreateIssueRequirement", 
-                policy => { policy.AddRequirements(new PermissionRequirement("create.issue")); });
-            
-            options.AddPolicy("CreateIssueRequirement", 
-                policy => { policy.AddRequirements(new PermissionRequirement("create.issue")); });
-        });
-
-        services.AddSingleton<IAuthorizationHandler, CreateIssueRequirementHandler>();
+        services.AddAuthorization();
+        
+        
         return services;
     }
     

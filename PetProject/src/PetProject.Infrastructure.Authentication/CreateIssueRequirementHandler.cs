@@ -2,19 +2,19 @@
 
 namespace PetProject.Infrastructure.Authentication;
 
-public class CreateIssueRequirementHandler : AuthorizationHandler<PermissionRequirement>
+public class CreateIssueRequirementHandler : AuthorizationHandler<PermissionAttribute>
 {
     protected override async Task HandleRequirementAsync(
         AuthorizationHandlerContext context, 
-        PermissionRequirement requirement)
+        PermissionAttribute permission)
     {
-        var permission = context.User.Claims.FirstOrDefault(c => c.Type == "Permission");
-        if (permission == null)
+        var userPermission = context.User.Claims.FirstOrDefault(c => c.Type == "Permission");
+        if (userPermission == null)
             return;
 
-        if (permission.Value == requirement.Code)
+        if (userPermission.Value == permission.Code)
         {
-            context.Succeed(requirement);
+            context.Succeed(permission);
         }
        
     }

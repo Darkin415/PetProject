@@ -125,7 +125,30 @@ namespace PetProject.Infrastructure.Authentication.Migrations
                     b.ToTable("user_tokens", (string)null);
                 });
 
-            modelBuilder.Entity("PetProject.Infrastructure.Authentication.Role", b =>
+            modelBuilder.Entity("PetProject.Application.Authorization.DataModels.Permission", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("permissions", (string)null);
+                });
+
+            modelBuilder.Entity("PetProject.Application.Authorization.DataModels.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -152,7 +175,22 @@ namespace PetProject.Infrastructure.Authentication.Migrations
                     b.ToTable("roles", (string)null);
                 });
 
-            modelBuilder.Entity("PetProject.Infrastructure.Authentication.User", b =>
+            modelBuilder.Entity("PetProject.Application.Authorization.DataModels.RolePermission", b =>
+                {
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PermissionId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("RoleId", "PermissionId");
+
+                    b.HasIndex("PermissionId");
+
+                    b.ToTable("role_permissions", (string)null);
+                });
+
+            modelBuilder.Entity("PetProject.Application.Authorization.DataModels.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -198,6 +236,10 @@ namespace PetProject.Infrastructure.Authentication.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
+                    b.Property<string>("SocialNetworks")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
@@ -219,7 +261,7 @@ namespace PetProject.Infrastructure.Authentication.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("PetProject.Infrastructure.Authentication.Role", null)
+                    b.HasOne("PetProject.Application.Authorization.DataModels.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -228,7 +270,7 @@ namespace PetProject.Infrastructure.Authentication.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("PetProject.Infrastructure.Authentication.User", null)
+                    b.HasOne("PetProject.Application.Authorization.DataModels.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -237,7 +279,7 @@ namespace PetProject.Infrastructure.Authentication.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("PetProject.Infrastructure.Authentication.User", null)
+                    b.HasOne("PetProject.Application.Authorization.DataModels.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -246,13 +288,13 @@ namespace PetProject.Infrastructure.Authentication.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("PetProject.Infrastructure.Authentication.Role", null)
+                    b.HasOne("PetProject.Application.Authorization.DataModels.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PetProject.Infrastructure.Authentication.User", null)
+                    b.HasOne("PetProject.Application.Authorization.DataModels.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -261,11 +303,35 @@ namespace PetProject.Infrastructure.Authentication.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("PetProject.Infrastructure.Authentication.User", null)
+                    b.HasOne("PetProject.Application.Authorization.DataModels.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PetProject.Application.Authorization.DataModels.RolePermission", b =>
+                {
+                    b.HasOne("PetProject.Application.Authorization.DataModels.Permission", "Permission")
+                        .WithMany()
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PetProject.Application.Authorization.DataModels.Role", "Role")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("PetProject.Application.Authorization.DataModels.Role", b =>
+                {
+                    b.Navigation("RolePermissions");
                 });
 #pragma warning restore 612, 618
         }

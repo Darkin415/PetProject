@@ -6,11 +6,20 @@ using PetProject.Application.AccountManagement.Commands.Login;
 using PetProject.Application.Authorization.Commands.Login;
 using PetProject.Application.Authorization.Commands.Register;
 using PetProject.Contracts.Extensions;
+using PetProject.Infrastructure.Authentication;
 
 namespace PetProject.API.Controllers.Accounts;
 
 public class AccountController : ApplicationController
 {
+    [Permission("volunteer.create")]
+    [HttpPost("create")]
+
+    public IActionResult CreateVolunteer()
+    {
+        return Ok();
+    }
+    
     [HttpPost("registration")]
     public async Task<ActionResult> Registor(
         [FromBody] RegisterUserRequest request,
