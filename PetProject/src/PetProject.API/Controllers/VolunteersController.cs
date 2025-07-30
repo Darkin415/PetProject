@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PetProject.API.Contracts;
 using PetProject.API.Controllers.Pets.Requests;
@@ -62,7 +63,9 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
     
+    [Authorize (Policy = "RequireAdministratorRole")] 
     [HttpPost("species")]
+    
     
     public async Task<ActionResult> CreateSpecies(
         [FromQuery] CreateSpeciesRequest request,
@@ -76,6 +79,7 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
     
+    [Authorize(Policy = "RequireAdministratorRole")]
     [HttpPost("species/{speciesId:guid}/breeds")]
     
     public async Task<ActionResult> CreateBreed(
@@ -113,7 +117,7 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
     
-    
+    [Authorize] 
     [HttpGet]
     public async Task<ActionResult> GetVolunteer(
         [FromQuery] GetVolunteerWithPaginationRequest request,
@@ -143,7 +147,7 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
     
-
+    [Authorize] 
     [HttpPost]
     public async Task<ActionResult> Create(
         [FromServices] CreateVolunteerHandler handler,
@@ -167,6 +171,8 @@ public class VolunteersController : ApplicationController
 
         return Ok(result.Value);
     }
+    
+    [Authorize] 
     [HttpPut("{id:guid}")]
     public async Task<ActionResult> UpdateMainInfo(
         [FromRoute] Guid id,
@@ -188,6 +194,8 @@ public class VolunteersController : ApplicationController
 
         return Ok(result.Value);
     }
+    
+    [Authorize] 
     [HttpPut("{id:guid}/social-medias")]
     public async Task<ActionResult> UpdateSocialList(
         [FromRoute] Guid id,
@@ -205,7 +213,7 @@ public class VolunteersController : ApplicationController
 
         return Ok(result.Value);
     }
-
+    
     [HttpDelete("{id:guid}")]
     public async Task<ActionResult> Delete(
         [FromRoute] Guid id,
@@ -222,7 +230,8 @@ public class VolunteersController : ApplicationController
 
         return Ok(result.Value);
     }
-
+    
+    [Authorize] 
     [HttpPost("{id:guid}/pet")]
     public async Task<ActionResult> AddPet(
         [FromRoute] Guid id,
@@ -254,7 +263,8 @@ public class VolunteersController : ApplicationController
 
         return Ok(result.Value);
     }
-
+    
+    [Authorize] 
     [HttpPost("{volunteerId:guid}/pet/{petId:guid}/photo")]
     public async Task<IActionResult> UploadFiles(
          [FromServices] UploadPetPhotosHandler handler,

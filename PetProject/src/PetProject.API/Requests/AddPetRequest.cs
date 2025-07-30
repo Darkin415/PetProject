@@ -20,19 +20,6 @@ public record AddPetRequest(
     StatusHelp Status,
     DateTime DateOfCreation)
 {
-    // public AddPetCommand ToCommand(Guid id) => new(
-    //     id,
-    //     NickName,
-    //     Breed,
-    //     Species,
-    //     Attribute,
-    //     Color,
-    //     StatusHealth,
-    //     OwnerTelephonNumber,
-    //     CastrationStatus,
-    //     VaccinationStatus,
-    //     BirthDate, 
-    //     Status, 
-    //     DateOfCreation);
+   
 }
 

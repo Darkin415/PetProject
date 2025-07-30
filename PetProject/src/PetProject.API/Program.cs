@@ -1,8 +1,13 @@
+using System.Text;
 using PetProject.Infrastructure;
 using PetProject.Application;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using PetProject.API.Middlewares;
+using PetProject.Application.Authorization.Commands.Login;
 using Serilog;
 using Serilog.Events;
 using PetProject.Infrastructure.Providers;
@@ -16,6 +21,7 @@ using PetProject.Application.Volunteers.Create.Pet.GetPets;
 using PetProject.Application.Volunteers.Create.Pet.GetSpecies;
 using PetProject.Application.Volunteers.Create.Pet.MovePet;
 using PetProject.Application.Volunteers.Create.Species;
+using PetProject.Infrastructure.Authentication;
 using PetProject.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,14 +45,43 @@ builder.Services.AddScoped<DeleteBreedHandler>();
 builder.Services.AddScoped<DeleteSpeciesHandler>();
 builder.Services.AddScoped<GetSpeciesWithPaginationHandler>();
 builder.Services.AddScoped<GetBreedBySpeciesIdHandler>();
+builder.Services.AddScoped<LoginHandler>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c => {
+    c.SwaggerDoc("v1", new OpenApiInfo {
+        Title = "My API",
+        Version = "v1"
+    });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
+        In = ParameterLocation.Header,
+        Description = "Please insert JWT with Bearer into field",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] { }
+        }
+    });
+});
 builder.Services.AddSerilog();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 builder.Services
     .AddInfrastructure(builder.Configuration)
-    .AddApplication();
+    .AddApplication()
+    .AddAuthorizationInfrastructure(builder.Configuration); 
+
+
 
 var app = builder.Build();
 
@@ -65,6 +100,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpLogging();
 app.MapControllers();
 app.UseHttpsRedirection();
+app.UseAuthorization();
 app.UseAuthorization();
 
 app.Run();
