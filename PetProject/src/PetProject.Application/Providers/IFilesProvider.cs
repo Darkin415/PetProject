@@ -1,12 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using PetProject.Application.FileProvider;
-using PetProject.Domain.Shared.ValueObjects;
-using PetProject.Domain.Volunteers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PetProject.Contracts;
 using FileInfo = PetProject.Application.FileProvider.FileInfo;
 
 namespace PetProject.Application.Providers;

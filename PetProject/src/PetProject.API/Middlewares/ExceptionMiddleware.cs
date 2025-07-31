@@ -1,5 +1,6 @@
 ﻿using PetProject.Contracts.Response;
 using static PetProject.Contracts.Response.Envelope;
+using Error = PetProject.Contracts.Error;
 
 namespace PetProject.API.Middlewares;
 
@@ -24,7 +25,7 @@ public class ExceptionMiddleware
         {
             _logger.LogError(ex, ex.Message);
 
-            var error = Domain.Shared.ValueObjects.Error.Failure("server.internal", ex.Message);
+            var error = Error.Failure("server.internal", ex.Message);
 
             var envelope = Envelope.Error(error);
 

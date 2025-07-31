@@ -3,15 +3,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Minio;
 using Minio.AspNetCore;
 using PetProject.Application;
-using PetProject.Application.Database;
 using PetProject.Application.Providers;
 using PetProject.Application.Volunteers;
+using PetProject.Contracts;
 using PetProject.Infrastructure.BackgroundServices;
 using PetProject.Infrastructure.DbContexts;
 using PetProject.Infrastructure.MessageQueues;
 using PetProject.Infrastructure.Options;
 using PetProject.Infrastructure.Providers;
-using PetProject.Infrastructure.Repositories;
 using MinioOptions = PetProject.Infrastructure.Options.MinioOptions;
 namespace PetProject.Infrastructure;
 

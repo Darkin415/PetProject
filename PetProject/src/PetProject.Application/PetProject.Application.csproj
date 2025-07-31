@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PetProject.Contracts\PetProject.Contracts.csproj" />
-    <ProjectReference Include="..\PetProject.Domain\PetProject.Domain.csproj" />
+    <ProjectReference Include="..\PetProject.Core\PetProject.Core.csproj" />
   </ItemGroup>
 
 </Project>

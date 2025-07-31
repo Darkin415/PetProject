@@ -1,6 +1,6 @@
 ﻿using FluentValidation.Results;
-using PetProject.Domain.Shared.ValueObjects;
 using System.ComponentModel.DataAnnotations;
+using PetProject.Contracts;
 
 namespace PetProject.Application.Extensions;
 public static class ValidationExtensions

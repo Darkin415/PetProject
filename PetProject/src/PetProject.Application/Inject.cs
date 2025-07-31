@@ -1,15 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using PetProject.Application.Abstraction;
-using PetProject.Application.Volunteers.Create.Pet.AddPet;
-using PetProject.Application.Volunteers.Create.Pet.AddPetPhoto;
-using PetProject.Application.Volunteers.Create.SocialList;
-using PetProject.Application.Volunteers.CreateVolunteer;
-using PetProject.Application.Volunteers.Delete;
-using PetProject.Application.Volunteers.DeletePhotos;
-using PetProject.Application.Volunteers.GetVolunteers;
-using PetProject.Application.Volunteers.UpdateMainInfo;
-using PetProject.Contracts.Commands;
+using PetProject.Contracts.Abstraction;
 
 namespace PetProject.Application;
 

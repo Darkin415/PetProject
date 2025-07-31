@@ -33,9 +33,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PetProject.Application\PetProject.Application.csproj" />
-    <ProjectReference Include="..\PetProject.Domain\PetProject.Domain.csproj" />
-    <ProjectReference Include="..\PetProject.Infrastructure.Authentication\PetProject.Infrastructure.Authentication.csproj" />
+    <ProjectReference Include="..\PetProject.Accounts.Infrastructure\PetProject.Accounts.Infrastructure.csproj" />
     <ProjectReference Include="..\PetProject.Infrastructure\PetProject.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

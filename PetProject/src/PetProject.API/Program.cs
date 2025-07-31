@@ -3,16 +3,17 @@ using PetProject.Infrastructure;
 using PetProject.Application;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using PetProject.Accounts.Application.Commands.Login;
+using PetProject.API.Authorization;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using PetProject.API.Middlewares;
-using PetProject.Application.Authorization.Commands.Login;
 using Serilog;
 using Serilog.Events;
 using PetProject.Infrastructure.Providers;
 using PetProject.Application.Providers;
-using PetProject.Application.Database;
 using PetProject.Application.Volunteers.Create.Pet.Breed;
 using PetProject.Application.Volunteers.Create.Pet.DeleteBreed;
 using PetProject.Application.Volunteers.Create.Pet.DeleteSpecies;
@@ -21,8 +22,9 @@ using PetProject.Application.Volunteers.Create.Pet.GetPets;
 using PetProject.Application.Volunteers.Create.Pet.GetSpecies;
 using PetProject.Application.Volunteers.Create.Pet.MovePet;
 using PetProject.Application.Volunteers.Create.Species;
-using PetProject.Infrastructure.Authentication;
-using PetProject.Infrastructure.Repositories;
+using PetProject.Accounts.Infrastructure;
+using PetProject.API.Exctensions;
+using PetProject.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 Log.Logger = new LoggerConfiguration()
@@ -81,6 +83,9 @@ builder.Services
     .AddApplication()
     .AddAuthorizationInfrastructure(builder.Configuration); 
 
+builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+
+builder.Services.AddSingleton<IAuthorizationHandler, CreateIssueRequirementHandler>();
 
 
 var app = builder.Build();

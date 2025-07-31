@@ -1,6 +1,4 @@
-﻿using PetProject.Domain.Shared.ValueObjects;
-
-namespace PetProject.Contracts.Response;
+﻿namespace PetProject.Contracts.Response;
 
 public record Envelope
 {
