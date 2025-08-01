@@ -34,7 +34,9 @@
   <ItemGroup>
     <ProjectReference Include="..\PetProject.Accounts.Infrastructure\PetProject.Accounts.Infrastructure.csproj" />
     <ProjectReference Include="..\PetProject.Files.Infrastructure\PetProject.Files.Infrastructure.csproj" />
+    <ProjectReference Include="..\PetProject.Species.Controllers\PetProject.Species.Controllers.csproj" />
     <ProjectReference Include="..\PetProject.Species.Infrastructure\PetProject.Species.Infrastructure.csproj" />
+    <ProjectReference Include="..\PetProject.Volunteers.Controllers\PetProject.Volunteers.Controllers.csproj" />
     <ProjectReference Include="..\PetProject.Volunteers.Infrastructure\PetProject.Volunteers.Infrastructure.csproj" />
   </ItemGroup>
 
