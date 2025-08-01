@@ -5,8 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PetProject.Accounts.Domain;
-using PetProject.Contracts;
-using PetProject.Infrastructure;
 
 namespace PetProject.Accounts.Infrastructure;
 

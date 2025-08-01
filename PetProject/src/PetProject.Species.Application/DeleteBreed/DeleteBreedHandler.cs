@@ -1,28 +1,32 @@
 ﻿using CSharpFunctionalExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using PetProejct.Volunteers.Application;
 using PetProject.Contracts;
+using PetProject.Core.Database;
+using PetProject.SharedKernel;
+using PetProject.SharedKernel.ValueObjects;
+using PetProject.Species.Contracts;
+using PetProject.Volunteers.Contracts;
 
 namespace PetProject.Species.Application.DeleteBreed;
 
 public class DeleteBreedHandler 
 {
-    private readonly IVolunteersRepository _volunteersRepository;
-    private readonly ISpeciesRepository _speciesRepository;
+    private readonly ISpeciesContract _speciesRepository;
     private readonly ILogger<DeleteBreedHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IReadDbContext _readDbContext;
+    private readonly IReadVolunteersDbContext _readSpeciesDbContext;
 
     public DeleteBreedHandler(
-        ISpeciesRepository speciesRepository,
+        ISpeciesContract speciesRepository,
         ILogger<DeleteBreedHandler> logger,
         IUnitOfWork unitOfWork,
-        IReadDbContext readDbContext)
+        IReadVolunteersDbContext readSpeciesDbContext)
     {
         _speciesRepository = speciesRepository;
         _logger = logger;
         _unitOfWork = unitOfWork;
-        _readDbContext = readDbContext;
+        _readSpeciesDbContext = readSpeciesDbContext;
     }
     public async Task<Result<Guid, ErrorList>> Handle(DeleteBreedCommand command, CancellationToken cancellationToken)
     {
@@ -34,7 +38,7 @@ public class DeleteBreedHandler
         if (breedResult.IsFailure)
             return breedResult.Error.ToErrorList();
 
-        var breedExists = await _readDbContext.Pets.AnyAsync(p => p.BreedId == breedId.Value);
+        var breedExists = await _readSpeciesDbContext.Pets.AnyAsync(p => p.BreedId == breedId.Value);
         if (breedExists)
             return Error.Conflict("breed.exsists",
                 "It is not possible to remove the breed, because the animal has it.").ToErrorList();

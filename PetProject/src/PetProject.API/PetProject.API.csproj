@@ -32,13 +32,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PetProject.Application\PetProject.Application.csproj" />
     <ProjectReference Include="..\PetProject.Accounts.Infrastructure\PetProject.Accounts.Infrastructure.csproj" />
-    <ProjectReference Include="..\PetProject.Infrastructure\PetProject.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\PetProject.Files.Infrastructure\PetProject.Files.Infrastructure.csproj" />
+    <ProjectReference Include="..\PetProject.Species.Infrastructure\PetProject.Species.Infrastructure.csproj" />
+    <ProjectReference Include="..\PetProject.Volunteers.Infrastructure\PetProject.Volunteers.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

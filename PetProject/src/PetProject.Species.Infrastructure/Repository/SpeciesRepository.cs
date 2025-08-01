@@ -1,22 +1,30 @@
 ﻿using CSharpFunctionalExtensions;
+using Microsoft.EntityFrameworkCore;
+using PetProejct.Volunteers.Application;
 using PetProject.Contracts;
+using PetProject.Core.Database;
+using PetProject.SharedKernel;
+using PetProject.SharedKernel.ValueObjects;
+using PetProject.Species.Application;
+using PetProject.Species.Contracts;
 using PetProject.Species.Domain.PetSpecies;
+using PetProject.Species.Infrastructure.DbContexts;
 
 namespace PetProject.Species.Infrastructure.Repository;
 
-public class SpeciesRepository : ISpeciesRepository
+public class SpeciesRepository : ISpeciesContract
 {
-    private readonly WriteDbContext _dbContext;
+    private readonly WriteSpeciesDbContext _dbContext;
     private readonly IUnitOfWork _unitOfWork;
 
-    public SpeciesRepository(WriteDbContext dbContext, IUnitOfWork unitOfWork)
+    public SpeciesRepository(WriteSpeciesDbContext dbContext, IUnitOfWork unitOfWork)
     {
         _dbContext = dbContext;
         _unitOfWork = unitOfWork;
     }
     
 
-    public async Task<Result<Species, Error>> GetSpeciesByNameAsync(Title title, CancellationToken cancellationToken)
+    public async Task<Result<Domain.PetSpecies.Species, Error>> GetSpeciesByNameAsync(Title title, CancellationToken cancellationToken)
     {
         var species = await _dbContext.Species
             .FirstOrDefaultAsync(s => s.Title.Name == title.Name, cancellationToken);   
@@ -48,7 +56,7 @@ public class SpeciesRepository : ISpeciesRepository
         return breed;
     }
 
-    public async Task<Result<Species, Error>> GetSpeciesByIdAsync(SpeciesId id, CancellationToken cancellationToken)
+    public async Task<Result<Domain.PetSpecies.Species, Error>> GetSpeciesByIdAsync(SpeciesId id, CancellationToken cancellationToken)
     {
         var species = await _dbContext.Species
             .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);   
@@ -59,7 +67,7 @@ public class SpeciesRepository : ISpeciesRepository
         return species;
     }
     
-    public async Task<Result<Guid, ErrorList>> AddSpecies(Species species, CancellationToken cancellationToken)
+    public async Task<Result<Guid, ErrorList>> AddSpecies(Domain.PetSpecies.Species species, CancellationToken cancellationToken)
     {
        
         if (await _dbContext.Species.AnyAsync(s => s.Title.Name == species.Title.Name, cancellationToken))
@@ -93,7 +101,7 @@ public class SpeciesRepository : ISpeciesRepository
         return breed.Id.Value;
     } 
     
-    public Guid DeleteSpecies(Species species, CancellationToken cancellationToken)
+    public Guid DeleteSpecies(Domain.PetSpecies.Species species, CancellationToken cancellationToken)
     {
         _dbContext.Species.Remove(species);
         return species.Id.Value;

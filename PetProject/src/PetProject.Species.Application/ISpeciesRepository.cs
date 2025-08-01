@@ -1,34 +1,27 @@
 ﻿using CSharpFunctionalExtensions;
-using PetProject.Contracts;
+using PetProject.SharedKernel;
+using PetProject.SharedKernel.ValueObjects;
 using PetProject.Species.Domain.PetSpecies;
 
-namespace PetProejct.Volunteers.Application;
+namespace PetProject.Species.Application;
 
 public interface ISpeciesRepository
 {
-    Task<Result<Species, Error>> GetSpeciesByIdAsync(SpeciesId id, CancellationToken cancellationToken);
+    Task<Result<Domain.PetSpecies.Species, Error>> GetSpeciesByIdAsync(SpeciesId id, CancellationToken cancellationToken);
 
-    Task<Result<Breed, Error>> GetBreedByIdAsync(BreedId id, CancellationToken cancellationToken);
+    Task<Result<Domain.PetSpecies.Breed, Error>> GetBreedByIdAsync(BreedId id, CancellationToken cancellationToken);
 
-    Task<Result<Guid, ErrorList>> AddSpecies(Species species, CancellationToken cancellationToken);
+    Task<Result<Guid, ErrorList>> AddSpecies(Domain.PetSpecies.Species species, CancellationToken cancellationToken);
 
-    Task<Result<Species, Error>> GetSpeciesByNameAsync(Title title, CancellationToken cancellationToken);
+    Task<Result<Domain.PetSpecies.Species, Error>> GetSpeciesByNameAsync(Title title, CancellationToken cancellationToken);
 
-    Task<Result<Breed, Error>> GetBreedByNameAsync(Title title, CancellationToken cancellationToken);
+    Task<Result<Domain.PetSpecies.Breed, Error>> GetBreedByNameAsync(Title title, CancellationToken cancellationToken);
 
-    Task<Result<Guid, ErrorList>> AddBreed(Breed breed, CancellationToken cancellationToken);
+    Task<Result<Guid, ErrorList>> AddBreed(Domain.PetSpecies.Breed breed, CancellationToken cancellationToken);
 
-    Guid DeleteBreed(Breed breed, CancellationToken cancellationToken);
+    Guid DeleteBreed(Domain.PetSpecies.Breed breed, CancellationToken cancellationToken);
 
-    Guid DeleteSpecies(Species species, CancellationToken cancellationToken);
+    Guid DeleteSpecies(Domain.PetSpecies.Species species, CancellationToken cancellationToken);
 
-    Task<Result<List<Breed>, Error>> GetBreedsBySpeciesId(SpeciesId speciesId, CancellationToken cancellationToken);
-    
-    
-
-
-
-
-
-
+    Task<Result<List<Domain.PetSpecies.Breed>, Error>> GetBreedsBySpeciesId(SpeciesId speciesId, CancellationToken cancellationToken);
 }

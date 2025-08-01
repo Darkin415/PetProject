@@ -17,8 +17,6 @@
 
   <ItemGroup>    
     <ProjectReference Include="..\..\PetProject\src\PetProject.API\PetProject.API.csproj" />
-    <ProjectReference Include="..\..\PetProject\src\PetProject.Application\PetProject.Application.csproj" />
-    <ProjectReference Include="..\..\PetProject\src\PetProject.Infrastructure\PetProject.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

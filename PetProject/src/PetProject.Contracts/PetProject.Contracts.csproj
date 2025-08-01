@@ -15,7 +15,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Abstraction\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Requests\" />
+    <Folder Include="Response\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PetProject.SharedKernel\PetProject.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

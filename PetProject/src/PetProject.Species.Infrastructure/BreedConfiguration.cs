@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetProject.Contracts;
+using PetProject.SharedKernel.ValueObjects;
 using PetProject.Species.Domain.PetSpecies;
 
 namespace PetProject.Species.Infrastructure;

@@ -1,19 +1,26 @@
-﻿namespace PetProject.Species.Application.GetSpecies;
+﻿using PetProject.Contracts.Dtos;
+using PetProject.Core.Abstraction;
+using PetProject.Species.Contracts;
+using PetProject.Species.Contracts.DTOs;
+using PetProject.Species.Contracts.Models;
+
+
+namespace PetProject.Species.Application.GetSpecies;
 
 public class GetSpeciesWithPaginationHandler : IQueryHandler<PagedList<SpeciesDto>, GetSpeciesWithPaginationQuery>
 {
-    private readonly IReadDbContext _readDbContext;
+    private readonly ISpeciesReadDbContext _speciesReadDbContext;
 
-    public GetSpeciesWithPaginationHandler(IReadDbContext readDbContext)
+    public GetSpeciesWithPaginationHandler(ISpeciesReadDbContext speciesReadDbContext)
     {
-        _readDbContext = readDbContext;
+        _speciesReadDbContext = speciesReadDbContext;
     }
 
 
     public async Task<PagedList<SpeciesDto>> Handle(GetSpeciesWithPaginationQuery query,
         CancellationToken cancellationToken)
     {
-        var speciesQuery = _readDbContext.Species;
+        var speciesQuery = _speciesReadDbContext.Species;
         
         var pagedList = await speciesQuery.ToPagedList(query.Page, query.PageSize, cancellationToken);
 

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetProject.Contracts.Dtos;
+using PetProject.Volunteers.Contracts.DTOs;
 
 
 namespace PetProject.Volunteers.Infrastructure.Configurations.Read;

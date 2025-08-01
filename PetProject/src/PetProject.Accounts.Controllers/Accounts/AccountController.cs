@@ -3,8 +3,8 @@ using PetProject.Accounts.Application.Commands.Login;
 using PetProject.Accounts.Application.Commands.Register;
 using PetProject.Accounts.Controllers.Requests;
 using PetProject.API.Authorization;
-using PetProject.API.Controllers;
 using PetProject.Contracts;
+using PetProject.Framework.Responses;
 
 namespace PetProject.Accounts.Controllers.Accounts;
 

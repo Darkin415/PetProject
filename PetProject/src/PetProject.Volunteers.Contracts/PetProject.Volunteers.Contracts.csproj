@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Response\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PetProject.Contracts\PetProject.Contracts.csproj" />
+      <ProjectReference Include="..\PetProject.Core\PetProject.Core.csproj" />
+    </ItemGroup>
+
+</Project>

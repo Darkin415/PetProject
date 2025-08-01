@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetProject.Contracts;
-using PetProject.Species.Domain.PetSpecies;
+using PetProject.SharedKernel.ValueObjects;
 
 namespace PetProject.Species.Infrastructure;
 
-public class SpeciesConfiguration : IEntityTypeConfiguration<Species>
+public class SpeciesConfiguration : IEntityTypeConfiguration<Domain.PetSpecies.Species>
 {
-    public void Configure(EntityTypeBuilder<Species> builder)
+    public void Configure(EntityTypeBuilder<Domain.PetSpecies.Species> builder)
     {
         builder.ToTable("species");
         builder.HasKey(p => p.Id);

@@ -1,16 +1,18 @@
 ﻿using CSharpFunctionalExtensions;
-using PetProejct.Volunteers.Application;
 using PetProject.Contracts;
-using PetProject.Contracts.Abstraction;
+using PetProject.Core.Abstraction;
+using PetProject.SharedKernel;
+using PetProject.SharedKernel.ValueObjects;
+using PetProject.Species.Contracts;
 using PetProject.Species.Domain.PetSpecies;
 
 namespace PetProject.Species.Application.Breed;
 
 public class CreateBreedHandler : ICommandHandler<Guid, CreateBreedCommand>
 {
-    private readonly ISpeciesRepository _speciesRepository;
+    private readonly ISpeciesContract _speciesRepository;
 
-    public CreateBreedHandler(ISpeciesRepository speciesRepository)
+    public CreateBreedHandler(ISpeciesContract speciesRepository)
     {
         _speciesRepository = speciesRepository;
     }

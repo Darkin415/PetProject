@@ -1,7 +1,5 @@
-﻿
-
-using PetProject.Contracts.Abstraction;
+﻿using ICommand = System.Windows.Input.ICommand;
 
 namespace PetProject.Accounts.Application.Commands.Register;
 
-public record RegisterUserCommand(string Email, string UserName, string Password) : ICommand;
+public record RegisterUserCommand(string Email, string UserName, string Password) : Core.Abstraction.ICommand;

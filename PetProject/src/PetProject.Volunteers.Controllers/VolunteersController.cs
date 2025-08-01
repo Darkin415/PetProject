@@ -1,29 +1,28 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PetProject.API.Controllers.Pets.Requests;
-using PetProject.API.Processors;
-using PetProject.Application.Commands;
-using PetProject.Application.Volunteers.Create.Pet.AddPet;
-using PetProject.Application.Volunteers.Create.Pet.AddPetPhoto;
-using PetProject.Application.Volunteers.Create.Pet.Breed;
-using PetProject.Application.Volunteers.Create.Pet.DeleteBreed;
-using PetProject.Application.Volunteers.Create.Pet.DeleteSpecies;
-using PetProject.Application.Volunteers.Create.Pet.GetPets;
-using PetProject.Application.Volunteers.Create.Pet.MovePet;
-using PetProject.Application.Volunteers.Create.SocialList;
-using PetProject.Application.Volunteers.Create.Species;
-using PetProject.Application.Volunteers.Create.Volunteer;
-using PetProject.Application.Volunteers.DeletePhotos;
-using PetProject.Application.Volunteers.DeleteVolunteer;
-using PetProject.Application.Volunteers.GetVolunteers;
-using PetProject.Application.Volunteers.Queries;
-using PetProject.Application.Volunteers.UpdateMainInfo;
-using PetProject.Contracts.Requests;
-using PetProject.Domain.PetSpecies;
+using PetProejct.Volunteers.Application.Commands.AddPetPhotos;
+using PetProejct.Volunteers.Application.Commands.CreatePet;
+using PetProejct.Volunteers.Application.Commands.CreateVolunteer;
+using PetProejct.Volunteers.Application.Commands.DeleteVolunteer;
+using PetProejct.Volunteers.Application.Commands.GetVolunteerById;
+using PetProejct.Volunteers.Application.Commands.MovePet;
+using PetProejct.Volunteers.Application.Commands.Queries.GetVolunteers;
+using PetProejct.Volunteers.Application.Commands.RemovePetPhotos;
+using PetProejct.Volunteers.Application.Commands.UpdateSocialNetwork;
+using PetProejct.Volunteers.Application.Commands.UpdateVolunteerMainInfo;
+using PetProject.Contracts;
+using PetProject.Contracts.Processors;
+using PetProject.Framework.Responses;
+using PetProject.Species.Application.Breed;
+using PetProject.Species.Application.DeleteBreed;
+using PetProject.Species.Application.DeleteSpecies;
+using PetProject.Species.Application.Species;
+using PetProject.Volunteers.Contracts.Requests;
+using PetProject.Volunteers.Controllers.Pets.Requests;
 
-
-namespace PetProject.API.Controllers;
+namespace PetProject.Volunteers.Controllers;
 public class VolunteersController : ApplicationController
 {
     

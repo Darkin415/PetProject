@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using CSharpFunctionalExtensions;
+using PetProject.SharedKernel;
 
 namespace PetProject.Contracts.ValueObjects;
 

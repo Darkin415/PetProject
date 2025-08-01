@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using PetProject.SharedKernel;
 
 namespace PetProject.Contracts.ValueObjects;
 

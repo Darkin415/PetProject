@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using PetProject.Accounts.Domain;
 using PetProject.Contracts;
-using PetProject.Contracts.Abstraction;
+using PetProject.Core.Abstraction;
+using PetProject.SharedKernel;
+
 namespace PetProject.Accounts.Application.Commands.Register;
 
 public class RegisterUserHandler : ICommandHandler<RegisterUserCommand>

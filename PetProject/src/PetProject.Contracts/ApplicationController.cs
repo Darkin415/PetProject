@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PetProject.Contracts.Response;
-namespace PetProject.API.Controllers;
+using PetProject.SharedKernel;
+
+namespace PetProject.Contracts;
 
 [Route("[controller]")]
 [ApiController]

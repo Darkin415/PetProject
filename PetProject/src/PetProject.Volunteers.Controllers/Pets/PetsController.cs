@@ -1,4 +1,12 @@
-﻿using PetProject.API.Controllers.Pets.Requests;
+﻿using Microsoft.AspNetCore.Mvc;
+using PetProejct.Volunteers.Application.Commands.Queries.GetPets.GetPetById;
+using PetProejct.Volunteers.Application.Commands.Queries.GetPets.GetPetsWIthPagination;
+using PetProject.Contracts;
+using PetProject.Framework.Responses;
+using PetProject.SharedKernel.ValueObjects;
+using PetProject.Species.Application.GetBreedBySpeciesId;
+using PetProject.Species.Application.GetSpecies;
+using PetProject.Volunteers.Controllers.Pets.Requests;
 
 namespace PetProject.Volunteers.Controllers.Pets;
 

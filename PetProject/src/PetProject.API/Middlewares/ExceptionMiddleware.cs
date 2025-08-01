@@ -1,6 +1,6 @@
-﻿using PetProject.Contracts.Response;
-using static PetProject.Contracts.Response.Envelope;
-using Error = PetProject.Contracts.Error;
+﻿
+using PetProject.SharedKernel;
+using Error = PetProject.SharedKernel.Error;
 
 namespace PetProject.API.Middlewares;
 

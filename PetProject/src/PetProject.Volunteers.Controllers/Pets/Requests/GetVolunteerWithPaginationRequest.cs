@@ -1,7 +1,7 @@
-﻿using PetProject.Application.Volunteers.Create.Pet.GetPets;
-using PetProject.Application.Volunteers.Queries.GetVolunteerWithPagination;
+﻿using PetProejct.Volunteers.Application.Commands.Queries.GetPets.GetPetsWIthPagination;
+using PetProejct.Volunteers.Application.Commands.Queries.GetVolunteers;
 
-namespace PetProject.API.Controllers.Pets.Requests;
+namespace PetProject.Volunteers.Controllers.Pets.Requests;
 
 public record GetVolunteerWithPaginationRequest(int Page, int PageSize)
 {

@@ -4,17 +4,18 @@ using PetProejct.Volunteers.Application;
 using PetProject.Contracts;
 using PetProject.Contracts.Ids;
 using PetProject.Contracts.ValueObjects;
+using PetProject.SharedKernel;
 using PetProject.Volunteers.Domain;
-using PetProject.Volunteers.Domain.Pets;
+using PetProject.Volunteers.Domain.Entities;
 using PetProject.Volunteers.Infrastructure.DbContexts;
 
 namespace PetProject.Volunteers.Infrastructure.Repositories;
 
 public class VolunteersRepository : IVolunteersRepository
 {
-    private readonly WriteDbContext _dbContext;
+    private readonly VolunteerWriteDbContext _dbContext;
     private List<Pet> _pets = [];
-    public VolunteersRepository(WriteDbContext dbContext)
+    public VolunteersRepository(VolunteerWriteDbContext dbContext)
     {
         _dbContext = dbContext;
     }    

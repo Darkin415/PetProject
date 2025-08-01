@@ -1,4 +1,5 @@
-﻿using PetProject.Contracts.Abstraction;
+﻿
+using PetProject.Core.Abstraction;
 
 namespace PetProject.Species.Application.Breed;
 

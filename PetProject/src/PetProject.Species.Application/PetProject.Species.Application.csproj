@@ -9,7 +9,9 @@
     <ItemGroup>
       <ProjectReference Include="..\PetProject.Contracts\PetProject.Contracts.csproj" />
       <ProjectReference Include="..\PetProject.Core\PetProject.Core.csproj" />
+      <ProjectReference Include="..\PetProject.Species.Contracts\PetProject.Species.Contracts.csproj" />
       <ProjectReference Include="..\PetProject.Species.Domain\PetProject.Species.Domain.csproj" />
+      <ProjectReference Include="..\PetProject.Volunteers.Contracts\PetProject.Volunteers.Contracts.csproj" />
     </ItemGroup>
 
 </Project>

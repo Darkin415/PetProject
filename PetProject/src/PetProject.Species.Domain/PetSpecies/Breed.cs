@@ -1,9 +1,13 @@
-﻿using CSharpFunctionalExtensions;
+﻿
+
+using CSharpFunctionalExtensions;
 using PetProject.Contracts;
+using PetProject.SharedKernel;
+using PetProject.SharedKernel.ValueObjects;
 
 namespace PetProject.Species.Domain.PetSpecies;
 
-public class Breed : Contracts.Entity<BreedId>
+public class Breed : SharedKernel.Entity<BreedId>
 {
     // для ef core
     private Breed(BreedId id) : base(id)

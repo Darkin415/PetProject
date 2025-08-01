@@ -1,9 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
 using PetProject.Contracts;
+using PetProject.SharedKernel;
+using PetProject.SharedKernel.ValueObjects;
 
 namespace PetProject.Species.Domain.PetSpecies;
 
-public class Species : Contracts.Entity<SpeciesId>
+public class Species : SharedKernel.Entity<SpeciesId>
 {
     private List<Breed> _breeds = [];
 

@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
+using PetProject.SharedKernel;
 
 namespace PetProject.Contracts.Validation;
 

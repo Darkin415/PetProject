@@ -2,7 +2,9 @@
 using PetProject.Contracts;
 using PetProject.Contracts.Ids;
 using PetProject.Contracts.ValueObjects;
+using PetProject.SharedKernel;
 using PetProject.Volunteers.Domain;
+using PetProject.Volunteers.Domain.Entities;
 
 namespace PetProejct.Volunteers.Application;
 
@@ -16,6 +18,6 @@ public interface IVolunteersRepository
 
     Guid Delete(Volunteer volunteer, CancellationToken cancellationToken);
 
-    Result<PetProject.Volunteers.Domain.Pets.Pet, Error> GetByPetId(PetId petId);
+    Result<Pet, Error> GetByPetId(PetId petId);
     Task<Result<Volunteer, Error>> GetByEmail(Email email, CancellationToken cancellationToken = default);      
 }

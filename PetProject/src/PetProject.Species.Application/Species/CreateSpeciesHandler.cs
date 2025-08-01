@@ -1,14 +1,20 @@
 ﻿using CSharpFunctionalExtensions;
+using PetProject.Contracts;
+using PetProject.Core.Abstraction;
+using PetProject.SharedKernel;
+using PetProject.SharedKernel.ValueObjects;
+using PetProject.Species.Contracts;
+using PetProject.Species.Domain.PetSpecies;
 
 namespace PetProject.Species.Application.Species;
 
 public class CreateSpeciesHandler : ICommandHandler<Guid, CreateSpeciesCommand>
 {
-    private readonly ISpeciesRepository _speciesRepository;
+    private readonly ISpeciesContract _speciesContract;
 
-    public CreateSpeciesHandler(ISpeciesRepository speciesRepository)
+    public CreateSpeciesHandler(ISpeciesContract speciesContract)
     {
-        _speciesRepository = speciesRepository;
+        _speciesContract = speciesContract;
     }
     public async Task<Result<Guid, ErrorList>> Handle(CreateSpeciesCommand command, CancellationToken cancellationToken)
     {
@@ -20,7 +26,7 @@ public class CreateSpeciesHandler : ICommandHandler<Guid, CreateSpeciesCommand>
         
         var species = new Domain.PetSpecies.Species(speciesId, name.Value);
 
-        var speciesResult = await _speciesRepository.AddSpecies(species, cancellationToken);
+        var speciesResult = await _speciesContract.AddSpecies(species, cancellationToken);
         
 
         return species.Id.Value;

@@ -1,30 +1,16 @@
-using System.Text;
-using PetProject.Infrastructure;
-using PetProject.Application;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PetProject.Accounts.Application.Commands.Login;
 using PetProject.API.Authorization;
-using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using PetProject.API.Middlewares;
 using Serilog;
 using Serilog.Events;
-using PetProject.Infrastructure.Providers;
-using PetProject.Application.Providers;
-using PetProject.Application.Volunteers.Create.Pet.Breed;
-using PetProject.Application.Volunteers.Create.Pet.DeleteBreed;
-using PetProject.Application.Volunteers.Create.Pet.DeleteSpecies;
-using PetProject.Application.Volunteers.Create.Pet.GetBreedBySpeciesId;
-using PetProject.Application.Volunteers.Create.Pet.GetPets;
-using PetProject.Application.Volunteers.Create.Pet.GetSpecies;
-using PetProject.Application.Volunteers.Create.Pet.MovePet;
-using PetProject.Application.Volunteers.Create.Species;
 using PetProject.Accounts.Infrastructure;
+using PetProject.API;
 using PetProject.API.Exctensions;
 using PetProject.Contracts;
+using PetProject.Core.Database;
+using PetProject.Volunteers.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 Log.Logger = new LoggerConfiguration()
@@ -39,15 +25,9 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 builder.Services.AddHttpLogging();
-builder.Services.AddScoped<GetPetByIdHandler>();
-builder.Services.AddScoped<MovePetHandler>();
-builder.Services.AddScoped<CreateSpeciesHandler>();
-builder.Services.AddScoped<CreateBreedHandler>();
-builder.Services.AddScoped<DeleteBreedHandler>();
-builder.Services.AddScoped<DeleteSpeciesHandler>();
-builder.Services.AddScoped<GetSpeciesWithPaginationHandler>();
-builder.Services.AddScoped<GetBreedBySpeciesIdHandler>();
+
 builder.Services.AddScoped<LoginHandler>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => {
@@ -79,11 +59,15 @@ builder.Services.AddSerilog();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 builder.Services
-    .AddInfrastructure(builder.Configuration)
-    .AddApplication()
     .AddAuthorizationInfrastructure(builder.Configuration); 
 
 builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+
+builder.Services.AddVolunteersInfrastructure();
+
+builder.Services.AddSpeciesModule();
+
+builder.Services.AddFilesModule(builder.Configuration);
 
 builder.Services.AddSingleton<IAuthorizationHandler, CreateIssueRequirementHandler>();
 
