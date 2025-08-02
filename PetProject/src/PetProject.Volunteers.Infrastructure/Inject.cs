@@ -2,6 +2,9 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using PetProejct.Volunteers.Application;
+using PetProejct.Volunteers.Application.Commands.DeleteVolunteer;
+using PetProejct.Volunteers.Application.Commands.GetVolunteerById;
+using PetProejct.Volunteers.Application.Commands.UpdateVolunteerMainInfo;
 using PetProject.Core.Abstraction;
 using PetProject.Core.Database;
 using PetProject.Volunteers.Infrastructure.DbContexts;
@@ -46,6 +49,10 @@ public static class Inject
         services.AddScoped<IVolunteersReadDbContext, VolunteerReadDbContext>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IVolunteersRepository, VolunteersRepository>();
+        services.AddScoped<GetVolunteerByIdHandler>();
+        services.AddScoped<UpdateMainInfoHandler>();
+        services.AddScoped<DeleteVolunteerHandler>();
+        
 
         return services;
     }

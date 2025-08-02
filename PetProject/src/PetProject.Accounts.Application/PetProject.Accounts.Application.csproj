@@ -12,4 +12,8 @@
       <ProjectReference Include="..\PetProject.Core\PetProject.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="9.0.7" />
+    </ItemGroup>
+
 </Project>

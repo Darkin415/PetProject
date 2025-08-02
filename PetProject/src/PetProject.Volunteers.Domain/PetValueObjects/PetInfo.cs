@@ -6,7 +6,8 @@ namespace PetProject.Volunteers.Domain.PetValueObjects;
 
 public record PetInfo
 {
-    public PetInfo()
+    //ef core
+    private PetInfo()
     {
         
     }

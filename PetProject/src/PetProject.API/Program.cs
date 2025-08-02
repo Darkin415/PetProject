@@ -1,7 +1,12 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
+using PetProejct.Volunteers.Application.Commands.CreateVolunteer;
+using PetProejct.Volunteers.Application.Commands.DeleteVolunteer;
+using PetProject.Accounts.Application;
+using PetProject.Accounts.Application.Authorization;
 using PetProject.Accounts.Application.Commands.Login;
-using PetProject.API.Authorization;
+using PetProject.Accounts.Application.Commands.Register;
 using PetProject.API.Middlewares;
 using Serilog;
 using Serilog.Events;
@@ -62,6 +67,14 @@ builder.Services
     .AddAuthorizationInfrastructure(builder.Configuration); 
 
 builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+
+builder.Services.AddScoped<RegisterUserHandler>();
+
+builder.Services.AddScoped<CreateVolunteerHandler>();
+
+builder.Services.AddValidatorsFromAssembly(typeof(CreateVolunteerCommandValidator).Assembly);
+
+builder.Services.AddScoped<DeleteVolunteerHandler>();
 
 builder.Services.AddVolunteersInfrastructure();
 

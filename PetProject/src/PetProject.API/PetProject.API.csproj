@@ -32,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PetProject.Accounts.Controllers\PetProject.Accounts.Controllers.csproj" />
     <ProjectReference Include="..\PetProject.Accounts.Infrastructure\PetProject.Accounts.Infrastructure.csproj" />
     <ProjectReference Include="..\PetProject.Files.Infrastructure\PetProject.Files.Infrastructure.csproj" />
     <ProjectReference Include="..\PetProject.Species.Controllers\PetProject.Species.Controllers.csproj" />

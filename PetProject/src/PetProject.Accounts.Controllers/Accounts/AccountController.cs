@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PetProject.Accounts.Application.Authorization;
 using PetProject.Accounts.Application.Commands.Login;
 using PetProject.Accounts.Application.Commands.Register;
 using PetProject.Accounts.Controllers.Requests;
-using PetProject.API.Authorization;
 using PetProject.Contracts;
 using PetProject.Framework.Responses;
 

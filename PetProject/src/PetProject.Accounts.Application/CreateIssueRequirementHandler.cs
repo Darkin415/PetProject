@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using PetProject.Accounts.Infrastructure;
+using PetProject.Accounts.Application.Authorization;
 
-namespace PetProject.API.Authorization;
+namespace PetProject.Accounts.Application;
 
 public class CreateIssueRequirementHandler : AuthorizationHandler<PermissionAttribute>
 {
