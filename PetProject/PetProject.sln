@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.API", "src\PetProject.API\PetProject.API.csproj", "{F94C87AD-E56F-4BEA-8811-093A7D4F9923}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.API", "src\WEB\PetProject.API\PetProject.API.csproj", "{F94C87AD-E56F-4BEA-8811-093A7D4F9923}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81DDED9D-158B-E303-5F62-77A2896D2A5A}"
 EndProject
@@ -11,49 +11,63 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Domain.UnitTests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Application.UnitTest", "..\tests\PetProject.Application.UnitTest\PetProject.Application.UnitTest.csproj", "{7F8B81B5-890D-4888-BA71-7CB271D55934}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Accounts.Infrastructure", "src\PetProject.Accounts.Infrastructure\PetProject.Accounts.Infrastructure.csproj", "{E5C5BCED-028E-46E0-8CE2-C69D5776B445}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Accounts.Infrastructure", "src\Accounts\PetProject.Accounts.Infrastructure\PetProject.Accounts.Infrastructure.csproj", "{E5C5BCED-028E-46E0-8CE2-C69D5776B445}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Accounts.Application", "src\PetProject.Accounts.Application\PetProject.Accounts.Application.csproj", "{85FA5901-1CF9-46C0-ADA3-DB4D46CE14C1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Accounts.Application", "src\Accounts\PetProject.Accounts.Application\PetProject.Accounts.Application.csproj", "{85FA5901-1CF9-46C0-ADA3-DB4D46CE14C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Accounts.Domain", "src\PetProject.Accounts.Domain\PetProject.Accounts.Domain.csproj", "{31C36ECF-83BF-40FD-A2A8-D0D9A7967036}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Accounts.Domain", "src\Accounts\PetProject.Accounts.Domain\PetProject.Accounts.Domain.csproj", "{31C36ECF-83BF-40FD-A2A8-D0D9A7967036}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Accounts.Controllers", "src\PetProject.Accounts.Controllers\PetProject.Accounts.Controllers.csproj", "{C6ACEFC1-EFE2-4C72-88EF-1186529EF1E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Accounts.Contracts", "src\Accounts\PetProject.Accounts.Contracts\PetProject.Accounts.Contracts.csproj", "{C6ACEFC1-EFE2-4C72-88EF-1186529EF1E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Volunteers.Domain", "src\PetProject.Volunteers.Domain\PetProject.Volunteers.Domain.csproj", "{D50ED034-7D0C-44EE-A343-D497D0A62817}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Volunteers.Domain", "src\Volunteers\PetProject.Volunteers.Domain\PetProject.Volunteers.Domain.csproj", "{D50ED034-7D0C-44EE-A343-D497D0A62817}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProejct.Volunteers.Application", "src\PetProejct.Volunteers.Application\PetProejct.Volunteers.Application.csproj", "{1A088224-960A-404A-BC83-43D9B3C1FD53}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProejct.Volunteers.Application", "src\Volunteers\PetProejct.Volunteers.Application\PetProejct.Volunteers.Application.csproj", "{1A088224-960A-404A-BC83-43D9B3C1FD53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Volunteers.Infrastructure", "src\PetProject.Volunteers.Infrastructure\PetProject.Volunteers.Infrastructure.csproj", "{552AC9EB-54ED-4C95-A080-CFF0D0794C24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Volunteers.Infrastructure", "src\Volunteers\PetProject.Volunteers.Infrastructure\PetProject.Volunteers.Infrastructure.csproj", "{552AC9EB-54ED-4C95-A080-CFF0D0794C24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Volunteers.Controllers", "src\PetProject.Volunteers.Controllers\PetProject.Volunteers.Controllers.csproj", "{C7EC5275-B7A5-4933-B370-5B28F02C20E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Volunteers.Presentation", "src\Volunteers\PetProject.Volunteers.Presentation\PetProject.Volunteers.Presentation.csproj", "{C7EC5275-B7A5-4933-B370-5B28F02C20E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Species.Domain", "src\PetProject.Species.Domain\PetProject.Species.Domain.csproj", "{806DC5BB-D998-444F-9584-BADAA7C16405}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Species.Domain", "src\Species\PetProject.Species.Domain\PetProject.Species.Domain.csproj", "{806DC5BB-D998-444F-9584-BADAA7C16405}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Species.Application", "src\PetProject.Species.Application\PetProject.Species.Application.csproj", "{6044C5FA-67E7-4DF4-8E1D-BEE28900D515}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Species.Application", "src\Species\PetProject.Species.Application\PetProject.Species.Application.csproj", "{6044C5FA-67E7-4DF4-8E1D-BEE28900D515}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Species.Infrastructure", "src\PetProject.Species.Infrastructure\PetProject.Species.Infrastructure.csproj", "{8E1FD531-8102-405E-AEAC-507C4F6879F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Species.Infrastructure", "src\Species\PetProject.Species.Infrastructure\PetProject.Species.Infrastructure.csproj", "{8E1FD531-8102-405E-AEAC-507C4F6879F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Species.Controllers", "src\PetProject.Species.Controllers\PetProject.Species.Controllers.csproj", "{EF1A8DA8-50A7-4762-86A7-0A3197DAA7F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Species.Presentation", "src\Species\PetProject.Species.Presentation\PetProject.Species.Presentation.csproj", "{EF1A8DA8-50A7-4762-86A7-0A3197DAA7F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Volunteers.Contracts", "src\PetProject.Volunteers.Contracts\PetProject.Volunteers.Contracts.csproj", "{865BFB17-5B68-4992-A2C0-40338DAFA1A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Volunteers.Contracts", "src\Volunteers\PetProject.Volunteers.Contracts\PetProject.Volunteers.Contracts.csproj", "{865BFB17-5B68-4992-A2C0-40338DAFA1A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Species.Contracts", "src\PetProject.Species.Contracts\PetProject.Species.Contracts.csproj", "{29A88699-C360-4DE8-806C-00C095A0C87D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Species.Contracts", "src\Species\PetProject.Species.Contracts\PetProject.Species.Contracts.csproj", "{29A88699-C360-4DE8-806C-00C095A0C87D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Core", "src\PetProject.Core\PetProject.Core.csproj", "{C928CD33-2DA0-4F90-B793-F2FC80A48585}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Core", "src\Shared\PetProject.Core\PetProject.Core.csproj", "{C928CD33-2DA0-4F90-B793-F2FC80A48585}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Framework", "src\PetProject.Framework\PetProject.Framework.csproj", "{E7449F15-3D07-429D-9D8B-68C6A3480880}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Framework", "src\Shared\PetProject.Framework\PetProject.Framework.csproj", "{E7449F15-3D07-429D-9D8B-68C6A3480880}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.SharedKernel", "src\PetProject.SharedKernel\PetProject.SharedKernel.csproj", "{5A48EF05-49E9-4FC9-B7E6-ED95F20E45E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.SharedKernel", "src\Shared\PetProject.SharedKernel\PetProject.SharedKernel.csproj", "{5A48EF05-49E9-4FC9-B7E6-ED95F20E45E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Files.API", "src\PetProject.Files.API\PetProject.Files.API.csproj", "{C27A8F35-4345-4F38-94BC-C5EFDFDBA6DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Files.API", "src\Files\PetProject.Files.API\PetProject.Files.API.csproj", "{C27A8F35-4345-4F38-94BC-C5EFDFDBA6DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Files.Contracts", "src\PetProject.Files.Contracts\PetProject.Files.Contracts.csproj", "{E14BB8BA-FDAA-4891-A8AE-AB32FA5D7487}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Files.Contracts", "src\Files\PetProject.Files.Contracts\PetProject.Files.Contracts.csproj", "{E14BB8BA-FDAA-4891-A8AE-AB32FA5D7487}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Files.Domain", "src\PetProject.Files.Domain\PetProject.Files.Domain.csproj", "{37E1EC1B-2F22-47DA-97BE-F5554F29B48D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Files.Domain", "src\Files\PetProject.Files.Domain\PetProject.Files.Domain.csproj", "{37E1EC1B-2F22-47DA-97BE-F5554F29B48D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Files.Infrastructure", "src\PetProject.Files.Infrastructure\PetProject.Files.Infrastructure.csproj", "{43CA21C4-8749-410E-B630-18068898FCCE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Files.Infrastructure", "src\Files\PetProject.Files.Infrastructure\PetProject.Files.Infrastructure.csproj", "{43CA21C4-8749-410E-B630-18068898FCCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Files.Application", "src\PetProject.Files.Application\PetProject.Files.Application.csproj", "{FC841D87-A5CE-44C8-B651-383ECF3F9996}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Files.Application", "src\Files\PetProject.Files.Application\PetProject.Files.Application.csproj", "{FC841D87-A5CE-44C8-B651-383ECF3F9996}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Accounts", "Accounts", "{C0C2A8FE-1144-4FFB-BF8B-38BD170C4BBD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Volunteers", "Volunteers", "{41FBB98F-F7BF-4676-AFBA-DA9DF2D4252F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Accounts.Presentation", "src\Accounts\PetProject.Accounts.Presentation\PetProject.Accounts.Presentation.csproj", "{DEAAFDF1-8748-4974-BD74-2218E1C9BC12}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Species", "Species", "{D0F295F6-7210-46FA-8C7E-26C80FE1F3C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{292883BE-93A7-49D8-9BFD-42FBB4A4524A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{8DF859C4-0402-47E7-9763-D0BE243F3929}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{B79F025D-2FA8-4AD8-AF57-3771545B4CAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -165,11 +179,41 @@ Global
 		{FC841D87-A5CE-44C8-B651-383ECF3F9996}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC841D87-A5CE-44C8-B651-383ECF3F9996}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC841D87-A5CE-44C8-B651-383ECF3F9996}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEAAFDF1-8748-4974-BD74-2218E1C9BC12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEAAFDF1-8748-4974-BD74-2218E1C9BC12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEAAFDF1-8748-4974-BD74-2218E1C9BC12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEAAFDF1-8748-4974-BD74-2218E1C9BC12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DE30E741-07AB-47D4-9996-31391F353544}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C6ACEFC1-EFE2-4C72-88EF-1186529EF1E8} = {C0C2A8FE-1144-4FFB-BF8B-38BD170C4BBD}
+		{31C36ECF-83BF-40FD-A2A8-D0D9A7967036} = {C0C2A8FE-1144-4FFB-BF8B-38BD170C4BBD}
+		{85FA5901-1CF9-46C0-ADA3-DB4D46CE14C1} = {C0C2A8FE-1144-4FFB-BF8B-38BD170C4BBD}
+		{E5C5BCED-028E-46E0-8CE2-C69D5776B445} = {C0C2A8FE-1144-4FFB-BF8B-38BD170C4BBD}
+		{1A088224-960A-404A-BC83-43D9B3C1FD53} = {41FBB98F-F7BF-4676-AFBA-DA9DF2D4252F}
+		{865BFB17-5B68-4992-A2C0-40338DAFA1A1} = {41FBB98F-F7BF-4676-AFBA-DA9DF2D4252F}
+		{C7EC5275-B7A5-4933-B370-5B28F02C20E2} = {41FBB98F-F7BF-4676-AFBA-DA9DF2D4252F}
+		{D50ED034-7D0C-44EE-A343-D497D0A62817} = {41FBB98F-F7BF-4676-AFBA-DA9DF2D4252F}
+		{552AC9EB-54ED-4C95-A080-CFF0D0794C24} = {41FBB98F-F7BF-4676-AFBA-DA9DF2D4252F}
+		{DEAAFDF1-8748-4974-BD74-2218E1C9BC12} = {C0C2A8FE-1144-4FFB-BF8B-38BD170C4BBD}
+		{6044C5FA-67E7-4DF4-8E1D-BEE28900D515} = {D0F295F6-7210-46FA-8C7E-26C80FE1F3C6}
+		{29A88699-C360-4DE8-806C-00C095A0C87D} = {D0F295F6-7210-46FA-8C7E-26C80FE1F3C6}
+		{EF1A8DA8-50A7-4762-86A7-0A3197DAA7F8} = {D0F295F6-7210-46FA-8C7E-26C80FE1F3C6}
+		{806DC5BB-D998-444F-9584-BADAA7C16405} = {D0F295F6-7210-46FA-8C7E-26C80FE1F3C6}
+		{8E1FD531-8102-405E-AEAC-507C4F6879F4} = {D0F295F6-7210-46FA-8C7E-26C80FE1F3C6}
+		{C928CD33-2DA0-4F90-B793-F2FC80A48585} = {292883BE-93A7-49D8-9BFD-42FBB4A4524A}
+		{E7449F15-3D07-429D-9D8B-68C6A3480880} = {292883BE-93A7-49D8-9BFD-42FBB4A4524A}
+		{5A48EF05-49E9-4FC9-B7E6-ED95F20E45E0} = {292883BE-93A7-49D8-9BFD-42FBB4A4524A}
+		{F94C87AD-E56F-4BEA-8811-093A7D4F9923} = {8DF859C4-0402-47E7-9763-D0BE243F3929}
+		{C27A8F35-4345-4F38-94BC-C5EFDFDBA6DF} = {B79F025D-2FA8-4AD8-AF57-3771545B4CAA}
+		{FC841D87-A5CE-44C8-B651-383ECF3F9996} = {B79F025D-2FA8-4AD8-AF57-3771545B4CAA}
+		{E14BB8BA-FDAA-4891-A8AE-AB32FA5D7487} = {B79F025D-2FA8-4AD8-AF57-3771545B4CAA}
+		{37E1EC1B-2F22-47DA-97BE-F5554F29B48D} = {B79F025D-2FA8-4AD8-AF57-3771545B4CAA}
+		{43CA21C4-8749-410E-B630-18068898FCCE} = {B79F025D-2FA8-4AD8-AF57-3771545B4CAA}
 	EndGlobalSection
 EndGlobal
