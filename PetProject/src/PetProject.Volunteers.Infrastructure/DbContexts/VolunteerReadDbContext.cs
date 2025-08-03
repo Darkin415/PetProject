@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PetProejct.Volunteers.Application;
-using PetProject.Contracts.Dtos;
 using PetProject.Volunteers.Contracts.DTOs;
 
 namespace PetProject.Volunteers.Infrastructure.DbContexts;

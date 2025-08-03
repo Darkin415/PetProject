@@ -1,5 +1,6 @@
-﻿using PetProject.Contracts.Dtos;
-using PetProject.Core.Abstraction;
+﻿using PetProject.Core.Abstraction;
+using PetProject.Core.DTOs;
+using PetProject.Files.Contracts.Dtos;
 
 namespace PetProejct.Volunteers.Application.Commands.AddPetPhotos;
 

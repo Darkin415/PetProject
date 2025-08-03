@@ -12,13 +12,9 @@ using PetProejct.Volunteers.Application.Commands.Queries.GetVolunteers;
 using PetProejct.Volunteers.Application.Commands.RemovePetPhotos;
 using PetProejct.Volunteers.Application.Commands.UpdateSocialNetwork;
 using PetProejct.Volunteers.Application.Commands.UpdateVolunteerMainInfo;
-using PetProject.Contracts;
-using PetProject.Contracts.Processors;
+using PetProject.Core.Abstraction;
+using PetProject.Core.DTOs;
 using PetProject.Framework.Responses;
-using PetProject.Species.Application.Breed;
-using PetProject.Species.Application.DeleteBreed;
-using PetProject.Species.Application.DeleteSpecies;
-using PetProject.Species.Application.Species;
 using PetProject.Volunteers.Contracts.Requests;
 using PetProject.Volunteers.Controllers.Pets.Requests;
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PetProject.Contracts;
+
+using PetProject.Core.Abstraction;
 using PetProject.Framework.Responses;
 using PetProject.Species.Application.Breed;
 using PetProject.Species.Application.DeleteBreed;
@@ -24,6 +25,8 @@ public class SpeciesController : ApplicationController
         var command = new CreateSpeciesCommand(request.Title);
     
         var result = await handler.Handle(command, cancellationToken);
+        if(result.IsFailure)
+            return result.Error.ToResponse();
     
         return Ok(result.Value);
     }

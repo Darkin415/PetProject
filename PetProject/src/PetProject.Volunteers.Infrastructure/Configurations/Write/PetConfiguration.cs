@@ -2,10 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PetProject.Contracts;
-using PetProject.Contracts.Ids;
+using PetProject.Core.Constants;
 using PetProject.SharedKernel.ValueObjects;
 using PetProject.Volunteers.Contracts.DTOs;
+using PetProject.Volunteers.Contracts.ids;
 using PetProject.Volunteers.Domain.Entities;
 using PetProject.Volunteers.Domain.PetValueObjects;
 

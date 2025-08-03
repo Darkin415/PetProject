@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using PetProject.Contracts;
+
 using PetProject.Core.Database;
 using PetProject.SharedKernel;
 using PetProject.SharedKernel.ValueObjects;

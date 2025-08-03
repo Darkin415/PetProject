@@ -4,6 +4,11 @@ namespace PetProject.SharedKernel.ValueObjects;
 
 public record SpeciesId
 {
+    //ef core
+    public SpeciesId()
+    {
+        
+    }
     public SpeciesId(Guid value)
     {
         Value = value;

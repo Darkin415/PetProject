@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Domain.UnitTests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Application.UnitTest", "..\tests\PetProject.Application.UnitTest\PetProject.Application.UnitTest.csproj", "{7F8B81B5-890D-4888-BA71-7CB271D55934}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Contracts", "src\PetProject.Contracts\PetProject.Contracts.csproj", "{9BF70870-5EB6-4B47-B828-4475CCAD9D16}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Accounts.Infrastructure", "src\PetProject.Accounts.Infrastructure\PetProject.Accounts.Infrastructure.csproj", "{E5C5BCED-028E-46E0-8CE2-C69D5776B445}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Accounts.Application", "src\PetProject.Accounts.Application\PetProject.Accounts.Application.csproj", "{85FA5901-1CF9-46C0-ADA3-DB4D46CE14C1}"
@@ -79,10 +77,6 @@ Global
 		{7F8B81B5-890D-4888-BA71-7CB271D55934}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F8B81B5-890D-4888-BA71-7CB271D55934}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F8B81B5-890D-4888-BA71-7CB271D55934}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9BF70870-5EB6-4B47-B828-4475CCAD9D16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9BF70870-5EB6-4B47-B828-4475CCAD9D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9BF70870-5EB6-4B47-B828-4475CCAD9D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9BF70870-5EB6-4B47-B828-4475CCAD9D16}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E5C5BCED-028E-46E0-8CE2-C69D5776B445}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E5C5BCED-028E-46E0-8CE2-C69D5776B445}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5C5BCED-028E-46E0-8CE2-C69D5776B445}.Release|Any CPU.ActiveCfg = Release|Any CPU

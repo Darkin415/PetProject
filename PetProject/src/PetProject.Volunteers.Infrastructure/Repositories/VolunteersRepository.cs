@@ -1,12 +1,10 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using PetProejct.Volunteers.Application;
-using PetProject.Contracts;
-using PetProject.Contracts.Ids;
-using PetProject.Contracts.ValueObjects;
 using PetProject.SharedKernel;
-using PetProject.Volunteers.Domain;
+using PetProject.Volunteers.Contracts.ids;
 using PetProject.Volunteers.Domain.Entities;
+using PetProject.Volunteers.Domain.VolunteerValueObject;
 using PetProject.Volunteers.Infrastructure.DbContexts;
 
 namespace PetProject.Volunteers.Infrastructure.Repositories;

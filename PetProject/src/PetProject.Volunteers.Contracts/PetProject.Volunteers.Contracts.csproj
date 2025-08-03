@@ -7,11 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Response\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\PetProject.Contracts\PetProject.Contracts.csproj" />
       <ProjectReference Include="..\PetProject.Core\PetProject.Core.csproj" />
     </ItemGroup>
 

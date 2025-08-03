@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using PetProject.Accounts.Domain;
-using PetProject.Contracts;
 using PetProject.Core.Abstraction;
 using PetProject.SharedKernel;
 

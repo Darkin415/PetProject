@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PetProject.Contracts;
+
 using PetProject.SharedKernel.ValueObjects;
 
 namespace PetProject.Species.Infrastructure;
@@ -22,5 +22,11 @@ public class SpeciesConfiguration : IEntityTypeConfiguration<Domain.PetSpecies.S
                 .IsRequired()
                 .HasColumnName("title");
         });
+        
+        builder.HasMany(p => p.Breeds)
+            .WithOne()
+            .HasForeignKey("species_id")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
     }
 }

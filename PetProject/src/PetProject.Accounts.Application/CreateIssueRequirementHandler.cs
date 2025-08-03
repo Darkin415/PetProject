@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using PetProject.Accounts.Application.Authorization;
+using PetProject.Core.Authorization;
 
 namespace PetProject.Accounts.Application;
 

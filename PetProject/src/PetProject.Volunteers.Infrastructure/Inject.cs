@@ -2,6 +2,7 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using PetProejct.Volunteers.Application;
+using PetProejct.Volunteers.Application.Commands.CreateVolunteer;
 using PetProejct.Volunteers.Application.Commands.DeleteVolunteer;
 using PetProejct.Volunteers.Application.Commands.GetVolunteerById;
 using PetProejct.Volunteers.Application.Commands.UpdateVolunteerMainInfo;
@@ -52,6 +53,7 @@ public static class Inject
         services.AddScoped<GetVolunteerByIdHandler>();
         services.AddScoped<UpdateMainInfoHandler>();
         services.AddScoped<DeleteVolunteerHandler>();
+        services.AddScoped<CreateVolunteerHandler>();
         
 
         return services;

@@ -1,10 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.Extensions.Logging;
-using PetProject.Contracts;
-using PetProject.Contracts.Ids;
-using PetProject.Contracts.ValueObjects;
 using PetProject.Core.Database;
 using PetProject.SharedKernel;
+using PetProject.Volunteers.Contracts.ids;
+using PetProject.Volunteers.Domain.PetValueObjects;
 
 namespace PetProejct.Volunteers.Application.Commands.MovePet;
 

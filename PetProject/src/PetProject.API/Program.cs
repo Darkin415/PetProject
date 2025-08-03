@@ -4,7 +4,6 @@ using Microsoft.OpenApi.Models;
 using PetProejct.Volunteers.Application.Commands.CreateVolunteer;
 using PetProejct.Volunteers.Application.Commands.DeleteVolunteer;
 using PetProject.Accounts.Application;
-using PetProject.Accounts.Application.Authorization;
 using PetProject.Accounts.Application.Commands.Login;
 using PetProject.Accounts.Application.Commands.Register;
 using PetProject.API.Middlewares;
@@ -13,8 +12,9 @@ using Serilog.Events;
 using PetProject.Accounts.Infrastructure;
 using PetProject.API;
 using PetProject.API.Exctensions;
-using PetProject.Contracts;
+using PetProject.Core.Authorization;
 using PetProject.Core.Database;
+using PetProject.Core.Enum;
 using PetProject.Volunteers.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -61,7 +61,6 @@ builder.Services.AddSwaggerGen(c => {
     });
 });
 builder.Services.AddSerilog();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 builder.Services
     .AddAuthorizationInfrastructure(builder.Configuration); 
@@ -70,11 +69,11 @@ builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProv
 
 builder.Services.AddScoped<RegisterUserHandler>();
 
-builder.Services.AddScoped<CreateVolunteerHandler>();
+builder.Services.AddKeyedScoped<IUnitOfWork,  PetProject.Volunteers.Infrastructure.UnitOfWork>(ModuleKey.Volunteer);
+
+builder.Services.AddKeyedScoped<IUnitOfWork,  PetProject.Species.Infrastructure.UnitOfWork>(ModuleKey.Species);
 
 builder.Services.AddValidatorsFromAssembly(typeof(CreateVolunteerCommandValidator).Assembly);
-
-builder.Services.AddScoped<DeleteVolunteerHandler>();
 
 builder.Services.AddVolunteersInfrastructure();
 
@@ -83,7 +82,6 @@ builder.Services.AddSpeciesModule();
 builder.Services.AddFilesModule(builder.Configuration);
 
 builder.Services.AddSingleton<IAuthorizationHandler, CreateIssueRequirementHandler>();
-
 
 var app = builder.Build();
 

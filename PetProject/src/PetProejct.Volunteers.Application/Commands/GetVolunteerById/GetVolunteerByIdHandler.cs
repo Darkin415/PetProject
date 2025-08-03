@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using PetProejct.Volunteers.Application.Commands.Queries.GetVolunteers;
-using PetProject.Contracts;
+
 using PetProject.Core.Abstraction;
 using PetProject.SharedKernel;
 using PetProject.Volunteers.Contracts.DTOs;

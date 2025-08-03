@@ -1,6 +1,5 @@
-﻿using PetProject.Contracts.Dtos;
-using PetProject.Species.Contracts.DTOs;
-using PetProject.Volunteers.Contracts.DTOs;
+﻿using PetProject.Species.Contracts.DTOs;
+
 
 namespace PetProject.Species.Application;
 

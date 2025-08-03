@@ -1,12 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
-using PetProject.Contracts;
-using PetProject.Contracts.Ids;
 using PetProject.Core.Abstraction;
 using PetProject.Core.Database;
 using PetProject.Core.Extensions;
 using PetProject.SharedKernel;
+using PetProject.Volunteers.Contracts.ids;
 
 namespace PetProejct.Volunteers.Application.Commands.DeleteVolunteer;
 public class DeleteVolunteerHandler : ICommandHandler<Guid, DeleteVolunteerCommand>

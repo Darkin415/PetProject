@@ -1,8 +1,15 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using PetProejct.Volunteers.Application;
-using PetProject.Contracts;
+
 using PetProject.Core.Database;
+using PetProject.Core.Enum;
 using PetProject.SharedKernel;
 using PetProject.SharedKernel.ValueObjects;
 using PetProject.Species.Application;
@@ -17,7 +24,8 @@ public class SpeciesRepository : ISpeciesContract
     private readonly WriteSpeciesDbContext _dbContext;
     private readonly IUnitOfWork _unitOfWork;
 
-    public SpeciesRepository(WriteSpeciesDbContext dbContext, IUnitOfWork unitOfWork)
+    public SpeciesRepository(WriteSpeciesDbContext dbContext, 
+        [FromKeyedServices(ModuleKey.Species)] IUnitOfWork unitOfWork)
     {
         _dbContext = dbContext;
         _unitOfWork = unitOfWork;

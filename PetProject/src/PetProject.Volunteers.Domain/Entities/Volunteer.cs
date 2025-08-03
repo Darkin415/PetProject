@@ -1,9 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
-using PetProject.Contracts;
-using PetProject.Contracts.Ids;
-using PetProject.Contracts.ValueObjects;
+using PetProject.Core.ValueObject;
 using PetProject.SharedKernel;
+using PetProject.Volunteers.Contracts.ids;
 using PetProject.Volunteers.Domain.Enum;
+using PetProject.Volunteers.Domain.PetValueObjects;
 using PetProject.Volunteers.Domain.VolunteerValueObject;
 
 namespace PetProject.Volunteers.Domain.Entities;

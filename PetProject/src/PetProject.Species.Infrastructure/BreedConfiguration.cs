@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PetProject.Contracts;
+
 using PetProject.SharedKernel.ValueObjects;
 using PetProject.Species.Domain.PetSpecies;
 
@@ -16,7 +16,7 @@ public class BreedConfiguration : IEntityTypeConfiguration<Breed>
         builder.Property(p => p.Id)
             .HasConversion(
             id => id.Value,
-            guid => BreedId.Create(guid).Value);
+            value => BreedId.Create(value).Value);
         
         builder.Property(p => p.SpeciesId)
             .HasConversion(

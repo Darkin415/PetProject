@@ -1,6 +1,6 @@
-﻿using System.Runtime.InteropServices.JavaScript;
+﻿
 using CSharpFunctionalExtensions;
-using PetProject.Contracts;
+
 using PetProject.SharedKernel;
 using PetProject.SharedKernel.ValueObjects;
 using PetProject.Species.Domain.PetSpecies;

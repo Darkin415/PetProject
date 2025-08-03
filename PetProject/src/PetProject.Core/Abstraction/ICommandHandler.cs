@@ -1,6 +1,5 @@
-﻿using System.Windows.Input;
+﻿
 using CSharpFunctionalExtensions;
-using PetProject.Contracts;
 using PetProject.SharedKernel;
 
 namespace PetProject.Core.Abstraction;

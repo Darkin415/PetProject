@@ -1,6 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
-using PetProject.Contracts;
+using Microsoft.Extensions.DependencyInjection;
+
 using PetProject.Core.Abstraction;
+using PetProject.Core.Database;
+using PetProject.Core.Enum;
 using PetProject.SharedKernel;
 using PetProject.SharedKernel.ValueObjects;
 using PetProject.Species.Contracts;
@@ -11,10 +14,13 @@ namespace PetProject.Species.Application.Species;
 public class CreateSpeciesHandler : ICommandHandler<Guid, CreateSpeciesCommand>
 {
     private readonly ISpeciesContract _speciesContract;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateSpeciesHandler(ISpeciesContract speciesContract)
+    public CreateSpeciesHandler(ISpeciesContract speciesContract, 
+        [FromKeyedServices(ModuleKey.Species)] IUnitOfWork unitOfWork)
     {
         _speciesContract = speciesContract;
+        _unitOfWork = unitOfWork;
     }
     public async Task<Result<Guid, ErrorList>> Handle(CreateSpeciesCommand command, CancellationToken cancellationToken)
     {
@@ -27,9 +33,11 @@ public class CreateSpeciesHandler : ICommandHandler<Guid, CreateSpeciesCommand>
         var species = new Domain.PetSpecies.Species(speciesId, name.Value);
 
         var speciesResult = await _speciesContract.AddSpecies(species, cancellationToken);
+        if (speciesResult.IsFailure)
+            return speciesResult.Error;
         
 
-        return species.Id.Value;
+        return speciesResult.Value;
 
     }
 }

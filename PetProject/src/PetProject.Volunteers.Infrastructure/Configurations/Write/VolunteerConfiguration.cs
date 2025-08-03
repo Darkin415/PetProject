@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PetProject.Contracts;
-using PetProject.Contracts.Ids;
+using PetProject.Core.Constants;
+using PetProject.Volunteers.Contracts.ids;
 using PetProject.Volunteers.Domain.Entities;
 
 namespace PetProject.Volunteers.Infrastructure.Configurations.Write;

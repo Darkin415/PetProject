@@ -1,7 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
-using PetProject.Contracts;
-using PetProject.Contracts.Dtos;
+
 using PetProject.SharedKernel;
 using PetProject.Volunteers.Contracts.DTOs;
 

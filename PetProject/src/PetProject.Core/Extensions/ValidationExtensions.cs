@@ -1,4 +1,4 @@
-﻿using PetProject.Contracts;
+﻿
 using PetProject.SharedKernel;
 
 namespace PetProject.Core.Extensions;

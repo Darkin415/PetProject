@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.Extensions.Logging;
-using PetProject.Contracts;
+
 using PetProject.SharedKernel;
 using PetProject.SharedKernel.ValueObjects;
 using PetProject.Species.Application.DeleteSpecies;

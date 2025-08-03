@@ -1,5 +1,4 @@
-﻿using PetProject.Contracts.Dtos;
-using PetProject.Core.Abstraction;
+﻿using PetProject.Core.Abstraction;
 using PetProject.Species.Contracts;
 using PetProject.Species.Contracts.DTOs;
 using PetProject.Species.Contracts.Models;

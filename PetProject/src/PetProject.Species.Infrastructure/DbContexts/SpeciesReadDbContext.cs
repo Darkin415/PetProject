@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PetProject.Contracts.Dtos;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PetProject.Species.Application;
 using PetProject.Species.Contracts.DTOs;
 using PetProject.Volunteers.Contracts.DTOs;

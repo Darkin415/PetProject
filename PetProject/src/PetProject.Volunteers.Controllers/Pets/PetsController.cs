@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PetProejct.Volunteers.Application.Commands.Queries.GetPets.GetPetById;
 using PetProejct.Volunteers.Application.Commands.Queries.GetPets.GetPetsWIthPagination;
-using PetProject.Contracts;
+
+using PetProject.Core.Abstraction;
 using PetProject.Framework.Responses;
 using PetProject.SharedKernel.ValueObjects;
 using PetProject.Species.Application.GetBreedBySpeciesId;

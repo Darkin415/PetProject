@@ -1,5 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
-using PetProject.Contracts;
+
 using PetProject.Core.Abstraction;
 using PetProject.SharedKernel;
 using PetProject.SharedKernel.ValueObjects;
