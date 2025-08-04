@@ -1,8 +1,10 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using PetProject.Core.Database;
+using PetProject.Core.Enum;
 using PetProject.SharedKernel;
 using PetProject.SharedKernel.ValueObjects;
 using PetProject.Volunteers.Contracts;
@@ -19,7 +21,7 @@ public class DeleteSpeciesHandler
     public DeleteSpeciesHandler(
         ISpeciesRepository speciesRepository,
         ILogger<DeleteSpeciesHandler> logger,
-        IUnitOfWork unitOfWork,
+        [FromKeyedServices(ModuleKey.Species)] IUnitOfWork unitOfWork,
         IPetCheckContract petCheckContract)
     {
         _speciesRepository = speciesRepository;

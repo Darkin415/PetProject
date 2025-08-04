@@ -7,6 +7,7 @@ using PetProject.Species.Application.Breed;
 using PetProject.Species.Application.DeleteBreed;
 using PetProject.Species.Application.DeleteSpecies;
 using PetProject.Species.Application.Species;
+using PetProject.Species.Contracts.Requests;
 
 namespace PetProject.Species.Presentation;
 
@@ -31,7 +32,7 @@ public class SpeciesController : ApplicationController
         return Ok(result.Value);
     }
     
-    [Authorize]
+   
     [HttpPost("species/{speciesId:guid}/breeds")]
     
     public async Task<ActionResult> CreateBreed(

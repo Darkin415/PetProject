@@ -1,5 +1,4 @@
 ﻿using CSharpFunctionalExtensions;
-
 using PetProject.Core.Abstraction;
 using PetProject.SharedKernel;
 using PetProject.SharedKernel.ValueObjects;
@@ -10,9 +9,9 @@ namespace PetProject.Species.Application.Breed;
 
 public class CreateBreedHandler : ICommandHandler<Guid, CreateBreedCommand>
 {
-    private readonly ISpeciesContract _speciesRepository;
+    private readonly ISpeciesRepository _speciesRepository;
 
-    public CreateBreedHandler(ISpeciesContract speciesRepository)
+    public CreateBreedHandler(ISpeciesRepository speciesRepository)
     {
         _speciesRepository = speciesRepository;
     }

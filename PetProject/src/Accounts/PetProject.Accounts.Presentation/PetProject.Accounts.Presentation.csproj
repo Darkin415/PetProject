@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\PetProject.Core\PetProject.Core.csproj" />
       <ProjectReference Include="..\..\Shared\PetProject.Core\PetProject.Core.csproj" />
       <ProjectReference Include="..\..\Shared\PetProject.Framework\PetProject.Framework.csproj" />
       <ProjectReference Include="..\..\Shared\PetProject.SharedKernel\PetProject.SharedKernel.csproj" />

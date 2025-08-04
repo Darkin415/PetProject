@@ -2,6 +2,7 @@
 using PetProject.Species.Contracts;
 using PetProject.Species.Contracts.DTOs;
 using PetProject.Species.Contracts.Models;
+using PetProject.Species.Contracts.Requests;
 
 
 namespace PetProject.Species.Application.GetSpecies;
@@ -27,11 +28,3 @@ public class GetSpeciesWithPaginationHandler : IQueryHandler<PagedList<SpeciesDt
     }
 }
 
-public record GetSpeciesWithPaginationQuery(
-    int Page, int PageSize) : IQuery;
-
-public record GetSpeciesWithPaginationRequest(int Page, int PageSize)
-{
-    public GetSpeciesWithPaginationQuery ToQuery() =>
-        new(Page, PageSize);
-}

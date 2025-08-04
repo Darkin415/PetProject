@@ -13,7 +13,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Files\PetProject.Files.Contracts\PetProject.Files.Contracts.csproj" />
-      <ProjectReference Include="..\..\PetProject.Files.Contracts\PetProject.Files.Contracts.csproj" />
       <ProjectReference Include="..\PetProject.SharedKernel\PetProject.SharedKernel.csproj" />
     </ItemGroup>
 

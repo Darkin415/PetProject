@@ -13,13 +13,13 @@ namespace PetProject.Species.Application.Species;
 
 public class CreateSpeciesHandler : ICommandHandler<Guid, CreateSpeciesCommand>
 {
-    private readonly ISpeciesContract _speciesContract;
+    private readonly ISpeciesRepository _speciesRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateSpeciesHandler(ISpeciesContract speciesContract, 
+    public CreateSpeciesHandler(ISpeciesRepository speciesRepository, 
         [FromKeyedServices(ModuleKey.Species)] IUnitOfWork unitOfWork)
     {
-        _speciesContract = speciesContract;
+        _speciesRepository = speciesRepository;
         _unitOfWork = unitOfWork;
     }
     public async Task<Result<Guid, ErrorList>> Handle(CreateSpeciesCommand command, CancellationToken cancellationToken)
@@ -32,7 +32,7 @@ public class CreateSpeciesHandler : ICommandHandler<Guid, CreateSpeciesCommand>
         
         var species = new Domain.PetSpecies.Species(speciesId, name.Value);
 
-        var speciesResult = await _speciesContract.AddSpecies(species, cancellationToken);
+        var speciesResult = await _speciesRepository.AddSpecies(species, cancellationToken);
         if (speciesResult.IsFailure)
             return speciesResult.Error;
         

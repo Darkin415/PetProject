@@ -23,8 +23,7 @@ public class UnitOfWork : IUnitOfWork
 
     public async Task SaveChanges(CancellationToken cancellationToken = default)
     {
-        var savedEntries = await _dbContext.SaveChangesAsync(cancellationToken);
-        Console.WriteLine($"Saved {savedEntries} entities");
+        await _dbContext.SaveChangesAsync(cancellationToken);
         
     }
 }

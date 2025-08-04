@@ -1,7 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-
 using PetProject.Core.Database;
 using PetProject.SharedKernel;
 using PetProject.SharedKernel.ValueObjects;
@@ -12,13 +10,13 @@ namespace PetProject.Species.Application.DeleteBreed;
 
 public class DeleteBreedHandler 
 {
-    private readonly ISpeciesContract _speciesRepository;
+    private readonly ISpeciesRepository _speciesRepository;
     private readonly ILogger<DeleteBreedHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPetCheckContract _petCheckContract;
 
     public DeleteBreedHandler(
-        ISpeciesContract speciesRepository,
+        ISpeciesRepository speciesRepository,
         ILogger<DeleteBreedHandler> logger,
         IUnitOfWork unitOfWork,
         IPetCheckContract petCheckContract)

@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PetProejct.Volunteers.Application.Commands.Queries.GetPets.GetPetById;
 using PetProejct.Volunteers.Application.Commands.Queries.GetPets.GetPetsWIthPagination;
-
 using PetProject.Core.Abstraction;
 using PetProject.Framework.Responses;
 using PetProject.SharedKernel.ValueObjects;
-using PetProject.Species.Application.GetBreedBySpeciesId;
-using PetProject.Species.Application.GetSpecies;
-using PetProject.Volunteers.Contracts.Requests;
+using PetProject.Species.Contracts;
+using PetProject.Species.Contracts.Requests;
 using PetProject.Volunteers.Presentation.Pets.Requests;
 
 namespace PetProject.Volunteers.Presentation.Pets;
@@ -15,21 +13,19 @@ namespace PetProject.Volunteers.Presentation.Pets;
 public class PetsController : ApplicationController
 {
     
-    [HttpGet("breed/{breedId:guid}")]
+    [HttpGet("breed/{speciesId:guid}")]
     public async Task<IActionResult> GetBreedBySpeciesId(
-        [FromRoute] Guid breedId,
-        [FromServices] GetBreedBySpeciesIdHandler handler,
+        [FromRoute] Guid speciesId,
+        [FromServices] ISpeciesContract speciesContract,
         CancellationToken cancellationToken)
     {
-        var speciesIdResult = SpeciesId.Create(breedId);
+        var speciesIdResult = SpeciesId.Create(speciesId);
         if (speciesIdResult.IsFailure)
         {
             return BadRequest(speciesIdResult.Error);
         }
         
-        var command = new GetBreedBySpeciesIdCommand(speciesIdResult.Value.Value);
-        
-        var result = await handler.Handle(command, cancellationToken);
+        var result = await  speciesContract.GetBreedsBySpeciesId(speciesIdResult.Value.Value, cancellationToken);
         
         if (result.IsSuccess)
         {
@@ -44,12 +40,13 @@ public class PetsController : ApplicationController
     [HttpGet("species")]
     public async Task<ActionResult> GetSpecies(
         [FromQuery] GetSpeciesWithPaginationRequest request,
-        [FromServices] GetSpeciesWithPaginationHandler handler,
+        [FromServices] ISpeciesContract speciesContract,
         CancellationToken cancellationToken)
     {
         var query = request.ToQuery();
 
-        var response = await handler.Handle(query, cancellationToken);
+        var response = await speciesContract.GetSpeciesWithPaginationAsync(
+            query.Page, query.PageSize, cancellationToken);
         
         return Ok(response);
     }

@@ -34,16 +34,14 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Accounts\PetProject.Accounts.Contracts\PetProject.Accounts.Contracts.csproj" />
     <ProjectReference Include="..\..\Accounts\PetProject.Accounts.Infrastructure\PetProject.Accounts.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Accounts\PetProject.Accounts.Presentation\PetProject.Accounts.Presentation.csproj" />
     <ProjectReference Include="..\..\Files\PetProject.Files.Infrastructure\PetProject.Files.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\PetProject.Files.Application\PetProject.Files.Application.csproj" />
-    <ProjectReference Include="..\..\PetProject.Files.Domain\PetProject.Files.Domain.csproj" />
-    <ProjectReference Include="..\..\PetProject.Files.Infrastructure\PetProject.Files.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\Shared\PetProject.Core\PetProject.Core.csproj" />
     <ProjectReference Include="..\..\Shared\PetProject.Framework\PetProject.Framework.csproj" />
-    <ProjectReference Include="..\..\Shared\PetProject.SharedKernel\PetProject.SharedKernel.csproj" />
     <ProjectReference Include="..\..\Species\PetProject.Species.Infrastructure\PetProject.Species.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Species\PetProject.Species.Presentation\PetProject.Species.Presentation.csproj" />
     <ProjectReference Include="..\..\Volunteers\PetProejct.Volunteers.Application\PetProejct.Volunteers.Application.csproj" />
     <ProjectReference Include="..\..\Volunteers\PetProject.Volunteers.Infrastructure\PetProject.Volunteers.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Volunteers\PetProject.Volunteers.Presentation\PetProject.Volunteers.Presentation.csproj" />
   </ItemGroup>
 
 </Project>

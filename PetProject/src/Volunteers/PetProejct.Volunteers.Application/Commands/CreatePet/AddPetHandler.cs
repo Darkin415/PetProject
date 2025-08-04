@@ -6,11 +6,11 @@ using PetProject.Core.Database;
 using PetProject.Core.ValueObject;
 using PetProject.Files.Contracts;
 using PetProject.SharedKernel;
+using PetProject.SharedKernel.ValueObjects;
 using PetProject.Species.Contracts;
 using PetProject.Species.Domain.PetSpecies;
 using PetProject.Volunteers.Contracts.ids;
 using PetProject.Volunteers.Domain.Entities;
-using PetProject.Volunteers.Domain.Enum;
 using PetProject.Volunteers.Domain.PetValueObjects;
 
 namespace PetProejct.Volunteers.Application.Commands.CreatePet;
@@ -68,15 +68,21 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
                 return titleSpecies.Error.ToErrorList();
             
 
-            var species = await _speciesContract.GetSpeciesByNameAsync(titleSpecies.Value, cancellationToken);
+            var species = await _speciesContract.GetSpeciesByNameAsync(
+                titleSpecies.Value.Name, cancellationToken);
             if (species.IsFailure)
                 return species.Error.ToErrorList();
+
+            var speciesId = SpeciesId.Create(species.Value.Id).Value;
             
-            var breed = await _speciesContract.GetBreedByNameAsync(titleBreed.Value, cancellationToken);
+            var breed = await _speciesContract.GetBreedByNameAsync(
+                titleBreed.Value.Name, cancellationToken);
             if (breed.IsFailure)
                 return breed.Error.ToErrorList();
+            
+            var breedId = BreedId.Create(breed.Value.Id).Value;
 
-            var petInfo = PetInfo.Create(species.Value.Id, breed.Value.Id).Value;
+            var petInfo = PetInfo.Create(speciesId, breedId).Value;
 
             var statusHealth = StatusHealth.Create(command.StatusHealth).Value;
 

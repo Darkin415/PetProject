@@ -15,10 +15,6 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
   </ItemGroup>
 
-  <ItemGroup>    
-    <ProjectReference Include="..\..\PetProject\src\PetProject.API\PetProject.API.csproj" />
-  </ItemGroup>
-
   <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>

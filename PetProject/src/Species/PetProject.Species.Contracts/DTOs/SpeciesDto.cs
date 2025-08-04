@@ -4,5 +4,5 @@ public class SpeciesDto
 {
     public Guid Id { get; init; }
     
-    public string title { get; init; } = default!;
+    public string title { get; init; } = string.Empty;
 }

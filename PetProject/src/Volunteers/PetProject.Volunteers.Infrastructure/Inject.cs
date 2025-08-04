@@ -8,8 +8,10 @@ using PetProejct.Volunteers.Application.Commands.GetVolunteerById;
 using PetProejct.Volunteers.Application.Commands.UpdateVolunteerMainInfo;
 using PetProject.Core.Abstraction;
 using PetProject.Core.Database;
+using PetProject.Volunteers.Contracts;
 using PetProject.Volunteers.Infrastructure.DbContexts;
 using PetProject.Volunteers.Infrastructure.Repositories;
+using PetProject.Volunteers.Presentation;
 
 namespace PetProject.Volunteers.Infrastructure;
 
@@ -50,6 +52,7 @@ public static class Inject
         services.AddScoped<IVolunteersReadDbContext, VolunteerReadDbContext>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IVolunteersRepository, VolunteersRepository>();
+        services.AddScoped<IPetCheckContract, VolunteersCheckContract>();
         services.AddScoped<GetVolunteerByIdHandler>();
         services.AddScoped<UpdateMainInfoHandler>();
         services.AddScoped<DeleteVolunteerHandler>();

@@ -27,7 +27,7 @@ public static class Inject
         
         // services.AddScoped<DeleteBreedHandler>();
         
-        // services.AddScoped<DeleteSpeciesHandler>();
+        services.AddScoped<DeleteSpeciesHandler>();
         
         
         services.AddScoped<ISpeciesRepository, SpeciesRepository>();
