@@ -1,26 +1,23 @@
-﻿using PetProject.Contracts.Commands;
-using PetProject.Domain.Enum;
-using PetProject.Domain.PetSpecies;
-using PetProject.Domain.Shared.Ids;
-using PetProject.Domain.Shared.ValueObjects;
-using PetProject.Domain;
-using PetProject.Domain.Volunteers;
-using System.Threading.Tasks;
-using PetProject.Contracts.Dtos;
-using PetProject.Application.Volunteers.Create.Pet.AddPetPhoto;
-using PetProject.Application.Providers;
-using CSharpFunctionalExtensions;
-using PetProject.Application.FileProvider;
-using Moq;
-using PetProject.Application.Volunteers;
-using FluentValidation;
-using Castle.Core.Logging;
-using Microsoft.Extensions.Logging;
-using System.Threading;
-using FluentValidation.Results;
-using FluentAssertions;
-
-namespace PetProject.Application.UnitTest;
+﻿// using PetProject.Domain.Enum;
+// using PetProject.Domain.PetSpecies;
+// using PetProject.Domain;
+// using PetProject.Domain.Volunteers;
+// using System.Threading.Tasks;
+// using PetProject.Contracts.Dtos;
+// using PetProject.Application.Volunteers.Create.Pet.AddPetPhoto;
+// using PetProject.Application.Providers;
+// using CSharpFunctionalExtensions;
+// using PetProject.Application.FileProvider;
+// using Moq;
+// using PetProject.Application.Volunteers;
+// using FluentValidation;
+// using Castle.Core.Logging;
+// using Microsoft.Extensions.Logging;
+// using System.Threading;
+// using FluentValidation.Results;
+// using FluentAssertions;
+//
+// namespace PetProject.Application.UnitTest;
 
 //public class UploadPhotoTests
 //{

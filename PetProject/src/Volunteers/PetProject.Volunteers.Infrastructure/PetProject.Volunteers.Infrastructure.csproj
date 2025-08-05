@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Files\PetProject.Files.Contracts\PetProject.Files.Contracts.csproj" />
+      <ProjectReference Include="..\..\Shared\PetProject.Core\PetProject.Core.csproj" />
+      <ProjectReference Include="..\..\Shared\PetProject.SharedKernel\PetProject.SharedKernel.csproj" />
+      <ProjectReference Include="..\PetProejct.Volunteers.Application\PetProejct.Volunteers.Application.csproj" />
+      <ProjectReference Include="..\PetProject.Volunteers.Contracts\PetProject.Volunteers.Contracts.csproj" />
+      <ProjectReference Include="..\PetProject.Volunteers.Presentation\PetProject.Volunteers.Presentation.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="12.0.0" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.7" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+      <PackageReference Include="Scrutor" Version="6.1.0" />
+    </ItemGroup>
+
+</Project>

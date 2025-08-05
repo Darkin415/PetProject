@@ -1,0 +1,19 @@
+﻿{
+  "Permissions" : {
+    "Volunteers" : [
+      "volunteer.create",
+      "volunteer.read",
+      "volunteer.update",
+      "volunteer.delete"
+      
+    ],
+
+    "Pets" : [
+      "pets.create",
+      "pets.read",
+      "pets.update",
+      "pets.delete"
+    ]
+  }
+  
+}
