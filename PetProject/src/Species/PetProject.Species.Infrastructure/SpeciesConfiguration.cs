@@ -23,10 +23,10 @@ public class SpeciesConfiguration : IEntityTypeConfiguration<Domain.PetSpecies.S
                 .HasColumnName("title");
         });
         
-        builder.HasMany(p => p.Breeds)
-            .WithOne()
-            .HasForeignKey("species_id")
-            .OnDelete(DeleteBehavior.Cascade)
-            .IsRequired();
+        // builder.HasMany(p => p.Breeds)
+        //     .WithOne()
+        //     .HasForeignKey("species_id")
+        //     .OnDelete(DeleteBehavior.Cascade)
+        //     .IsRequired();
     }
 }

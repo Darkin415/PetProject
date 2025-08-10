@@ -21,6 +21,7 @@
       <ProjectReference Include="..\PetProject.Species.Application\PetProject.Species.Application.csproj" />
       <ProjectReference Include="..\PetProject.Species.Contracts\PetProject.Species.Contracts.csproj" />
       <ProjectReference Include="..\PetProject.Species.Domain\PetProject.Species.Domain.csproj" />
+      <ProjectReference Include="..\PetProject.Species.Presentation\PetProject.Species.Presentation.csproj" />
     </ItemGroup>
 
 </Project>

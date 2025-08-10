@@ -11,6 +11,8 @@ using PetProejct.Volunteers.Application.Commands.Queries.GetVolunteers;
 using PetProejct.Volunteers.Application.Commands.RemovePetPhotos;
 using PetProejct.Volunteers.Application.Commands.UpdateSocialNetwork;
 using PetProejct.Volunteers.Application.Commands.UpdateVolunteerMainInfo;
+using PetProject.Files.Application;
+using PetProject.Files.Infrastructure.Providers;
 
 namespace PetProejct.Volunteers.Application
 {

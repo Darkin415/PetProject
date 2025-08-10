@@ -14,6 +14,8 @@ using PetProject.API.Exctensions;
 using PetProject.Core.Authorization;
 using PetProject.Core.Database;
 using PetProject.Core.Enum;
+using PetProject.Files.Contracts;
+using PetProject.Files.Infrastructure.Providers;
 using PetProject.Volunteers.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -74,7 +76,7 @@ builder.Services.AddKeyedScoped<IUnitOfWork,  PetProject.Species.Infrastructure.
 
 builder.Services.AddValidatorsFromAssembly(typeof(CreateVolunteerCommandValidator).Assembly);
 
-builder.Services.AddVolunteersInfrastructure();
+builder.Services.AddVolunteerModule();
 
 builder.Services.AddSpeciesModule();
 

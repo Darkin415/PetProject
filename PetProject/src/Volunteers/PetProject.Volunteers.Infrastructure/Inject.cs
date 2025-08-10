@@ -2,12 +2,17 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using PetProejct.Volunteers.Application;
+using PetProejct.Volunteers.Application.Commands.CreatePet;
 using PetProejct.Volunteers.Application.Commands.CreateVolunteer;
 using PetProejct.Volunteers.Application.Commands.DeleteVolunteer;
 using PetProejct.Volunteers.Application.Commands.GetVolunteerById;
+using PetProejct.Volunteers.Application.Commands.Queries.GetVolunteers;
 using PetProejct.Volunteers.Application.Commands.UpdateVolunteerMainInfo;
 using PetProject.Core.Abstraction;
 using PetProject.Core.Database;
+using PetProject.Files.Application;
+using PetProject.Files.Contracts;
+using PetProject.Files.Infrastructure.Providers;
 using PetProject.Volunteers.Contracts;
 using PetProject.Volunteers.Infrastructure.DbContexts;
 using PetProject.Volunteers.Infrastructure.Repositories;
@@ -53,10 +58,7 @@ public static class Inject
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IVolunteersRepository, VolunteersRepository>();
         services.AddScoped<IPetCheckContract, VolunteersCheckContract>();
-        services.AddScoped<GetVolunteerByIdHandler>();
-        services.AddScoped<UpdateMainInfoHandler>();
-        services.AddScoped<DeleteVolunteerHandler>();
-        services.AddScoped<CreateVolunteerHandler>();
+        
         
 
         return services;

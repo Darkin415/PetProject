@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Minio;
 using PetProject.Core.Messaging;
 using PetProject.Files.Application;
+using PetProject.Files.Contracts;
 using PetProject.Files.Infrastructure.BackgroundServices;
 using PetProject.Files.Infrastructure.MessageQueues;
 using PetProject.Files.Infrastructure.Options;
@@ -20,13 +21,15 @@ public static class Inject
         
         services.AddMinio(configuration);
         
-        
         services.AddScoped<IFilesProvider, MinioProvider>();
+
+        services.AddScoped<IFilesContract, FilesContract>();
         
         services.AddScoped<MinioOptions>();
         
-        services.AddSingleton<IMessageQueue<IEnumerable<FileInfo>>,
-            InMemoryMessageQueue<IEnumerable<FileInfo>>>();
+        services.AddSingleton<
+            IMessageQueue<IEnumerable<PetProject.SharedKernel.ValueObjects.FileInfo>>, 
+            InMemoryMessageQueue<IEnumerable<PetProject.SharedKernel.ValueObjects.FileInfo>>>();
         
         
         // services.AddScoped<IFIlesCleanerService, FilesCleanerBackgroundService>();

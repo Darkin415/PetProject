@@ -42,7 +42,7 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
     
-    [Authorize] 
+ 
     [HttpGet]
     public async Task<ActionResult> GetVolunteer(
         [FromQuery] GetVolunteerWithPaginationRequest request,

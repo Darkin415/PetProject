@@ -1,5 +1,6 @@
 ﻿using PetProejct.Volunteers.Application;
 using PetProject.Files.Infrastructure;
+using PetProject.Species.Application;
 using PetProject.Species.Infrastructure;
 using PetProject.Volunteers.Infrastructure;
 
@@ -20,6 +21,7 @@ public static class DependencyInjection
         this IServiceCollection services)
     {
         services.AddSpeciesInfrastructure();
+        services.AddSpeciesUseCases();
 
         return services;
     }

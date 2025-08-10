@@ -7,10 +7,12 @@ using PetProject.Species.Application;
 using PetProject.Species.Application.Breed;
 using PetProject.Species.Application.DeleteBreed;
 using PetProject.Species.Application.DeleteSpecies;
+using PetProject.Species.Application.GetBreedBySpeciesId;
 using PetProject.Species.Application.Species;
 using PetProject.Species.Contracts;
 using PetProject.Species.Infrastructure.DbContexts;
 using PetProject.Species.Infrastructure.Repository;
+using PetProject.Species.Presentation;
 using PetProject.Volunteers.Contracts;
 
 namespace PetProject.Species.Infrastructure;
@@ -20,17 +22,12 @@ public static class Inject
     public static IServiceCollection AddSpeciesInfrastructure(this IServiceCollection services)
     {
         services.AddScoped<WriteSpeciesDbContext>();
-
-        services.AddScoped<CreateSpeciesHandler>();
-        
-        services.AddScoped<CreateBreedHandler>();
-        
-        // services.AddScoped<DeleteBreedHandler>();
-        
-        services.AddScoped<DeleteSpeciesHandler>();
-        
         
         services.AddScoped<ISpeciesRepository, SpeciesRepository>();
+        
+        services.AddScoped<ISpeciesReadDbContext, SpeciesReadDbContext>();
+
+        services.AddScoped<ISpeciesContract, SpeciesContract>();
 
         return services;
     }

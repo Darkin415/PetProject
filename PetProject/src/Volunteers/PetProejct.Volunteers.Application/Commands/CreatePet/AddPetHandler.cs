@@ -20,13 +20,12 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
 {
     private const string BUCKET_NAME = "photos";   
     private readonly ILogger<AddPetHandler> _logger;
-    private readonly IFilesContract _fileContract;
     private readonly IVolunteersRepository _volunteersRepository;
     private readonly ISpeciesContract _speciesContract;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IValidator<AddPetCommand> _validator;
     public AddPetHandler(
-        IFilesContract fileContract,
+        
         IValidator<AddPetCommand> validator,
         ISpeciesContract speciesContract,
         IVolunteersRepository volunteersRepository,
@@ -36,7 +35,6 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
     {
         _logger = logger;
         _validator = validator;
-        _fileContract = fileContract;
         _volunteersRepository = volunteersRepository;
         _speciesContract = speciesContract;
         _unitOfWork = unitOfWork;
